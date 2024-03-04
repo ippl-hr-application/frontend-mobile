@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meraih_mobile/screens/home/home_page.dart';
+// import 'package:meraih_mobile/screens/home/home_page.dart';
+import 'package:meraih_mobile/screens/pelanggaran/offense_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(),
-      home: const HomeScreen(),
+      home: const OffenceScreen(),
     );
   }
 }
