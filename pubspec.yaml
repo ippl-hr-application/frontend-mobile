@@ -30,6 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_form_builder: ^7.0.0
+  calendar_date_picker2: ^0.2.5
+  signature: ^5.0.1
+  file_picker: ^4.1.4
+  intl: ^0.17.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -52,6 +57,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - lib/images/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
