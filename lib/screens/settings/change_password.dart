@@ -8,9 +8,7 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
-  bool _isObscured1 = true;
-  bool _isObscured2 = true;
-  bool _isObscured3 = true;
+  bool _isObscured = true;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +41,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               Container(
                 width: double.infinity,
                 child: TextField(
-                  obscureText: _isObscured1,
+                  obscureText: _isObscured,
                   decoration: InputDecoration(
                     labelText: 'Kata Sandi Lama',
                     border: OutlineInputBorder(
@@ -51,12 +49,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isObscure1 ? Icons.visibility : Icons.visibility_off,
+                        _isObscured ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
                         // Toggle the visibility of the password
                         setState(() {
-                          _isObscured1 = !_isObscured1;
+                          _isObscured = !_isObscured;
                         });
                       },
                     ),
@@ -67,7 +65,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               Container(
                 width: double.infinity,
                 child: TextField(
-                  obscureText: _isObscured2,
+                  obscureText: _isObscured,
                   decoration: InputDecoration(
                     labelText: 'Kata Sandi Baru',
                     border: OutlineInputBorder(
@@ -75,12 +73,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isObscured2 ? Icons.visibility : Icons.visibility_off,
+                        _isObscured ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
                         // Toggle the visibility of the password
                         setState(() {
-                          _isObscured2 = !_isObscured2;
+                          _isObscured = !_isObscured;
                         });
                       },
                     ),
@@ -91,7 +89,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               Container(
                 width: double.infinity,
                 child: TextField(
-                  obscureText: _isObscured3,
+                  obscureText: _isObscured,
                   decoration: InputDecoration(
                     labelText: 'Konfirmasi Kata Sandi',
                     border: OutlineInputBorder(
@@ -99,12 +97,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _isObscured3 ? Icons.visibility : Icons.visibility_off,
+                        _isObscured ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
                         // Toggle the visibility of the password
                         setState(() {
-                          _isObscured3 = !_isObscured3;
+                          _isObscured = !_isObscured;
                         });
                       },
                     ),
