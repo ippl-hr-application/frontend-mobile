@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
-class ChangePassword extends StatelessWidget {
-  const ChangePassword({Key? key});
+class ChangePassword extends StatefulWidget {
+  const ChangePassword({Key? key}) : super(key: key);
+
+  @override
+  _ChangePasswordState createState() => _ChangePasswordState();
+}
+
+class _ChangePasswordState extends State<ChangePassword> {
+  bool _isObscured1 = true;
+  bool _isObscured2 = true;
+  bool _isObscured3 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +43,23 @@ class ChangePassword extends StatelessWidget {
               Container(
                 width: double.infinity,
                 child: TextField(
-                  obscureText: true,
+                  obscureText: _isObscured1,
                   decoration: InputDecoration(
                     labelText: 'Kata Sandi Lama',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    suffixIcon: Icon(Icons.visibility),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isObscure1 ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        // Toggle the visibility of the password
+                        setState(() {
+                          _isObscured1 = !_isObscured1;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -47,12 +67,23 @@ class ChangePassword extends StatelessWidget {
               Container(
                 width: double.infinity,
                 child: TextField(
-                  obscureText: true,
+                  obscureText: _isObscured2,
                   decoration: InputDecoration(
                     labelText: 'Kata Sandi Baru',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    suffixIcon: Icon(Icons.visibility),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isObscured2 ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        // Toggle the visibility of the password
+                        setState(() {
+                          _isObscured2 = !_isObscured2;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -60,12 +91,23 @@ class ChangePassword extends StatelessWidget {
               Container(
                 width: double.infinity,
                 child: TextField(
-                  obscureText: true,
+                  obscureText: _isObscured3,
                   decoration: InputDecoration(
                     labelText: 'Konfirmasi Kata Sandi',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    suffixIcon: Icon(Icons.visibility),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isObscured3 ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        // Toggle the visibility of the password
+                        setState(() {
+                          _isObscured3 = !_isObscured3;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -76,9 +118,6 @@ class ChangePassword extends StatelessWidget {
                   onPressed: () {
                     // Add authentication logic or navigate to the next page here
                   },
-                  // style: ElevatedButton.styleFrom(
-                  //   primary: Color(0xFF2051E5),
-                  // ),
                   child: Text("Simpan"),
                 ),
               ),
