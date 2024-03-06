@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xFF2051E5),
       ),
-      home: const CheckinMap(),
+      home: const ForgetSendEmail(),
     );
   }
 }

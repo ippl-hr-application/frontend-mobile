@@ -13,12 +13,11 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Logo di bagian atas tengah
-              // Image.asset(
-              //   'lib/images/logo.PNG', // Gantilah dengan path/logo Anda
-              //   width: 100.0,
-              //   height: 100.0,
-              // ),
+              Image.asset(
+                'lib/images/logo.png',
+                width: 100.0,
+                height: 100.0,
+              ),
               SizedBox(height: 5.0),
               TextFormField(
                 decoration: InputDecoration(
@@ -43,7 +42,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(
                   height:
-                      10.0), 
+                      5.0), 
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -55,7 +54,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 5.0),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

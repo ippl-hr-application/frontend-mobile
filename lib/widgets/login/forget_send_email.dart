@@ -5,7 +5,7 @@ class ForgetSendEmail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String email = ''; 
+    String email = '';
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -28,6 +28,13 @@ class ForgetSendEmail extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    
+                    Image.asset(
+                      'lib/images/popforgetpassword.png',
+                      width: 100.0,
+                      height: 100.0,
+                    ),
+                    SizedBox(height: 10.0),
                     Text(
                       'Lupa Password',
                       style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
@@ -66,7 +73,7 @@ class ForgetSendEmail extends StatelessWidget {
                 ),
               ),
               child: TextButton(
-                onPressed: () { 
+                onPressed: () {
                   print('Email yang dikirim: $email');
                 },
                 child: Text('Kirim Email'),
