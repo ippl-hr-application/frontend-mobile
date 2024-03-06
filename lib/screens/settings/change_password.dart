@@ -24,7 +24,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                   IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                      // Add navigation logic to go back to the previous page
                       Navigator.pop(context);
                     },
                   ),
@@ -52,7 +51,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                         _isObscured ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        // Toggle the visibility of the password
                         setState(() {
                           _isObscured = !_isObscured;
                         });
@@ -76,7 +74,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                         _isObscured ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        // Toggle the visibility of the password
                         setState(() {
                           _isObscured = !_isObscured;
                         });
@@ -100,7 +97,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                         _isObscured ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
-                        // Toggle the visibility of the password
                         setState(() {
                           _isObscured = !_isObscured;
                         });
@@ -114,7 +110,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Add authentication logic or navigate to the next page here
                   },
                   child: Text("Simpan"),
                 ),

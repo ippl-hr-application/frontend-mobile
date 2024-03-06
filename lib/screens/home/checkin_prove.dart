@@ -11,18 +11,18 @@ class CheckinProve extends StatelessWidget {
         backgroundColor: Colors.blue,
         title: Row(
           children: [
-            
-            
             IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
-                
                 Navigator.pop(context);
               },
             ),
-            Text(
-              'Check In',
-              style: TextStyle(color: Colors.white),
+            Center(
+              child: Text(
+                'Check In',
+                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),
@@ -33,14 +33,14 @@ class CheckinProve extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Tanggal: 06 Maret 2024\nJam: 09.00 - 17.00', // Ganti dengan tanggal dan jam yang sesuai
+              'Tanggal: 06 Maret 2024\nJam: 09.00 - 17.00',
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
             InkWell(
               onTap: () {
-                  _captureImage(context);
+                _captureImage(context);
               },
               child: Container(
                 width: 150,
@@ -59,6 +59,15 @@ class CheckinProve extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
+              ),
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                },
+                child: Text('Check In'),
               ),
             ),
           ],

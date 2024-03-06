@@ -51,7 +51,6 @@ class ForgetPassword extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Tambahkan logika autentikasi atau navigasi ke halaman berikutnya di sini
                   },
                   // style: ElevatedButton.styleFrom(
                   //   primary: Color(0xFF2051E5), // Ubah warna latar belakang

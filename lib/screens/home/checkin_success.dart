@@ -54,8 +54,8 @@ class CheckinSuccess extends StatelessWidget {
             SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                // Tambahkan logika untuk kembali ke beranda
-              },
+                              
+                              },
               child: Text('Kembali ke Beranda'),
             ),
           ],

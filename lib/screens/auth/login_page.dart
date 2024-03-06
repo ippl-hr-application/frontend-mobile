@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meraih_mobile/widgets/login/forget_password.dart';
+import 'package:meraih_mobile/widgets/login/forget_send_email.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key});
@@ -20,7 +20,6 @@ class LoginPage extends StatelessWidget {
               //   height: 100.0,
               // ),
               SizedBox(height: 5.0),
-              // TextFormField dengan outline
               TextFormField(
                 decoration: InputDecoration(
                   labelText: "Username",
@@ -38,32 +37,29 @@ class LoginPage extends StatelessWidget {
                   suffixIcon: IconButton(
                     icon: Icon(Icons.visibility),
                     onPressed: () {
-                      // Togle visibility password
                     },
                   ),
                 ),
               ),
               SizedBox(
                   height:
-                      10.0), // Sesuaikan jarak antara password dan "Lupa Password?"
+                      10.0), 
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () {
-                      // Logika untuk menangani "Lupa Password?"
+                      
                     },
                     child: Text("Lupa Password?"),
                   ),
                 ],
               ),
               SizedBox(height: 20.0),
-              // ElevatedButton dengan lebar sesuai dengan input field
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Tambahkan logika autentikasi atau navigasi ke halaman berikutnya di sini
                   },
                   // style: ElevatedButton.styleFrom(
                   //   primary: Color(0xFF2051E5), // Ubah warna latar belakang

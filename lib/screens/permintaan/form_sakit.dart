@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:file_picker/file_picker.dart'; // Add this for FilePicker
+import 'package:file_picker/file_picker.dart';
 import 'package:signature/signature.dart';
 
 class FormSakit extends StatefulWidget {
@@ -20,7 +20,7 @@ class _FormSakitState extends State<FormSakit> {
     penColor: Colors.black,
   );
 
-  FilePickerResult? filePickerResult; // Added to store file picker result
+  FilePickerResult? filePickerResult;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _FormSakitState extends State<FormSakit> {
                   labelText: 'Keterangan Sakit',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                  ), // Add outline border
+                  ), 
                 ),
               ),
               SizedBox(height: 20),
@@ -56,7 +56,7 @@ class _FormSakitState extends State<FormSakit> {
                   labelText: 'Mulai dan Akhir Sakit Tanggal',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                  ), // Add outline border
+                  ),
                 ),
                 firstDate: DateTime.now(),
                 lastDate: DateTime.now().add(Duration(days: 365)),
@@ -81,11 +81,11 @@ class _FormSakitState extends State<FormSakit> {
                 height: 200,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.grey, // Set the outline color
-                    width: 3.0, // Set the outline width
+                    color: Colors.grey, 
+                    width: 3.0, 
                   ),
                   borderRadius:
-                      BorderRadius.circular(5.0), // Set the border radius
+                      BorderRadius.circular(5.0),
                 ),
                 child: Signature(
                   controller: _signatureController,
@@ -95,16 +95,16 @@ class _FormSakitState extends State<FormSakit> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                width: double.infinity, // Set the width to take the full width
+                width: double.infinity, 
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.saveAndValidate()) {
-                      // Handle the form submission
+                      
                       Map<String, dynamic> formData =
                           _formKey.currentState!.value;
                       String keterangan = formData['keterangan'];
                       String? buktiSakit =
-                          filePickerResult?.files.first.path; // Get file path
+                          filePickerResult?.files.first.path;
                       DateTimeRange izinDate = formData['izinDate'];
                       DateTime startDate = izinDate.start;
                       DateTime endDate = izinDate.end;
