@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/data/pelanggaran.dart';
 import 'package:meraih_mobile/models/pelanggaran.dart';
 // import 'package:meraih_mobile/screens/pelanggaran/widget/calender_years.dart';
@@ -14,34 +15,6 @@ class _OffenceScreenState extends State<OffenceScreen> {
   String showYears = 'Pilih Tahun';
   DateTime _selectedYear = DateTime.now();
 
-  selectYear(contex) async {
-    // print("calling date picker");
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: const Center(child: Text("Pilih Tahun")),
-              content: SizedBox(
-                  width: 300,
-                  height: 300,
-                  child: YearPicker(
-                    firstDate: DateTime(DateTime.now().year - 5, 1),
-                    // lastDate: DateTime.now(),
-                    lastDate: DateTime.now(),
-                    // ignore: deprecated_member_use
-                    initialDate: DateTime.now(),
-                    selectedDate: _selectedYear,
-                    onChanged: (DateTime dateTime) {
-                      setState(() {
-                        _selectedYear = dateTime;
-                        showYears = "${dateTime.year}";
-                      });
-                      Navigator.pop(context);
-                    },
-                  )));
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +25,9 @@ class _OffenceScreenState extends State<OffenceScreen> {
             Icons.arrow_back,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            context.go("/");
+          },
         ),
         flexibleSpace: const Stack(
           children: [
@@ -152,5 +127,33 @@ class _OffenceScreenState extends State<OffenceScreen> {
         ),
       ),
     );
+  }
+
+  selectYear(contex) async {
+    // print("calling date picker");
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: const Center(child: Text("Pilih Tahun")),
+              content: SizedBox(
+                  width: 300,
+                  height: 300,
+                  child: YearPicker(
+                    firstDate: DateTime(DateTime.now().year - 5, 1),
+                    // lastDate: DateTime.now(),
+                    lastDate: DateTime.now(),
+                    // ignore: deprecated_member_use
+                    initialDate: DateTime.now(),
+                    selectedDate: _selectedYear,
+                    onChanged: (DateTime dateTime) {
+                      setState(() {
+                        _selectedYear = dateTime;
+                        showYears = "${dateTime.year}";
+                      });
+                      Navigator.pop(context);
+                    },
+                  )));
+        });
   }
 }

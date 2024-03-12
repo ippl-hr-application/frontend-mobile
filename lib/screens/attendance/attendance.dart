@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meraih_mobile/screens/attendance/widget/card_attandance_today.dart';
+import 'package:go_router/go_router.dart';
 
-class TaskWork extends StatelessWidget {
-  const TaskWork({super.key});
+class Attendance extends StatelessWidget {
+  const Attendance({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,9 @@ class TaskWork extends StatelessWidget {
               Icons.arrow_back,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.go("/");
+            },
           ),
           flexibleSpace: const Stack(
             children: [

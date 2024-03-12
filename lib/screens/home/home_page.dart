@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/data/user_data.dart';
 // import 'package:meraih_mobile/widgets/card_home.dart';
 import 'package:meraih_mobile/models/user.model.dart';
@@ -66,14 +67,19 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         for (ImageModel feature in imageHome)
-                          Column(
-                            children: [
-                              Image.asset(feature.imageAssets),
-                              Text(
-                                feature.category,
-                                style: const TextStyle(fontSize: 13.0),
-                              )
-                            ],
+                          InkWell(
+                            onTap: () {
+                              context.go(feature.path);
+                            },
+                            child: Column(
+                              children: [
+                                Image.asset(feature.imageAssets),
+                                Text(
+                                  feature.category,
+                                  style: const TextStyle(fontSize: 13.0),
+                                )
+                              ],
+                            ),
                           )
                       ],
                     ),
