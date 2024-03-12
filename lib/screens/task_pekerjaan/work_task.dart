@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meraih_mobile/screens/task_pekerjaan/widget/detail_task.dart';
+import 'package:go_router/go_router.dart';
 
 class WorkTask extends StatelessWidget {
   const WorkTask({super.key});
@@ -14,7 +15,9 @@ class WorkTask extends StatelessWidget {
             Icons.arrow_back,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            context.go("/");
+          },
         ),
         flexibleSpace: const Stack(
           children: [
