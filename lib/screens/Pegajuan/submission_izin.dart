@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/widgets/calenderSelect.dart';
 
 class SubmissionIzin extends StatefulWidget {
   const SubmissionIzin({super.key});
@@ -24,7 +25,7 @@ class _SubmissionIzin extends State<SubmissionIzin> {
             color: Colors.white,
           ),
           onPressed: () {
-            context.go('/');
+            context.go('/pengajuan');
           },
         ),
         flexibleSpace: const Stack(
@@ -81,7 +82,8 @@ class _SubmissionIzin extends State<SubmissionIzin> {
                                         BorderRadius.all(Radius.circular(8))),
                                 child: Image.asset('assets/dates1.png')),
                             const SizedBox(width: 16.0),
-                            const Text("Pili Tanggal")
+                            const Text("Pili Tanggal"),
+                            // const CustomCalendarPicker(onDateSelected: selectedDate,selectedDates: [],)
                           ],
                         ),
                       ),

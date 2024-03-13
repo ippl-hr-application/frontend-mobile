@@ -137,18 +137,23 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             for (NavigationsBarApps data in bottomBar)
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(data.imageAssets),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    data.category,
-                    style: const TextStyle(
-                        // color: Color(0xFF2196F3)
-                        fontSize: 12.0),
-                  )
-                ],
+              InkWell(
+                onTap: () {
+                  context.go(data.path);
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(data.imageAssets),
+                    const SizedBox(height: 4.0),
+                    Text(
+                      data.category,
+                      style: const TextStyle(
+                          // color: Color(0xFF2196F3)
+                          fontSize: 12.0),
+                    )
+                  ],
+                ),
               )
           ],
         ),

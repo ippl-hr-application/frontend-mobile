@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meraih_mobile/screens/daftarPengajuan/daftarPengajuanPage.dart';
 import 'package:meraih_mobile/screens/home/home_page.dart';
 import 'package:meraih_mobile/screens/pelanggaran/offense_page.dart';
 import 'package:meraih_mobile/screens/attendance/attendance.dart';
@@ -43,6 +44,18 @@ final GoRouter _router = GoRouter(routes: [
       return const Attendance();
     },
   ),
+  GoRoute(
+    path: '/pengajuan',
+    builder: (BuildContext context, GoRouterState state) {
+      return const DaftarPengajuanScreen();
+    },
+  ),
+  GoRoute(
+    path: "/pengajuan-izin",
+    builder: (BuildContext context, GoRouterState state) {
+      return const SubmissionIzin();
+    },
+  )
 ]);
 
 class MyApp extends StatelessWidget {
