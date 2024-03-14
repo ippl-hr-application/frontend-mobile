@@ -3,18 +3,20 @@ import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/data/user_data.dart';
 // import 'package:meraih_mobile/widgets/card_home.dart';
 import 'package:meraih_mobile/models/user.model.dart';
+// import 'package:meraih_mobile/providers.dart';
 import 'package:meraih_mobile/widgets/card_attendance.dart';
 // import 'package:meraih_mobile/widgets/card_attendance.dart';
 import 'package:meraih_mobile/data/image_home.dart';
 import 'package:meraih_mobile/models/image_model.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   // final UserModels place;
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double screenWidth = MediaQuery.of(context).size.width;
     final UserModels data = userData[0];
 
@@ -40,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Hi, ${data.name}",
+                            data.name,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,

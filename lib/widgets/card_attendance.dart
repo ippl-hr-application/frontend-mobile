@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "package:go_router/go_router.dart";
 // import "package:flutter/widgets.dart";
 import "package:meraih_mobile/data/user_data.dart";
 import "package:meraih_mobile/models/user.model.dart";
@@ -101,7 +102,9 @@ class CardAttendance extends StatelessWidget {
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/checkin');
+                  },
                   child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 6.0, horizontal: 40.0),

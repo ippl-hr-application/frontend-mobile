@@ -25,8 +25,8 @@ class ButtomBar extends StatelessWidget {
           label: 'Notifikasi',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          label: 'Notifikasi',
+          icon: Icon(Icons.note_rounded),
+          label: 'pengajuan',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
@@ -48,7 +48,7 @@ class ButtomBar extends StatelessWidget {
         context.go('/task');
         break;
       case 3:
-        context.go('/pelanggaran');
+        context.go('/login');
         break;
       default:
         break;
