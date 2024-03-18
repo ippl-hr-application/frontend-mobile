@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:meraih_mobile/widgets/login/forget_send_email.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends ConsumerWidget {
+  final TextEditingController _companyId = TextEditingController();
+  final TextEditingController _employeeId = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
+  LoginPage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -19,22 +24,33 @@ class LoginPage extends StatelessWidget {
                 height: 100.0,
               ),
               const SizedBox(height: 5.0),
-              TextFormField(
+              TextField(
+                controller: _companyId,
                 decoration: InputDecoration(
-                  labelText: "Username",
+                  labelText: "Company ID",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0)),
                 ),
               ),
               const SizedBox(height: 10.0),
-              TextFormField(
+              TextField(
+                controller: _employeeId,
+                decoration: InputDecoration(
+                  labelText: "Employee ID",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              TextField(
                 obscureText: true,
+                controller: _password,
                 decoration: InputDecoration(
                   labelText: "Password",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0)),
                   suffixIcon: IconButton(
-                    icon: const Icon(Icons.visibility),
+                    icon: Icon(Icons.visibility),
                     onPressed: () {},
                   ),
                 ),
@@ -53,7 +69,19 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    () async {
+                      await ref
+                          .read(loginControllerProvider.notifier)
+                          .handleLogin(
+                              companyId: _companyId.text,
+                              employeeId: _employeeId.text,
+                              password: _password.text);
+                      if (context.mounted) {
+                        context.go('/homepage');
+                      }
+                    };
+                  },
                   // style: ElevatedButton.styleFrom(
                   //   primary: Color(0xFF2051E5), // Ubah warna latar belakang
                   // ),
