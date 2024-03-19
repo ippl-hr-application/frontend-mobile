@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/providers/submission_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/providers/submission_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/screen/widgets/submission_item.dart';
 
 class Submission extends ConsumerWidget {
   @override
@@ -27,8 +28,12 @@ class Submission extends ConsumerWidget {
                   shrinkWrap: true,
                   itemCount: data?.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                        title: Text(data?[index].type.toString() ?? ''));
+                    return SubmissionItem(
+                      submissionId: data?[index].submission_id,
+                      submissionDate: data?[index].submission_date,
+                      status: data?[index].status,
+                      type: data?[index].type,
+                    );
                   },
                 );
               },
