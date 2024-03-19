@@ -9,7 +9,6 @@ export 'package:meraih_mobile/data/image_home.dart';
 export 'package:meraih_mobile/data/kehadiran.dart';
 export 'package:meraih_mobile/data/pelanggaran.dart';
 export 'package:meraih_mobile/data/user_data.dart';
-export 'package:meraih_mobile/features/authentication/data/auth.repository.dart';
 export 'package:meraih_mobile/features/authentication/domain/auth.dart';
 export 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
 export 'package:meraih_mobile/routes/app_router.dart';

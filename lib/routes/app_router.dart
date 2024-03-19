@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
+import 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +19,14 @@ GoRouter goRouter(GoRouterRef ref) {
             );
           },
         ),
+        GoRoute(
+          path: '/submission',
+          pageBuilder: (context, state) {
+            return NoTransitionPage(
+              child: Submission(),
+            );
+          },
+        )
       ],
       redirect: (context, state) async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -25,6 +34,6 @@ GoRouter goRouter(GoRouterRef ref) {
         if (token != null) {
           return '/';
         }
-        return '/auth/login';
+        return '/submission';
       });
 }
