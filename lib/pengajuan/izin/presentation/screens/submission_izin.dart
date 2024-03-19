@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/pengajuan/izin/presentation/providers/izin_provider.dart';
 
-class SubmissionIzin extends StatefulWidget {
-  const SubmissionIzin({super.key});
+class SubmissionIzin extends ConsumerWidget {
+  TextEditingController _permission_reason = TextEditingController();
+  TextEditingController _permission_file = TextEditingController();
+  String _from = "";
+  String _to = "";
 
+  SubmissionIzin({super.key});
   @override
-  State<SubmissionIzin> createState() => _SubmissionIzin();
-}
-
-class _SubmissionIzin extends State<SubmissionIzin> {
-  String _fileText = "";
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -105,24 +104,23 @@ class _SubmissionIzin extends State<SubmissionIzin> {
                                         BorderRadius.all(Radius.circular(8))),
                                 child: Image.asset('assets/reason.png')),
                             const SizedBox(width: 16.0),
-                            const Expanded(
-                              child: TextField(
-                                cursorColor: Colors.black,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                  hintStyle: TextStyle(color: Colors.black),
-                                  labelText: "Alasan Izin",
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 0.0, horizontal: 0.0),
-                                  // border: OutlineInputBorder(
-                                  //     borderSide: const BorderSide(
-                                  //         color: Colors.black, width: 0.5),
-                                  //     borderRadius: BorderRadius.circular(8.0)),
-                                ),
+                            TextField(
+                              controller: _permission_reason,
+                              cursorColor: Colors.black,
+                              style: const TextStyle(color: Colors.black),
+                              decoration: const InputDecoration(
+                                hintStyle: TextStyle(color: Colors.black),
+                                labelText: "Alasan Izin",
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 0.0, horizontal: 0.0),
+                                // border: OutlineInputBorder(
+                                //     borderSide: const BorderSide(
+                                //         color: Colors.black, width: 0.5),
+                                //     borderRadius: BorderRadius.circular(8.0)),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -161,7 +159,7 @@ class _SubmissionIzin extends State<SubmissionIzin> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black),
                                 )),
-                            Text(_fileText)
+                            const Text("_permission_file as String")
                           ],
                         ),
                       ),
@@ -182,7 +180,15 @@ class _SubmissionIzin extends State<SubmissionIzin> {
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              () async {
+                await ref.read(izinControllerProvider.notifier).handleIzin(
+                    from: _from,
+                    permission_reason: _permission_reason.text,
+                    permission_file: _permission_file.text,
+                    to: _to);
+              };
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
               shape: const RoundedRectangleBorder(
@@ -209,9 +215,7 @@ class _SubmissionIzin extends State<SubmissionIzin> {
       if (result.files.isNotEmpty && result.files.single.path != null) {
         // User selected a file
         File file_1 = File(result.files.single.path!);
-        setState(() {
-          _fileText = file_1.path;
-        });
+        _permission_file = file_1 as TextEditingController;
       } else {
         // User canceled the picker or no file selected
         print("User canceled the picker or no file selected");
