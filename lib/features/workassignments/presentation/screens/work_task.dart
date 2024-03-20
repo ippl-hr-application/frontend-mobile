@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meraih_mobile/screens/task_pekerjaan/widget/detail_task.dart';
+import 'package:meraih_mobile/features/workassignments/presentation/widget/detail_task.dart';
 import 'package:go_router/go_router.dart';
 
 class WorkTask extends StatelessWidget {

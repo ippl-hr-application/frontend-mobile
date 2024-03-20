@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meraih_mobile/screens/attendance/widget/card_attandance_today.dart';
+import 'package:meraih_mobile/features/attendance/presentation/widget/card_attandance_today.dart';
 import 'package:go_router/go_router.dart';
 
 class Attendance extends StatelessWidget {

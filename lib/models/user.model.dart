@@ -16,4 +16,6 @@ class UserModels {
     required this.date,
     required this.time,
   });
+
+  get employeeName => null;
 }

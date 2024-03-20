@@ -60,7 +60,9 @@ class LoginPage extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.go('/resset-password');
+                    },
                     child: const Text("Lupa Password?"),
                   ),
                 ],

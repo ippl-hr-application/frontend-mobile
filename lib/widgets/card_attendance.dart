@@ -3,10 +3,21 @@ import "package:go_router/go_router.dart";
 // import "package:flutter/widgets.dart";
 import "package:meraih_mobile/data/user_data.dart";
 import "package:meraih_mobile/models/user.model.dart";
+import 'package:meraih_mobile/utils/format_date.dart';
+import 'package:meraih_mobile/utils/format_time.dart';
 
 class CardAttendance extends StatelessWidget {
-  const CardAttendance({super.key});
+  final String? companyName;
+  final String? date;
+  final String? from;
+  final String? to;
 
+  const CardAttendance(
+      {required this.companyName,
+      required this.date,
+      required this.from,
+      required this.to,
+      super.key});
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -44,13 +55,13 @@ class CardAttendance extends StatelessWidget {
                   Image.asset(data.imageAsset),
                   const SizedBox(height: 6.0),
                   Text(
-                    data.company,
+                    companyName.toString(),
                     style: const TextStyle(
                         fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 6.0),
                   Text(
-                    data.position,
+                    date.toString(),
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w500,
@@ -76,7 +87,7 @@ class CardAttendance extends StatelessWidget {
                     Image.asset(data.dateImage),
                     const SizedBox(width: 10.0),
                     Text(
-                      data.date,
+                      formatDate(date.toString()),
                       style: const TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -85,12 +96,31 @@ class CardAttendance extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10.0),
-                Text(
-                  data.time,
-                  style: const TextStyle(
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      formatTime(from.toString()),
+                      style: const TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 6.0),
+                    const Text(
+                      "-",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 30.0),
+                    ),
+                    const SizedBox(width: 6.0),
+                    Text(
+                      formatTime(to.toString()),
+                      style: const TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
                 )
               ]),
             ),
