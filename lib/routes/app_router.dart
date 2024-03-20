@@ -32,8 +32,8 @@ GoRouter goRouter(GoRouterRef ref) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String? token = prefs.getString('token');
         if (token != null) {
-          return '/';
+          return '/submission';
         }
-        return '/submission';
+        return '/login';
       });
 }

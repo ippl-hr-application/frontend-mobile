@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 
 class LoginPage extends ConsumerWidget {
@@ -70,17 +71,17 @@ class LoginPage extends ConsumerWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    () async {
-                      await ref
-                          .read(loginControllerProvider.notifier)
-                          .handleLogin(
-                              companyId: _companyId.text,
-                              employeeId: _employeeId.text,
-                              password: _password.text);
-                      if (context.mounted) {
-                        context.go('/homepage');
-                      }
-                    };
+                    print(_companyId.text);
+                    print(_employeeId.text);
+                    print(_password.text);
+                    handleLogin(LoginRequest(
+                        employee_id: _employeeId.text,
+                        company_id: _companyId.text,
+                        password: _password.text));
+
+                    context.go('/submission');
+
+                    ;
                   },
                   // style: ElevatedButton.styleFrom(
                   //   primary: Color(0xFF2051E5), // Ubah warna latar belakang
