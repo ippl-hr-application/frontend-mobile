@@ -10,7 +10,7 @@ _$IzinRequestImpl _$$IzinRequestImplFromJson(Map<String, dynamic> json) =>
     _$IzinRequestImpl(
       from: json['from'] as String,
       permission_reason: json['permission_reason'] as String,
-      permission_file: json['permission_file'] as String,
+      permission_file: json['permission_file'] as String?,
       to: json['to'] as String,
     );
 

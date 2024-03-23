@@ -27,7 +27,7 @@ class IzinRequest with _$IzinRequest {
   factory IzinRequest({
     @JsonKey(name: 'from') required String from,
     @JsonKey(name: 'permission_reason') required String permission_reason,
-    @JsonKey(name: 'permission_file') required String permission_file,
+    @JsonKey(name: 'permission_file') required String? permission_file,
     @JsonKey(name: 'to') required String to,
   }) = _IzinRequest;
 

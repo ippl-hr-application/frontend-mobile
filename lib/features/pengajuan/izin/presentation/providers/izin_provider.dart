@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meraih_mobile/pengajuan/izin/domain/izin.dart';
+import 'package:meraih_mobile/features/pengajuan/izin/domain/izin.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'izin_provider.g.dart';
@@ -13,7 +13,7 @@ class IzinController extends _$IzinController {
   Future<void> handleIzin(
       {required String from,
       required String permission_reason,
-      required String permission_file,
+      required String? permission_file,
       required String to}) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {

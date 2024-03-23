@@ -24,7 +24,7 @@ export 'package:meraih_mobile/screens/pelanggaran/offense_page.dart';
 export 'package:meraih_mobile/screens/pelanggaran/widget/calender_years.dart';
 export 'package:meraih_mobile/screens/permintaan/form_kehadiran_request.dart';
 export 'package:meraih_mobile/screens/permintaan/form_sakit.dart';
-export 'package:meraih_mobile/pengajuan/izin/presentation/screens/submission_izin.dart';
+export 'package:meraih_mobile/features/pengajuan/izin/presentation/screens/submission_izin.dart';
 export 'package:meraih_mobile/screens/settings/change_password.dart';
 export 'package:meraih_mobile/screens/task_pekerjaan/widget/detail_task.dart';
 export 'package:meraih_mobile/screens/task_pekerjaan/work_task.dart';

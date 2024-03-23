@@ -6,7 +6,7 @@ part of 'izin_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$izinControllerHash() => r'4e9bfa96a32a97a2140c519c75720726d036c540';
+String _$izinControllerHash() => r'8baec7e8f500d3cbb5611862044fd767184af2b4';
 
 /// See also [IzinController].
 @ProviderFor(IzinController)
