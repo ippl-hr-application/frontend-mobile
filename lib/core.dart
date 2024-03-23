@@ -21,9 +21,9 @@ export 'package:meraih_mobile/features/attendance/presentation/screens/checkin_s
 export 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
 export 'package:meraih_mobile/features/workoffense/presentation/screens/offense_page.dart';
 export 'package:meraih_mobile/features/workoffense/presentation/widget/calender_years.dart';
-export 'package:meraih_mobile/features/submission/presentation/screens/form_kehadiran_request.dart';
-export 'package:meraih_mobile/features/submission/presentation/screens/form_sakit.dart';
-export 'package:meraih_mobile/features/submission/presentation/screens/form_izin.dart';
+export 'package:meraih_mobile/features/submission/presentation/screen/form_kehadiran_request.dart';
+export 'package:meraih_mobile/features/submission/presentation/screen/form_sakit.dart';
+export 'package:meraih_mobile/features/submission/presentation/screen/form_izin.dart';
 export 'package:meraih_mobile/features/profile/presentation/screens/change_password.dart';
 export 'package:meraih_mobile/features/workassignments/presentation/widget/detail_task.dart';
 export 'package:meraih_mobile/features/workassignments/presentation/screens/work_task.dart';
@@ -35,3 +35,5 @@ export 'package:meraih_mobile/widgets/login/forget_send_email.dart';
 export 'package:meraih_mobile/widgets/login/success_password_change.dart';
 export 'package:meraih_mobile/widgets/notif.dart';
 export 'package:meraih_mobile/widgets/upload_files.dart';
+export 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
+import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';

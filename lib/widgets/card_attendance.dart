@@ -36,7 +36,8 @@ class CardAttendance extends StatelessWidget {
                 blurRadius: 10,
                 offset: const Offset(0, 3),
               )
-            ]),
+            ]
+            ),
         // padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -133,7 +134,7 @@ class CardAttendance extends StatelessWidget {
                         MaterialStateProperty.all<Color>(Colors.white),
                   ),
                   onPressed: () {
-                    context.go('/checkin');
+                    context.go('/checkin-prove');
                   },
                   child: Container(
                       padding: const EdgeInsets.symmetric(

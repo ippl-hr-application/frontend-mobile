@@ -2,6 +2,8 @@ import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
 import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
+import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';
+import 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,6 +50,46 @@ GoRouter goRouter(GoRouterRef ref) {
         path: "/work-offense",
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: OffenceScreen());
+        },
+      ),
+      GoRoute(
+        path: '/submission',
+        pageBuilder: (context, state) {
+          return NoTransitionPage(
+            child: Submission(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/checkin-map',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckinMap(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/checkin-prove',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckinProve(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/checkin-success',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckinSuccess(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/profile',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: Profile(),
+          );
         },
       ),
     ],

@@ -1,3 +1,3 @@
 class AppConfigs {
-  static const String baseUrl = "https://b385-180-248-117-106.ngrok-free.app";
+  static const String baseUrl = "https://e0c6-114-122-229-248.ngrok-free.app";
 }

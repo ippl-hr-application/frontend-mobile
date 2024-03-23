@@ -9,7 +9,7 @@ class CheckinProve extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Color.fromRGBO(32, 81, 229, 1),
         title: Row(
           children: [
             IconButton(
@@ -67,7 +67,7 @@ class CheckinProve extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  context.go('/checkin_success');
+                  context.go('/checkin-success');
                 },
                 child: Text('Check In'),
               ),

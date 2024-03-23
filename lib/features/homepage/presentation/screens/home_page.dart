@@ -18,8 +18,11 @@ class HomeScreen extends ConsumerWidget {
     final homeHistoryData = ref.watch(homeProvider);
 
     return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+      // ),
       body: homeHistoryData.when(
-        loading: () => const CircularProgressIndicator(),
+        loading: () => Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Text('Error: $error'),
         data: ((data) {
           return SafeArea(
