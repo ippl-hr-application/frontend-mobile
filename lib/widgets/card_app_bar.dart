@@ -45,7 +45,7 @@ class ButtomBar extends StatelessWidget {
         context.go('/izin');
         break;
       case 2:
-        context.go('/task');
+        context.go('/daftarPengajuan');
         break;
       case 3:
         context.go('/login');

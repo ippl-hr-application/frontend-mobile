@@ -149,31 +149,36 @@ class _DaftarPengajuanScreenState extends State<DaftarPengajuanScreen> {
         width: 60,
         height: 60.0,
         child: FloatingActionButton(
-          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-          onPressed: () {
-            setState(() {
-              _isPlusIcon = !_isPlusIcon; // Mengubah status ikon
-            });
-            if (_isPlusIcon) {
-              // Tutup pop-up
-            } else {
-              // Tampilkan pop-up
+            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+            onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return StatefulBuilder(
                     builder: (BuildContext context, StateSetter setState) {
                       return AlertDialog(
-                        alignment: const Alignment(1.5, 0.5),
-                        title:
-                            const Center(child: Text("Pilih Jenis Pengajuan")),
+                        contentPadding: EdgeInsets.zero,
+                        insetPadding: EdgeInsets.zero,
+                        titlePadding: EdgeInsets.zero,
+                        iconPadding: EdgeInsets.zero,
+                        buttonPadding: EdgeInsets.zero,
+                        alignment: const Alignment(0.8, 0.3),
                         content: SizedBox(
                           width: 100,
-                          height: 300,
+                          height: 340,
                           child: Column(
                             children: [
                               ListTile(
-                                title: const Text("Pengajuan Sakit"),
+                                title: const Text("Sakit"),
+                                titleTextStyle: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                                trailing: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: Image.asset(
+                                        'assets/notifications.png')),
                                 onTap: () {
                                   setState(() {
                                     Navigator.pop(context);
@@ -182,7 +187,16 @@ class _DaftarPengajuanScreenState extends State<DaftarPengajuanScreen> {
                                 },
                               ),
                               ListTile(
-                                title: const Text("Pengajuan Izin"),
+                                title: const Text("Izin"),
+                                titleTextStyle: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                                trailing: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child:
+                                        Image.asset('assets/images/izin.png')),
                                 onTap: () {
                                   setState(() {
                                     Navigator.pop(context);
@@ -191,7 +205,16 @@ class _DaftarPengajuanScreenState extends State<DaftarPengajuanScreen> {
                                 },
                               ),
                               ListTile(
-                                title: const Text("Pengajuan Lembur"),
+                                title: const Text("Lembur"),
+                                titleTextStyle: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                                trailing: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: Image.asset(
+                                        'assets/images/lembur.png')),
                                 onTap: () {
                                   setState(() {
                                     Navigator.pop(context);
@@ -200,7 +223,16 @@ class _DaftarPengajuanScreenState extends State<DaftarPengajuanScreen> {
                                 },
                               ),
                               ListTile(
-                                title: const Text("Pengajuan Ganti Shift"),
+                                title: const Text("Ganti Shift"),
+                                titleTextStyle: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                                trailing: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: Image.asset(
+                                        'assets/images/ganti_shift.png')),
                                 onTap: () {
                                   setState(() {
                                     Navigator.pop(context);
@@ -209,12 +241,39 @@ class _DaftarPengajuanScreenState extends State<DaftarPengajuanScreen> {
                                 },
                               ),
                               ListTile(
-                                title: const Text("Pengajuan Mutasi"),
+                                title: const Text("Mutasi"),
+                                titleTextStyle: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                                trailing: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: Image.asset(
+                                        'assets/images/mutasi.png')),
                                 onTap: () {
                                   setState(() {
                                     Navigator.pop(context);
                                   });
                                   context.go("/pengajuan-mutasi");
+                                },
+                              ),
+                              ListTile(
+                                title: const Text("Resign"),
+                                titleTextStyle: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                                trailing: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: Image.asset(
+                                        'assets/images/keluar.png')),
+                                onTap: () {
+                                  setState(() {
+                                    Navigator.pop(context);
+                                  });
+                                  context.go("/resign");
                                 },
                               ),
                             ],
@@ -225,12 +284,8 @@ class _DaftarPengajuanScreenState extends State<DaftarPengajuanScreen> {
                   );
                 },
               );
-            }
-          },
-          child: _isPlusIcon
-              ? const Icon(Icons.add, size: 30.0, color: Colors.white)
-              : const Icon(Icons.close, size: 30.0, color: Colors.white),
-        ),
+            },
+            child: const Icon(Icons.add, size: 30.0, color: Colors.white)),
       ),
       bottomNavigationBar: BottomAppBar(
         height: 70,
