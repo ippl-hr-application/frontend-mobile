@@ -24,8 +24,9 @@ mixin _$IzinRequest {
   String get from => throw _privateConstructorUsedError;
   @JsonKey(name: 'permission_reason')
   String get permission_reason => throw _privateConstructorUsedError;
+  @FileConverter()
   @JsonKey(name: 'permission_file')
-  String? get permission_file => throw _privateConstructorUsedError;
+  File get permission_file => throw _privateConstructorUsedError;
   @JsonKey(name: 'to')
   String get to => throw _privateConstructorUsedError;
 
@@ -44,7 +45,7 @@ abstract class $IzinRequestCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'from') String from,
       @JsonKey(name: 'permission_reason') String permission_reason,
-      @JsonKey(name: 'permission_file') String? permission_file,
+      @FileConverter() @JsonKey(name: 'permission_file') File permission_file,
       @JsonKey(name: 'to') String to});
 }
 
@@ -63,7 +64,7 @@ class _$IzinRequestCopyWithImpl<$Res, $Val extends IzinRequest>
   $Res call({
     Object? from = null,
     Object? permission_reason = null,
-    Object? permission_file = freezed,
+    Object? permission_file = null,
     Object? to = null,
   }) {
     return _then(_value.copyWith(
@@ -75,10 +76,10 @@ class _$IzinRequestCopyWithImpl<$Res, $Val extends IzinRequest>
           ? _value.permission_reason
           : permission_reason // ignore: cast_nullable_to_non_nullable
               as String,
-      permission_file: freezed == permission_file
+      permission_file: null == permission_file
           ? _value.permission_file
           : permission_file // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as File,
       to: null == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
@@ -98,7 +99,7 @@ abstract class _$$IzinRequestImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'from') String from,
       @JsonKey(name: 'permission_reason') String permission_reason,
-      @JsonKey(name: 'permission_file') String? permission_file,
+      @FileConverter() @JsonKey(name: 'permission_file') File permission_file,
       @JsonKey(name: 'to') String to});
 }
 
@@ -115,7 +116,7 @@ class __$$IzinRequestImplCopyWithImpl<$Res>
   $Res call({
     Object? from = null,
     Object? permission_reason = null,
-    Object? permission_file = freezed,
+    Object? permission_file = null,
     Object? to = null,
   }) {
     return _then(_$IzinRequestImpl(
@@ -127,10 +128,10 @@ class __$$IzinRequestImplCopyWithImpl<$Res>
           ? _value.permission_reason
           : permission_reason // ignore: cast_nullable_to_non_nullable
               as String,
-      permission_file: freezed == permission_file
+      permission_file: null == permission_file
           ? _value.permission_file
           : permission_file // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as File,
       to: null == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
@@ -145,7 +146,9 @@ class _$IzinRequestImpl implements _IzinRequest {
   _$IzinRequestImpl(
       {@JsonKey(name: 'from') required this.from,
       @JsonKey(name: 'permission_reason') required this.permission_reason,
-      @JsonKey(name: 'permission_file') required this.permission_file,
+      @FileConverter()
+      @JsonKey(name: 'permission_file')
+      required this.permission_file,
       @JsonKey(name: 'to') required this.to});
 
   factory _$IzinRequestImpl.fromJson(Map<String, dynamic> json) =>
@@ -158,8 +161,9 @@ class _$IzinRequestImpl implements _IzinRequest {
   @JsonKey(name: 'permission_reason')
   final String permission_reason;
   @override
+  @FileConverter()
   @JsonKey(name: 'permission_file')
-  final String? permission_file;
+  final File permission_file;
   @override
   @JsonKey(name: 'to')
   final String to;
@@ -206,7 +210,9 @@ abstract class _IzinRequest implements IzinRequest {
       {@JsonKey(name: 'from') required final String from,
       @JsonKey(name: 'permission_reason')
       required final String permission_reason,
-      @JsonKey(name: 'permission_file') required final String? permission_file,
+      @FileConverter()
+      @JsonKey(name: 'permission_file')
+      required final File permission_file,
       @JsonKey(name: 'to') required final String to}) = _$IzinRequestImpl;
 
   factory _IzinRequest.fromJson(Map<String, dynamic> json) =
@@ -219,8 +225,9 @@ abstract class _IzinRequest implements IzinRequest {
   @JsonKey(name: 'permission_reason')
   String get permission_reason;
   @override
+  @FileConverter()
   @JsonKey(name: 'permission_file')
-  String? get permission_file;
+  File get permission_file;
   @override
   @JsonKey(name: 'to')
   String get to;

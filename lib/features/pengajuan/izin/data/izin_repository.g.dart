@@ -13,7 +13,7 @@ class _IzinRepository implements IzinRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://69b0-36-85-32-40.ngrok-free.app';
+    baseUrl ??= 'https://2399-36-85-39-96.ngrok-free.app';
   }
 
   final Dio _dio;
@@ -21,33 +21,53 @@ class _IzinRepository implements IzinRepository {
   String? baseUrl;
 
   @override
-  Future<IzinResponse> Izin(String token) async {
+  Future<dynamic> postIzin(
+    String from,
+    String permissionReason,
+    File permissionFile,
+    String to,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6ImE3OTQ0MjFiLTYwMzctNGY5MS1iNTY3LTFjZTZhYTlhNjVlMCIsImNvbXBhbnlfYnJhbmNoX2lkIjo1LCJpYXQiOjE3MTExNzcwNzYsImV4cCI6MTcxMTc4MTg3Nn0.estJ0dXQuiKWNKmE2ogCrpI0wE-A8GuBnsczYaSnA0c':
-          token
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<IzinResponse>(Options(
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'from',
+      from,
+    ));
+    _data.fields.add(MapEntry(
+      'permission_reason',
+      permissionReason,
+    ));
+    _data.files.add(MapEntry(
+      'permission_file',
+      MultipartFile.fromFileSync(
+        permissionFile.path,
+        filename: permissionFile.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    _data.fields.add(MapEntry(
+      'to',
+      to,
+    ));
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
-            .compose(
-              _dio.options,
-              '/submission/permission',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = IzinResponse.fromJson(_result.data!);
+        .compose(
+          _dio.options,
+          '/submission/permission',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
     return value;
   }
 

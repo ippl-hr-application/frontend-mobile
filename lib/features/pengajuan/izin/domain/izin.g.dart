@@ -10,7 +10,8 @@ _$IzinRequestImpl _$$IzinRequestImplFromJson(Map<String, dynamic> json) =>
     _$IzinRequestImpl(
       from: json['from'] as String,
       permission_reason: json['permission_reason'] as String,
-      permission_file: json['permission_file'] as String?,
+      permission_file:
+          const FileConverter().fromJson(json['permission_file'] as String),
       to: json['to'] as String,
     );
 
@@ -18,7 +19,7 @@ Map<String, dynamic> _$$IzinRequestImplToJson(_$IzinRequestImpl instance) =>
     <String, dynamic>{
       'from': instance.from,
       'permission_reason': instance.permission_reason,
-      'permission_file': instance.permission_file,
+      'permission_file': const FileConverter().toJson(instance.permission_file),
       'to': instance.to,
     };
 
