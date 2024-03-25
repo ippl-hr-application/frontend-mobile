@@ -21,7 +21,7 @@ class _IzinRepository implements IzinRepository {
   String? baseUrl;
 
   @override
-  Future<dynamic> postIzin(
+  Future<IzinResponse> postIzin(
     String from,
     String permissionReason,
     File permissionFile,
@@ -50,24 +50,25 @@ class _IzinRepository implements IzinRepository {
       'to',
       to,
     ));
-    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<IzinResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
       contentType: 'multipart/form-data',
     )
-        .compose(
-          _dio.options,
-          '/submission/permission',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value = _result.data;
+            .compose(
+              _dio.options,
+              '/submission/permission',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = IzinResponse.fromJson(_result.data!);
     return value;
   }
 

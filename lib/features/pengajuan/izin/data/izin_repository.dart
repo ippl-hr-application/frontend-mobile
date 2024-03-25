@@ -11,8 +11,8 @@ abstract class IzinRepository {
   factory IzinRepository(Dio dio, {String baseUrl}) = _IzinRepository;
   @POST('/submission/permission')
   @MultiPart()
-  Future<dynamic> postIzin(
-    @Part() @Part(name: 'from') String from,
+  Future<IzinResponse> postIzin(
+    @Part(name: 'from') String from,
     @Part(name: 'permission_reason') String permissionReason,
     @Part(name: 'permission_file') File permissionFile,
     @Part(name: 'to') String to,
