@@ -13,7 +13,7 @@ class _AuthRepository implements AuthRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://69b0-36-85-32-40.ngrok-free.app';
+    baseUrl ??= 'https://e1c5-36-85-39-96.ngrok-free.app';
   }
 
   final Dio _dio;
@@ -34,7 +34,7 @@ class _AuthRepository implements AuthRepository {
     )
             .compose(
               _dio.options,
-              '/auth/login',
+              '/auth/employee-login/',
               queryParameters: queryParameters,
               data: _data,
             )
