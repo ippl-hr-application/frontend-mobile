@@ -4,15 +4,15 @@ var imageHome = [
   ImageModel(
       imageAssets: "assets/kehadiran.png",
       category: "Kehadiran",
-      path: "/kehadiran_today"),
+      path: "/attendance"),
   ImageModel(
       imageAssets: "assets/task-work.png",
       category: "Task Pekerjaan",
-      path: "/"),
+      path: "/work-assignment"),
   ImageModel(
       imageAssets: "assets/slip_gaji.png", category: "Slip Gaji", path: "/"),
   ImageModel(
       imageAssets: "assets/calender.png",
       category: "Pelanggaran",
-      path: "/pelanggaran"),
+      path: "/work-offense"),
 ];

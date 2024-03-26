@@ -20,10 +20,10 @@ LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoginRequest {
-  @JsonKey(name: 'employe_id')
-  String get employeId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'employee_id')
+  String get employee_id => throw _privateConstructorUsedError;
   @JsonKey(name: 'company_id')
-  String get companyId => throw _privateConstructorUsedError;
+  String get company_id => throw _privateConstructorUsedError;
   @JsonKey(name: 'password')
   String get password => throw _privateConstructorUsedError;
 
@@ -40,8 +40,8 @@ abstract class $LoginRequestCopyWith<$Res> {
       _$LoginRequestCopyWithImpl<$Res, LoginRequest>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'employe_id') String employeId,
-      @JsonKey(name: 'company_id') String companyId,
+      {@JsonKey(name: 'employee_id') String employee_id,
+      @JsonKey(name: 'company_id') String company_id,
       @JsonKey(name: 'password') String password});
 }
 
@@ -58,18 +58,18 @@ class _$LoginRequestCopyWithImpl<$Res, $Val extends LoginRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? employeId = null,
-    Object? companyId = null,
+    Object? employee_id = null,
+    Object? company_id = null,
     Object? password = null,
   }) {
     return _then(_value.copyWith(
-      employeId: null == employeId
-          ? _value.employeId
-          : employeId // ignore: cast_nullable_to_non_nullable
+      employee_id: null == employee_id
+          ? _value.employee_id
+          : employee_id // ignore: cast_nullable_to_non_nullable
               as String,
-      companyId: null == companyId
-          ? _value.companyId
-          : companyId // ignore: cast_nullable_to_non_nullable
+      company_id: null == company_id
+          ? _value.company_id
+          : company_id // ignore: cast_nullable_to_non_nullable
               as String,
       password: null == password
           ? _value.password
@@ -88,8 +88,8 @@ abstract class _$$LoginRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'employe_id') String employeId,
-      @JsonKey(name: 'company_id') String companyId,
+      {@JsonKey(name: 'employee_id') String employee_id,
+      @JsonKey(name: 'company_id') String company_id,
       @JsonKey(name: 'password') String password});
 }
 
@@ -104,18 +104,18 @@ class __$$LoginRequestImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? employeId = null,
-    Object? companyId = null,
+    Object? employee_id = null,
+    Object? company_id = null,
     Object? password = null,
   }) {
     return _then(_$LoginRequestImpl(
-      employeId: null == employeId
-          ? _value.employeId
-          : employeId // ignore: cast_nullable_to_non_nullable
+      employee_id: null == employee_id
+          ? _value.employee_id
+          : employee_id // ignore: cast_nullable_to_non_nullable
               as String,
-      companyId: null == companyId
-          ? _value.companyId
-          : companyId // ignore: cast_nullable_to_non_nullable
+      company_id: null == company_id
+          ? _value.company_id
+          : company_id // ignore: cast_nullable_to_non_nullable
               as String,
       password: null == password
           ? _value.password
@@ -129,26 +129,26 @@ class __$$LoginRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LoginRequestImpl implements _LoginRequest {
   _$LoginRequestImpl(
-      {@JsonKey(name: 'employe_id') required this.employeId,
-      @JsonKey(name: 'company_id') required this.companyId,
+      {@JsonKey(name: 'employee_id') required this.employee_id,
+      @JsonKey(name: 'company_id') required this.company_id,
       @JsonKey(name: 'password') required this.password});
 
   factory _$LoginRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginRequestImplFromJson(json);
 
   @override
-  @JsonKey(name: 'employe_id')
-  final String employeId;
+  @JsonKey(name: 'employee_id')
+  final String employee_id;
   @override
   @JsonKey(name: 'company_id')
-  final String companyId;
+  final String company_id;
   @override
   @JsonKey(name: 'password')
   final String password;
 
   @override
   String toString() {
-    return 'LoginRequest(employeId: $employeId, companyId: $companyId, password: $password)';
+    return 'LoginRequest(employee_id: $employee_id, company_id: $company_id, password: $password)';
   }
 
   @override
@@ -156,17 +156,18 @@ class _$LoginRequestImpl implements _LoginRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginRequestImpl &&
-            (identical(other.employeId, employeId) ||
-                other.employeId == employeId) &&
-            (identical(other.companyId, companyId) ||
-                other.companyId == companyId) &&
+            (identical(other.employee_id, employee_id) ||
+                other.employee_id == employee_id) &&
+            (identical(other.company_id, company_id) ||
+                other.company_id == company_id) &&
             (identical(other.password, password) ||
                 other.password == password));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, employeId, companyId, password);
+  int get hashCode =>
+      Object.hash(runtimeType, employee_id, company_id, password);
 
   @JsonKey(ignore: true)
   @override
@@ -184,8 +185,8 @@ class _$LoginRequestImpl implements _LoginRequest {
 
 abstract class _LoginRequest implements LoginRequest {
   factory _LoginRequest(
-          {@JsonKey(name: 'employe_id') required final String employeId,
-          @JsonKey(name: 'company_id') required final String companyId,
+          {@JsonKey(name: 'employee_id') required final String employee_id,
+          @JsonKey(name: 'company_id') required final String company_id,
           @JsonKey(name: 'password') required final String password}) =
       _$LoginRequestImpl;
 
@@ -193,11 +194,11 @@ abstract class _LoginRequest implements LoginRequest {
       _$LoginRequestImpl.fromJson;
 
   @override
-  @JsonKey(name: 'employe_id')
-  String get employeId;
+  @JsonKey(name: 'employee_id')
+  String get employee_id;
   @override
   @JsonKey(name: 'company_id')
-  String get companyId;
+  String get company_id;
   @override
   @JsonKey(name: 'password')
   String get password;

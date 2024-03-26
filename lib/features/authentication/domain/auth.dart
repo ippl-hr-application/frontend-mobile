@@ -7,8 +7,8 @@ part 'auth.g.dart';
 @freezed
 class LoginRequest with _$LoginRequest {
   factory LoginRequest({
-    @JsonKey(name: 'employe_id') required String employeId,
-    @JsonKey(name: 'company_id') required String companyId,
+    @JsonKey(name: 'employee_id') required String employee_id,
+    @JsonKey(name: 'company_id') required String company_id,
     @JsonKey(name: 'password') required String password,
   }) = _LoginRequest;
 
