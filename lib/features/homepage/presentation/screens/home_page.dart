@@ -6,8 +6,7 @@ import 'package:meraih_mobile/data/image_home.dart';
 import 'package:meraih_mobile/models/image_model.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meraih_mobile/features/homepage/presentation/provider/profile_provider.dart';
-import 'package:meraih_mobile/features/homepage/domain/profile.dart';
+import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

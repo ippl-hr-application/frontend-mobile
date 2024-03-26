@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ChangePassword extends StatefulWidget {
-  const ChangePassword({Key? key}) : super(key: key);
+  const ChangePassword({super.key});
 
   @override
   _ChangePasswordState createState() => _ChangePasswordState();
@@ -24,7 +25,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                      Navigator.pop(context);
+                      context.go('/profile');
                     },
                   ),
                   Text(
@@ -105,13 +106,23 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                  },
-                  child: Text("Simpan"),
+                  onPressed: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 14.0),
+                    child: Text(
+                      "Simpan",
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(32, 81, 229, 1)),
                 ),
               ),
             ],

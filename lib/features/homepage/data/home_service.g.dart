@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_service.dart';
+part of 'home_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -13,7 +13,7 @@ class _HomeRepository implements HomeRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://e0c6-114-122-229-248.ngrok-free.app';
+    baseUrl ??= 'https://e1c5-36-85-39-96.ngrok-free.app';
   }
 
   final Dio _dio;

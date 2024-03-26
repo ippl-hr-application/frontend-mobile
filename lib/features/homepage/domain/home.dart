@@ -2,8 +2,8 @@
 import 'package:flutter/src/widgets/text.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meraih_mobile/widgets/card_attendance.dart';
-part 'profile.freezed.dart';
-part 'profile.g.dart';
+part 'home.freezed.dart';
+part 'home.g.dart';
 
 @freezed
 class HomeResponse with _$HomeResponse {

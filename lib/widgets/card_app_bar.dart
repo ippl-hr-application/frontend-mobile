@@ -30,7 +30,7 @@ class ButtomBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Notifikasi',
+          label: 'Pengaturan',
         )
       ],
     );

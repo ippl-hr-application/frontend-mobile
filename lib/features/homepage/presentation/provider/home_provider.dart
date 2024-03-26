@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meraih_mobile/features/homepage/data/profile_service.dart';
+import 'package:meraih_mobile/features/homepage/data/home_service.dart';
 
 final homeProvider = FutureProvider((ref) async {
   final dio = Dio();

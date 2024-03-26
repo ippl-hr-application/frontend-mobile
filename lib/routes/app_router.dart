@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
 import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
+import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -89,6 +90,22 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: Profile(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/my-profile',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: MyProfile(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/change-password',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ChangePassword(),
           );
         },
       ),

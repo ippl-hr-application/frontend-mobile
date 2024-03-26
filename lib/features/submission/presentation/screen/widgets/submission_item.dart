@@ -16,7 +16,7 @@ class SubmissionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      // color: Colors.red,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -43,19 +43,22 @@ class SubmissionItem extends StatelessWidget {
                       fontSize: 16.0,
                       color: status.toString() == "PENDING"
                           ? Colors.grey
-                          : Colors.green),
+                          : status.toString() == "ACCEPTED"
+                              ? Colors.green
+                              : Colors.red),
                 ),
               ],
             ),
             Container(
-              child: IconButton(
-                icon: const Icon(
-                  Icons.delete_outline,
-                  color: Colors.red,
-                ),
-                onPressed: () {},
-              ),
-            )
+                child: status.toString() == 'PENDING'
+                    ? IconButton(
+                        icon: const Icon(
+                          Icons.delete_outline,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {},
+                      )
+                    : SizedBox())
           ],
         ),
       ),

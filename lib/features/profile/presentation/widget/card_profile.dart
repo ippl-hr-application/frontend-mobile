@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CardProfile extends StatelessWidget {
-  const CardProfile({super.key});
+  final String? firstName;
+  final String? lastName;
+  final String? positon;
+
+  const CardProfile(
+      {required this.firstName,
+      required this.lastName,
+      required this.positon,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
+    final String name = '${firstName ?? ''} ${lastName ?? ''}';
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
       decoration: BoxDecoration(
@@ -19,15 +28,16 @@ class CardProfile extends StatelessWidget {
               offset: const Offset(0, 3),
             )
           ]),
-      child: const Column(
+      child: Column(
         children: [
           Text(
-            "Muhammad Saman",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            name.toString(),
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 10.0),
-          Text("Manajer accounting",
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal))
+          const SizedBox(height: 10.0),
+          Text(positon.toString(),
+              style: const TextStyle(
+                  fontSize: 20.0, fontWeight: FontWeight.normal))
         ],
       ),
     );

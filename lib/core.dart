@@ -37,3 +37,5 @@ export 'package:meraih_mobile/widgets/notif.dart';
 export 'package:meraih_mobile/widgets/upload_files.dart';
 export 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';
+import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
+import 'package:meraih_mobile/features/profile/presentation/screens/change_password.dart';
