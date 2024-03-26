@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CheckinSuccess extends StatelessWidget {
-  const CheckinSuccess({Key? key}) : super(key: key);
+  const CheckinSuccess({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class CheckinSuccess extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
-             SizedBox(height: 40.0),
+            SizedBox(height: 40.0),
             Text(
               '09.00',
               style: TextStyle(
@@ -54,8 +55,8 @@ class CheckinSuccess extends StatelessWidget {
             SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () {
-                              
-                              },
+                context.go("/");
+              },
               child: Text('Kembali ke Beranda'),
             ),
           ],

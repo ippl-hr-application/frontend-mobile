@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:signature/signature.dart';
+import 'package:go_router/go_router.dart';
 
 class FormSakit extends StatefulWidget {
   const FormSakit({Key? key}) : super(key: key);
@@ -26,10 +27,30 @@ class _FormSakitState extends State<FormSakit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF2051E5),
-        title: Text(
-          'Form Pengajuan Sakit',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            context.go('/');
+          },
+        ),
+        flexibleSpace: const Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 18,
+              child: Center(
+                child: Text(
+                  "Pengajuan Sakit",
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       body: Padding(
@@ -62,6 +83,10 @@ class _FormSakitState extends State<FormSakit> {
                 lastDate: DateTime.now().add(Duration(days: 365)),
               ),
               SizedBox(height: 20),
+              Text(
+                'Bukti Sakit :',
+                style: TextStyle(fontSize: 16),
+              ),
               ElevatedButton(
                 onPressed: () async {
                   filePickerResult = await FilePicker.platform.pickFiles(
@@ -77,46 +102,45 @@ class _FormSakitState extends State<FormSakit> {
                 'Tanda Tangan Digital:',
                 style: TextStyle(fontSize: 16),
               ),
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey, 
-                    width: 3.0, 
-                  ),
-                  borderRadius:
-                      BorderRadius.circular(5.0),
-                ),
-                child: Signature(
-                  controller: _signatureController,
-                  height: 200,
-                  backgroundColor: Colors.white,
-                ),
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity, 
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.saveAndValidate()) {
-                      
-                      Map<String, dynamic> formData =
-                          _formKey.currentState!.value;
-                      String keterangan = formData['keterangan'];
-                      String? buktiSakit =
-                          filePickerResult?.files.first.path;
-                      DateTimeRange izinDate = formData['izinDate'];
-                      DateTime startDate = izinDate.start;
-                      DateTime endDate = izinDate.end;
-
-                      // Access the signature image using _signatureController.toPngBytes()
-                      // Uint8List? signatureImage = await _signatureController.toPngBytes();
-                    }
-                  },
-                  child: Text('Kirim Pengajuan'),
-                ),
+              ElevatedButton(
+                onPressed: () async {
+                  filePickerResult = await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowedExtensions: ['pdf', 'jpg', 'png'],
+                  );
+                  setState(() {});
+                },
+                child: Text('Tanda Tangan Digital'),
               ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: const Color.fromARGB(255, 255, 255, 255),
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            // color: Color.fromRGBO(255, 255, 255, 1),
+            borderRadius: BorderRadius.all(Radius.circular(6)),
+          ),
+          child: ElevatedButton(
+            onPressed: () {
+           
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+            ),
+            child: const Text(
+              "Kirim Pengajuan",
+              style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
           ),
         ),
       ),

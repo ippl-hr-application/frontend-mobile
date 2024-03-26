@@ -28,16 +28,16 @@ class ForgetSendEmail extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    
                     Image.asset(
-                      'lib/images/popforgetpassword.png',
+                      'assets/popforgetpassword.png',
                       width: 100.0,
                       height: 100.0,
                     ),
                     SizedBox(height: 10.0),
                     Text(
                       'Lupa Password',
-                      style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 24.0, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 10.0),

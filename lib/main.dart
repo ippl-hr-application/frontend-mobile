@@ -1,35 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:meraih_mobile/screens/auth/forget_password.dart';
-import 'package:meraih_mobile/screens/auth/login_page.dart';
-import 'package:meraih_mobile/screens/home/checkin_map.dart';
-import 'package:meraih_mobile/screens/home/checkin_prove.dart';
-import 'package:meraih_mobile/screens/home/checkin_success.dart';
-import 'package:meraih_mobile/screens/permintaan/form_kehadiran_request.dart';
-import 'package:meraih_mobile/screens/permintaan/form_sakit.dart';
-import 'package:meraih_mobile/screens/settings/change_password.dart';
-import 'package:meraih_mobile/widgets/login/forget_send_email.dart';
-import 'package:meraih_mobile/widgets/login/success_password_change.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meraih_mobile/routes/app_router.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
+  FilePicker.platform = FilePicker.platform;
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final GoRouter goRouter = ref.watch(goRouterProvider);
+    return MaterialApp.router(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Color(0xFF2051E5),
-      ),
-      // home: const CheckinMap(),
-      home: const CheckinProve(), 
-      // home: const CheckinSuccess(),
-      // home: const CheckinSuccess(),
-      // home: const CheckinSuccess(),
-      // home: const CheckinSuccess(),
+      theme: ThemeData(),
+      routerConfig: goRouter,
     );
   }
 }

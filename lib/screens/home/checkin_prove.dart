@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:go_router/go_router.dart';
 
 class CheckinProve extends StatelessWidget {
-  const CheckinProve({Key? key}) : super(key: key);
+  const CheckinProve({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +13,9 @@ class CheckinProve extends StatelessWidget {
         title: Row(
           children: [
             IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
-                Navigator.pop(context);
+                context.go("/");
               },
             ),
             Center(
@@ -66,6 +67,7 @@ class CheckinProve extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
+                  context.go('/checkin_success');
                 },
                 child: Text('Check In'),
               ),
