@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screen/absensiPage.dart';
 import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
+import 'package:meraih_mobile/features/pengajuan/cuti/presentation/screens/submission_cuti.dart';
 import 'package:meraih_mobile/features/pengajuan/daftarPengajuan/DaftarPengajuanPage.dart';
 import 'package:meraih_mobile/features/pengajuan/resign/presentation/screens/pengajuan_resign.dart';
 import 'package:meraih_mobile/screens/home/home_page.dart';
@@ -52,6 +53,14 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return NoTransitionPage(
             child: PengajuanResign(),
+          );
+        },
+      ),
+      GoRoute(
+        path: "/cuti",
+        pageBuilder: (context, state) {
+          return NoTransitionPage(
+            child: SubmissionCuti(),
           );
         },
       ),

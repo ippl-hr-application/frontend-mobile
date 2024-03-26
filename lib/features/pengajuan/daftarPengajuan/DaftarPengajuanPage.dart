@@ -162,10 +162,10 @@ class _DaftarPengajuanScreenState extends State<DaftarPengajuanScreen> {
                         titlePadding: EdgeInsets.zero,
                         iconPadding: EdgeInsets.zero,
                         buttonPadding: EdgeInsets.zero,
-                        alignment: const Alignment(0.8, 0.3),
+                        alignment: const Alignment(0.8, 0.25),
                         content: SizedBox(
                           width: 100,
-                          height: 340,
+                          height: 400,
                           child: Column(
                             children: [
                               ListTile(
@@ -202,6 +202,24 @@ class _DaftarPengajuanScreenState extends State<DaftarPengajuanScreen> {
                                     Navigator.pop(context);
                                   });
                                   context.go("/izin");
+                                },
+                              ),
+                              ListTile(
+                                title: const Text("Cuti"),
+                                titleTextStyle: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                                trailing: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child:
+                                        Image.asset('assets/images/cuti.png')),
+                                onTap: () {
+                                  setState(() {
+                                    Navigator.pop(context);
+                                  });
+                                  context.go("/cuti");
                                 },
                               ),
                               ListTile(

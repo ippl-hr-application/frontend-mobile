@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'resign_repository.dart';
+part of 'cuti_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'resign_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _ResignRepository implements ResignRepository {
-  _ResignRepository(
+class _CutiRepository implements CutiRepository {
+  _CutiRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,24 +21,50 @@ class _ResignRepository implements ResignRepository {
   String? baseUrl;
 
   @override
-  Future<ResignResponse> resign(String token) async {
+  Future<CutiResponse> postCuti(
+    String from,
+    String leave_reason,
+    String leave_type,
+    File leave_file,
+    String to,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6ImE3OTQ0MjFiLTYwMzctNGY5MS1iNTY3LTFjZTZhYTlhNjVlMCIsImNvbXBhbnlfYnJhbmNoX2lkIjo1LCJpYXQiOjE3MTExNzcwNzYsImV4cCI6MTcxMTc4MTg3Nn0.estJ0dXQuiKWNKmE2ogCrpI0wE-A8GuBnsczYaSnA0c':
-          token
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'from',
+      from,
+    ));
+    _data.fields.add(MapEntry(
+      'leave_reason',
+      leave_reason,
+    ));
+    _data.fields.add(MapEntry(
+      'leave_type',
+      leave_type,
+    ));
+    _data.files.add(MapEntry(
+      'leave_file',
+      MultipartFile.fromFileSync(
+        leave_file.path,
+        filename: leave_file.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    _data.fields.add(MapEntry(
+      'to',
+      to,
+    ));
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ResignResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<CutiResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
-              '/submission/resign',
+              '/submission/leave',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -47,7 +73,7 @@ class _ResignRepository implements ResignRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ResignResponse.fromJson(_result.data!);
+    final value = CutiResponse.fromJson(_result.data!);
     return value;
   }
 

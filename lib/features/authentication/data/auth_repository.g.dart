@@ -13,7 +13,7 @@ class _AuthRepository implements AuthRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://2399-36-85-39-96.ngrok-free.app';
+    baseUrl ??= 'https://934b-36-85-33-215.ngrok-free.app';
   }
 
   final Dio _dio;

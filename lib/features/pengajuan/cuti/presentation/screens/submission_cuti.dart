@@ -5,20 +5,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:meraih_mobile/features/pengajuan/izin/domain/izin.dart';
-import 'package:meraih_mobile/features/pengajuan/izin/presentation/providers/izin_provider.dart';
+import 'package:meraih_mobile/features/pengajuan/cuti/domain/cuti.dart';
+import 'package:meraih_mobile/features/pengajuan/cuti/presentation/providers/cuti_provider.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:signature/signature.dart';
 
-class SubmissionIzin extends ConsumerStatefulWidget {
-  const SubmissionIzin({super.key});
+class SubmissionCuti extends ConsumerStatefulWidget {
+  const SubmissionCuti({super.key});
 
   @override
-  SubmissionIzinState createState() => SubmissionIzinState();
+  SubmissionCutiState createState() => SubmissionCutiState();
 }
 
-class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
+class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
   // TextEditingController _permission_reason = TextEditingController();
   // TextEditingController _permission_file = TextEditingController();
   // String _from = "";
@@ -53,7 +53,7 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
               top: 70,
               child: Center(
                 child: Text(
-                  "Pengajuan Izin",
+                  "Pengajuan Cuti",
                   style: TextStyle(fontSize: 18.0, color: Colors.white),
                 ),
               ),
@@ -68,10 +68,34 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              FormBuilderDropdown(
+                name: 'Jenis_Cuti',
+                decoration: InputDecoration(
+                  labelText: 'Pilih Jenis Cuti',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                items: [
+                  DropdownMenuItem(
+                    child: Text('Cuti Tahunan'),
+                    value: 'Cuti Tahunan',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Cuti Bulanan'),
+                    value: 'Cuti Bulanan',
+                  ),
+                  DropdownMenuItem(
+                    child: Text('Cuti Lahiran'),
+                    value: 'Cuti Lahiran',
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
               FormBuilderTextField(
                 name: 'Alasan',
                 decoration: InputDecoration(
-                  labelText: 'Alasan Izin',
+                  labelText: 'Alasan Cuti',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
@@ -79,10 +103,10 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
               ),
               SizedBox(height: 20),
               FormBuilderDateRangePicker(
-                name: 'izinDate',
+                name: 'CutiDate',
                 format: DateFormat('yyyy-MM-dd'),
                 decoration: InputDecoration(
-                  labelText: 'Pilih Tanggal Izin',
+                  labelText: 'Pilih Tanggal Cuti',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
@@ -99,7 +123,7 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
                   );
                   setState(() {});
                 },
-                child: const Text('Upload Bukti'),
+                child: Text('Upload Bukti'),
               ),
               SizedBox(height: 20),
               Spacer(),
@@ -116,14 +140,15 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
                         print(formData['Alasan']);
                         print(File(filePickerResult!.files.first.path ?? '')
                             .path);
-                        handleIzinSubmission(IzinRequest(
+                        handleCutiSubmission(CutiRequest(
                           from: convertToIso8601(
-                              formData['izinDate'].start.toString()),
-                          permission_reason: formData['Alasan'],
-                          permission_file:
+                              formData['CutiDate'].start.toString()),
+                          leave_reason: formData['Alasan'],
+                          leave_file:
                               File(filePickerResult!.files.first.path ?? ''),
+                          leave_type: formData['Jenis_Cuti'],
                           to: convertToIso8601(
-                              formData['izinDate'].end.toString()),
+                              formData['CutiDate'].end.toString()),
                         ));
                       }
                     },
