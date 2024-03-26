@@ -34,7 +34,6 @@ class Submission extends ConsumerWidget {
               ],
             ),
             Container(
-                // color: Colors.white,
                 padding: const EdgeInsets.all(16.0),
                 child: submissionHistoryData.when(
                   data: (data) {
@@ -61,33 +60,7 @@ class Submission extends ConsumerWidget {
       ),
       floatingActionButton: SpeedDial(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        animatedIcon: AnimatedIcons.menu_close,
-        children: [
-          SpeedDialChild(
-            child: const Icon(
-              Icons.note_alt_outlined,
-              color: Colors.white,
-            ),
-            label: 'Izin',
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-            shape: const CircleBorder(),
-          ),
-          SpeedDialChild(
-            child: const Icon(
-              Icons.date_range_outlined,
-              color: Colors.white,
-            ),
-            label: 'Cuti',
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-            shape: const CircleBorder(),
-          ),
-        ],
+        
       ),
       bottomNavigationBar: Container(
         child: const ButtomBar(),

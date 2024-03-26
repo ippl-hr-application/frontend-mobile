@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class PayrollPage extends StatefulWidget {
   const PayrollPage({Key? key}) : super(key: key);
@@ -235,34 +236,11 @@ class _PayrollPageState extends State<PayrollPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: const Color.fromARGB(255, 255, 255, 255),
-        child: Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            // color: Color.fromRGBO(255, 255, 255, 1),
-            borderRadius: BorderRadius.all(Radius.circular(6)),
-          ),
-          child: ElevatedButton(
-            onPressed: () {
-              // Perform action on button press
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-            ),
-            child: const Text(
-              "Download Slip Gaji",
-              style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: SpeedDial(
+        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+        icon: Icons.file_download, 
+        foregroundColor: Colors.white,
+      )  
     );
   }
 }
