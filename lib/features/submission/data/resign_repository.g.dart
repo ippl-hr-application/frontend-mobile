@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'profile_service.dart';
+part of 'resign_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'profile_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _ProfileRepository implements ProfileRepository {
-  _ProfileRepository(
+class _ResignRepository implements ResignRepository {
+  _ResignRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,20 +21,24 @@ class _ProfileRepository implements ProfileRepository {
   String? baseUrl;
 
   @override
-  Future<ProfileResponse> getProfile() async {
+  Future<ResignResponse> resign(String token) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6ImE3OTQ0MjFiLTYwMzctNGY5MS1iNTY3LTFjZTZhYTlhNjVlMCIsImNvbXBhbnlfYnJhbmNoX2lkIjo1LCJpYXQiOjE3MTExNzcwNzYsImV4cCI6MTcxMTc4MTg3Nn0.estJ0dXQuiKWNKmE2ogCrpI0wE-A8GuBnsczYaSnA0c':
+          token
+    };
+    _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ProfileResponse>(Options(
-      method: 'GET',
+        .fetch<Map<String, dynamic>>(_setStreamType<ResignResponse>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/profile',
+              '/submission/resign',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,7 +47,7 @@ class _ProfileRepository implements ProfileRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ProfileResponse.fromJson(_result.data!);
+    final value = ResignResponse.fromJson(_result.data!);
     return value;
   }
 

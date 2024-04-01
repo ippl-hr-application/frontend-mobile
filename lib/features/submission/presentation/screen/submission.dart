@@ -1,11 +1,10 @@
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/submission_provider.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/widgets/submission_item.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/submission_item.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
+import 'package:go_router/go_router.dart';
 
 class Submission extends ConsumerWidget {
   const Submission({super.key});
@@ -64,6 +63,9 @@ class Submission extends ConsumerWidget {
         animatedIcon: AnimatedIcons.menu_close,
         children: [
           SpeedDialChild(
+            onTap: () {
+              context.go('/izin');
+            },
             child: const Icon(
               Icons.note_alt_outlined,
               color: Colors.white,
@@ -76,6 +78,9 @@ class Submission extends ConsumerWidget {
             shape: const CircleBorder(),
           ),
           SpeedDialChild(
+            onTap: () {
+              context.go('/cuti');
+            },
             child: const Icon(
               Icons.date_range_outlined,
               color: Colors.white,
