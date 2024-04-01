@@ -5,9 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:signature/signature.dart';
+import 'package:go_router/go_router.dart';
 
 class FormSakit extends StatefulWidget {
-  const FormSakit({Key? key}) : super(key: key);
+  const FormSakit({super.key});
 
   @override
   _FormSakitState createState() => _FormSakitState();
@@ -26,10 +27,30 @@ class _FormSakitState extends State<FormSakit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF2051E5),
-        title: Text(
-          'Form Pengajuan Sakit',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            context.go("/");
+          },
+        ),
+        flexibleSpace: const Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 40,
+              child: Center(
+                child: Text(
+                  "Pengajuan Sakit",
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       body: Padding(
@@ -45,7 +66,7 @@ class _FormSakitState extends State<FormSakit> {
                   labelText: 'Keterangan Sakit',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                  ), 
+                  ),
                 ),
               ),
               SizedBox(height: 20),
@@ -81,11 +102,10 @@ class _FormSakitState extends State<FormSakit> {
                 height: 200,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.grey, 
-                    width: 3.0, 
+                    color: Colors.grey,
+                    width: 3.0,
                   ),
-                  borderRadius:
-                      BorderRadius.circular(5.0),
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Signature(
                   controller: _signatureController,
@@ -95,16 +115,14 @@ class _FormSakitState extends State<FormSakit> {
               ),
               SizedBox(height: 20),
               SizedBox(
-                width: double.infinity, 
+                width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.saveAndValidate()) {
-                      
                       Map<String, dynamic> formData =
                           _formKey.currentState!.value;
                       String keterangan = formData['keterangan'];
-                      String? buktiSakit =
-                          filePickerResult?.files.first.path;
+                      String? buktiSakit = filePickerResult?.files.first.path;
                       DateTimeRange izinDate = formData['izinDate'];
                       DateTime startDate = izinDate.start;
                       DateTime endDate = izinDate.end;

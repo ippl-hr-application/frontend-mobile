@@ -78,16 +78,16 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
                 ),
                 items: [
                   DropdownMenuItem(
-                    child: Text('Cuti Tahunan'),
-                    value: 'Cuti Tahunan',
+                    child: Text('Tahunan'),
+                    value: 'Tahunan',
                   ),
                   DropdownMenuItem(
-                    child: Text('Cuti Bulanan'),
-                    value: 'Cuti Bulanan',
+                    child: Text('Bulanan'),
+                    value: 'Bulanan',
                   ),
                   DropdownMenuItem(
-                    child: Text('Cuti Lahiran'),
-                    value: 'Cuti Lahiran',
+                    child: Text('Lahiran'),
+                    value: 'Lahiran',
                   ),
                 ],
               ),

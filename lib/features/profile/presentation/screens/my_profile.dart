@@ -37,7 +37,7 @@ class MyProfile extends ConsumerWidget {
                             fontSize: 24.0, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 30.0),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
@@ -52,36 +52,42 @@ class MyProfile extends ConsumerWidget {
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "Email",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "Alamat",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "Tanggal Masuk",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "jabatan",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "Type Karyawan",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "No Telpon",
                                 style: TextStyle(
@@ -91,6 +97,8 @@ class MyProfile extends ConsumerWidget {
                             ],
                           ),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 '${data?.firstName.toString()} ${data?.lastName.toString()}',
@@ -98,36 +106,42 @@ class MyProfile extends ConsumerWidget {
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              const SizedBox(height: 8.0),
                               Text(
                                 data!.email.toString(),
                                 style: const TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              const SizedBox(height: 8.0),
                               Text(
                                 data.residentialAddress.toString(),
                                 style: const TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              const SizedBox(height: 8.0),
                               Text(
                                 '${data?.firstName.toString()} ${data?.lastName.toString()}',
                                 style: const TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              const SizedBox(height: 8.0),
                               Text(
                                 data.jobPosition!.name.toString(),
                                 style: const TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              const SizedBox(height: 8.0),
                               Text(
                                 data.employmentStatus!.name.toString(),
                                 style: const TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              const SizedBox(height: 8.0),
                               Text(
                                 data.phoneNumber.toString(),
                                 style: const TextStyle(

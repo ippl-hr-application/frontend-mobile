@@ -58,7 +58,7 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/submission',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
-            child: Submission(),
+            child: DaftarPengajuanScreen(),
           );
         },
       ),
@@ -113,7 +113,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/izin',
         pageBuilder: (context, state) {
-          return NoTransitionPage(
+          return const NoTransitionPage(
             child: SubmissionIzin(),
           );
         },
@@ -121,8 +121,40 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/cuti',
         pageBuilder: (context, state) {
-          return NoTransitionPage(
+          return const NoTransitionPage(
             child: SubmissionCuti(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/sick',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: FormSakit(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/resign',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: PengajuanResign(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/change-shift',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: SubmissionShift(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/mutasi',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: SubmissionMutasi(),
           );
         },
       ),

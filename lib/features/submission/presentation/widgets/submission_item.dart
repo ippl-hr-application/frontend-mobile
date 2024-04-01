@@ -15,7 +15,13 @@ class SubmissionItem extends StatelessWidget {
       super.key});
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom:
+              BorderSide(width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+        ),
+      ),
       // color: Colors.red,
       child: Padding(
         padding: const EdgeInsets.all(8.0),

@@ -47,7 +47,7 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
             Positioned(
               left: 0,
               right: 0,
-              top: 70,
+              top: 40,
               child: Center(
                 child: Text(
                   "Pengajuan Resign",

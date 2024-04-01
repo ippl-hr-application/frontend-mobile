@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/submission_provider.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/widgets/submission_item.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/submission_item.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
 import 'package:go_router/go_router.dart';
 

@@ -13,7 +13,7 @@ class _CutiRepository implements CutiRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://e1c5-36-85-39-96.ngrok-free.app';
+    baseUrl ??= 'https://5c31-180-248-64-152.ngrok-free.app';
   }
 
   final Dio _dio;
