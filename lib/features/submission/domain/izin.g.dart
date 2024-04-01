@@ -8,19 +8,24 @@ part of 'izin.dart';
 
 _$IzinRequestImpl _$$IzinRequestImplFromJson(Map<String, dynamic> json) =>
     _$IzinRequestImpl(
+      to: json['to'] as String,
       from: json['from'] as String,
       permission_reason: json['permission_reason'] as String,
-      permission_file:
-          const FileConverter().fromJson(json['permission_file'] as String),
-      to: json['to'] as String,
+      file_name: json['file_name'] as String,
+      file_size: json['file_size'] as int,
+      file_type: json['file_type'] as String,
+      file_url: json['file_url'] as String,
     );
 
 Map<String, dynamic> _$$IzinRequestImplToJson(_$IzinRequestImpl instance) =>
     <String, dynamic>{
+      'to': instance.to,
       'from': instance.from,
       'permission_reason': instance.permission_reason,
-      'permission_file': const FileConverter().toJson(instance.permission_file),
-      'to': instance.to,
+      'file_name': instance.file_name,
+      'file_size': instance.file_size,
+      'file_type': instance.file_type,
+      'file_url': instance.file_url,
     };
 
 _$IzinResponseImpl _$$IzinResponseImplFromJson(Map<String, dynamic> json) =>
@@ -41,9 +46,6 @@ Map<String, dynamic> _$$IzinResponseImplToJson(_$IzinResponseImpl instance) =>
 
 _$IzinDataImpl _$$IzinDataImplFromJson(Map<String, dynamic> json) =>
     _$IzinDataImpl(
-      permission_submission_id: json['permission_submission_id'] as int?,
-      submision_id: json['submision_id'] as int?,
-      employee_file_id: json['employee_file_id'] as int?,
       from: json['from'] as String?,
       to: json['to'] as String?,
       permission_reason: json['permission_reason'] as String?,
@@ -52,9 +54,6 @@ _$IzinDataImpl _$$IzinDataImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$IzinDataImplToJson(_$IzinDataImpl instance) =>
     <String, dynamic>{
-      'permission_submission_id': instance.permission_submission_id,
-      'submision_id': instance.submision_id,
-      'employee_file_id': instance.employee_file_id,
       'from': instance.from,
       'to': instance.to,
       'permission_reason': instance.permission_reason,

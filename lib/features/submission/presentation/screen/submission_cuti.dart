@@ -140,16 +140,14 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
                         print(formData['Alasan']);
                         print(File(filePickerResult!.files.first.path ?? '')
                             .path);
-                        handleCutiSubmission(CutiRequest(
-                          from: convertToIso8601(
-                              formData['CutiDate'].start.toString()),
-                          leave_reason: formData['Alasan'],
-                          leave_file:
-                              File(filePickerResult!.files.first.path ?? ''),
-                          leave_type: formData['Jenis_Cuti'],
-                          to: convertToIso8601(
-                              formData['CutiDate'].end.toString()),
-                        ));
+                        handleCutiSubmission(
+                            convertToIso8601(
+                                formData['CutiDate'].start.toString()),
+                            convertToIso8601(
+                                formData['CutiDate'].end.toString()),
+                            formData['Alasan'],
+                            formData['Jenis_Cuti'],
+                            File(filePickerResult!.files.first.path ?? ''));
                       }
                     },
                     child: Text('Kirim Pengajuan'),

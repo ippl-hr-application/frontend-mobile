@@ -53,6 +53,7 @@ dependencies:
   dio: ^5.4.1
   flutter_secure_storage: ^4.2.1
   shared_preferences: ^2.2.2
+  imagekit: ^0.0.5
 
 dev_dependencies:
   flutter_test:

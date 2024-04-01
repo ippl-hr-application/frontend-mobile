@@ -20,15 +20,20 @@ IzinRequest _$IzinRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$IzinRequest {
+  @JsonKey(name: 'to')
+  String get to => throw _privateConstructorUsedError;
   @JsonKey(name: 'from')
   String get from => throw _privateConstructorUsedError;
   @JsonKey(name: 'permission_reason')
   String get permission_reason => throw _privateConstructorUsedError;
-  @FileConverter()
-  @JsonKey(name: 'permission_file')
-  File get permission_file => throw _privateConstructorUsedError;
-  @JsonKey(name: 'to')
-  String get to => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_name')
+  String get file_name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_size')
+  int get file_size => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_type')
+  String get file_type => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_url')
+  String get file_url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,10 +48,13 @@ abstract class $IzinRequestCopyWith<$Res> {
       _$IzinRequestCopyWithImpl<$Res, IzinRequest>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'from') String from,
+      {@JsonKey(name: 'to') String to,
+      @JsonKey(name: 'from') String from,
       @JsonKey(name: 'permission_reason') String permission_reason,
-      @FileConverter() @JsonKey(name: 'permission_file') File permission_file,
-      @JsonKey(name: 'to') String to});
+      @JsonKey(name: 'file_name') String file_name,
+      @JsonKey(name: 'file_size') int file_size,
+      @JsonKey(name: 'file_type') String file_type,
+      @JsonKey(name: 'file_url') String file_url});
 }
 
 /// @nodoc
@@ -62,12 +70,19 @@ class _$IzinRequestCopyWithImpl<$Res, $Val extends IzinRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? to = null,
     Object? from = null,
     Object? permission_reason = null,
-    Object? permission_file = null,
-    Object? to = null,
+    Object? file_name = null,
+    Object? file_size = null,
+    Object? file_type = null,
+    Object? file_url = null,
   }) {
     return _then(_value.copyWith(
+      to: null == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String,
       from: null == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
@@ -76,13 +91,21 @@ class _$IzinRequestCopyWithImpl<$Res, $Val extends IzinRequest>
           ? _value.permission_reason
           : permission_reason // ignore: cast_nullable_to_non_nullable
               as String,
-      permission_file: null == permission_file
-          ? _value.permission_file
-          : permission_file // ignore: cast_nullable_to_non_nullable
-              as File,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      file_name: null == file_name
+          ? _value.file_name
+          : file_name // ignore: cast_nullable_to_non_nullable
+              as String,
+      file_size: null == file_size
+          ? _value.file_size
+          : file_size // ignore: cast_nullable_to_non_nullable
+              as int,
+      file_type: null == file_type
+          ? _value.file_type
+          : file_type // ignore: cast_nullable_to_non_nullable
+              as String,
+      file_url: null == file_url
+          ? _value.file_url
+          : file_url // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -97,10 +120,13 @@ abstract class _$$IzinRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'from') String from,
+      {@JsonKey(name: 'to') String to,
+      @JsonKey(name: 'from') String from,
       @JsonKey(name: 'permission_reason') String permission_reason,
-      @FileConverter() @JsonKey(name: 'permission_file') File permission_file,
-      @JsonKey(name: 'to') String to});
+      @JsonKey(name: 'file_name') String file_name,
+      @JsonKey(name: 'file_size') int file_size,
+      @JsonKey(name: 'file_type') String file_type,
+      @JsonKey(name: 'file_url') String file_url});
 }
 
 /// @nodoc
@@ -114,12 +140,19 @@ class __$$IzinRequestImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? to = null,
     Object? from = null,
     Object? permission_reason = null,
-    Object? permission_file = null,
-    Object? to = null,
+    Object? file_name = null,
+    Object? file_size = null,
+    Object? file_type = null,
+    Object? file_url = null,
   }) {
     return _then(_$IzinRequestImpl(
+      to: null == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String,
       from: null == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
@@ -128,13 +161,21 @@ class __$$IzinRequestImplCopyWithImpl<$Res>
           ? _value.permission_reason
           : permission_reason // ignore: cast_nullable_to_non_nullable
               as String,
-      permission_file: null == permission_file
-          ? _value.permission_file
-          : permission_file // ignore: cast_nullable_to_non_nullable
-              as File,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      file_name: null == file_name
+          ? _value.file_name
+          : file_name // ignore: cast_nullable_to_non_nullable
+              as String,
+      file_size: null == file_size
+          ? _value.file_size
+          : file_size // ignore: cast_nullable_to_non_nullable
+              as int,
+      file_type: null == file_type
+          ? _value.file_type
+          : file_type // ignore: cast_nullable_to_non_nullable
+              as String,
+      file_url: null == file_url
+          ? _value.file_url
+          : file_url // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -144,16 +185,20 @@ class __$$IzinRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$IzinRequestImpl implements _IzinRequest {
   _$IzinRequestImpl(
-      {@JsonKey(name: 'from') required this.from,
+      {@JsonKey(name: 'to') required this.to,
+      @JsonKey(name: 'from') required this.from,
       @JsonKey(name: 'permission_reason') required this.permission_reason,
-      @FileConverter()
-      @JsonKey(name: 'permission_file')
-      required this.permission_file,
-      @JsonKey(name: 'to') required this.to});
+      @JsonKey(name: 'file_name') required this.file_name,
+      @JsonKey(name: 'file_size') required this.file_size,
+      @JsonKey(name: 'file_type') required this.file_type,
+      @JsonKey(name: 'file_url') required this.file_url});
 
   factory _$IzinRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$IzinRequestImplFromJson(json);
 
+  @override
+  @JsonKey(name: 'to')
+  final String to;
   @override
   @JsonKey(name: 'from')
   final String from;
@@ -161,16 +206,21 @@ class _$IzinRequestImpl implements _IzinRequest {
   @JsonKey(name: 'permission_reason')
   final String permission_reason;
   @override
-  @FileConverter()
-  @JsonKey(name: 'permission_file')
-  final File permission_file;
+  @JsonKey(name: 'file_name')
+  final String file_name;
   @override
-  @JsonKey(name: 'to')
-  final String to;
+  @JsonKey(name: 'file_size')
+  final int file_size;
+  @override
+  @JsonKey(name: 'file_type')
+  final String file_type;
+  @override
+  @JsonKey(name: 'file_url')
+  final String file_url;
 
   @override
   String toString() {
-    return 'IzinRequest(from: $from, permission_reason: $permission_reason, permission_file: $permission_file, to: $to)';
+    return 'IzinRequest(to: $to, from: $from, permission_reason: $permission_reason, file_name: $file_name, file_size: $file_size, file_type: $file_type, file_url: $file_url)';
   }
 
   @override
@@ -178,18 +228,24 @@ class _$IzinRequestImpl implements _IzinRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$IzinRequestImpl &&
+            (identical(other.to, to) || other.to == to) &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.permission_reason, permission_reason) ||
                 other.permission_reason == permission_reason) &&
-            (identical(other.permission_file, permission_file) ||
-                other.permission_file == permission_file) &&
-            (identical(other.to, to) || other.to == to));
+            (identical(other.file_name, file_name) ||
+                other.file_name == file_name) &&
+            (identical(other.file_size, file_size) ||
+                other.file_size == file_size) &&
+            (identical(other.file_type, file_type) ||
+                other.file_type == file_type) &&
+            (identical(other.file_url, file_url) ||
+                other.file_url == file_url));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, from, permission_reason, permission_file, to);
+  int get hashCode => Object.hash(runtimeType, to, from, permission_reason,
+      file_name, file_size, file_type, file_url);
 
   @JsonKey(ignore: true)
   @override
@@ -207,17 +263,22 @@ class _$IzinRequestImpl implements _IzinRequest {
 
 abstract class _IzinRequest implements IzinRequest {
   factory _IzinRequest(
-      {@JsonKey(name: 'from') required final String from,
-      @JsonKey(name: 'permission_reason')
-      required final String permission_reason,
-      @FileConverter()
-      @JsonKey(name: 'permission_file')
-      required final File permission_file,
-      @JsonKey(name: 'to') required final String to}) = _$IzinRequestImpl;
+          {@JsonKey(name: 'to') required final String to,
+          @JsonKey(name: 'from') required final String from,
+          @JsonKey(name: 'permission_reason')
+          required final String permission_reason,
+          @JsonKey(name: 'file_name') required final String file_name,
+          @JsonKey(name: 'file_size') required final int file_size,
+          @JsonKey(name: 'file_type') required final String file_type,
+          @JsonKey(name: 'file_url') required final String file_url}) =
+      _$IzinRequestImpl;
 
   factory _IzinRequest.fromJson(Map<String, dynamic> json) =
       _$IzinRequestImpl.fromJson;
 
+  @override
+  @JsonKey(name: 'to')
+  String get to;
   @override
   @JsonKey(name: 'from')
   String get from;
@@ -225,12 +286,17 @@ abstract class _IzinRequest implements IzinRequest {
   @JsonKey(name: 'permission_reason')
   String get permission_reason;
   @override
-  @FileConverter()
-  @JsonKey(name: 'permission_file')
-  File get permission_file;
+  @JsonKey(name: 'file_name')
+  String get file_name;
   @override
-  @JsonKey(name: 'to')
-  String get to;
+  @JsonKey(name: 'file_size')
+  int get file_size;
+  @override
+  @JsonKey(name: 'file_type')
+  String get file_type;
+  @override
+  @JsonKey(name: 'file_url')
+  String get file_url;
   @override
   @JsonKey(ignore: true)
   _$$IzinRequestImplCopyWith<_$IzinRequestImpl> get copyWith =>
@@ -449,12 +515,6 @@ IzinData _$IzinDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$IzinData {
-  @JsonKey(name: 'permission_submission_id')
-  int? get permission_submission_id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'submision_id')
-  int? get submision_id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'employee_file_id')
-  int? get employee_file_id => throw _privateConstructorUsedError;
   @JsonKey(name: 'from')
   String? get from => throw _privateConstructorUsedError;
   @JsonKey(name: 'to')
@@ -476,10 +536,7 @@ abstract class $IzinDataCopyWith<$Res> {
       _$IzinDataCopyWithImpl<$Res, IzinData>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'permission_submission_id') int? permission_submission_id,
-      @JsonKey(name: 'submision_id') int? submision_id,
-      @JsonKey(name: 'employee_file_id') int? employee_file_id,
-      @JsonKey(name: 'from') String? from,
+      {@JsonKey(name: 'from') String? from,
       @JsonKey(name: 'to') String? to,
       @JsonKey(name: 'permission_reason') String? permission_reason,
       @JsonKey(name: 'type') String? type});
@@ -498,27 +555,12 @@ class _$IzinDataCopyWithImpl<$Res, $Val extends IzinData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? permission_submission_id = freezed,
-    Object? submision_id = freezed,
-    Object? employee_file_id = freezed,
     Object? from = freezed,
     Object? to = freezed,
     Object? permission_reason = freezed,
     Object? type = freezed,
   }) {
     return _then(_value.copyWith(
-      permission_submission_id: freezed == permission_submission_id
-          ? _value.permission_submission_id
-          : permission_submission_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      submision_id: freezed == submision_id
-          ? _value.submision_id
-          : submision_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      employee_file_id: freezed == employee_file_id
-          ? _value.employee_file_id
-          : employee_file_id // ignore: cast_nullable_to_non_nullable
-              as int?,
       from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
@@ -548,10 +590,7 @@ abstract class _$$IzinDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'permission_submission_id') int? permission_submission_id,
-      @JsonKey(name: 'submision_id') int? submision_id,
-      @JsonKey(name: 'employee_file_id') int? employee_file_id,
-      @JsonKey(name: 'from') String? from,
+      {@JsonKey(name: 'from') String? from,
       @JsonKey(name: 'to') String? to,
       @JsonKey(name: 'permission_reason') String? permission_reason,
       @JsonKey(name: 'type') String? type});
@@ -568,27 +607,12 @@ class __$$IzinDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? permission_submission_id = freezed,
-    Object? submision_id = freezed,
-    Object? employee_file_id = freezed,
     Object? from = freezed,
     Object? to = freezed,
     Object? permission_reason = freezed,
     Object? type = freezed,
   }) {
     return _then(_$IzinDataImpl(
-      permission_submission_id: freezed == permission_submission_id
-          ? _value.permission_submission_id
-          : permission_submission_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      submision_id: freezed == submision_id
-          ? _value.submision_id
-          : submision_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      employee_file_id: freezed == employee_file_id
-          ? _value.employee_file_id
-          : employee_file_id // ignore: cast_nullable_to_non_nullable
-              as int?,
       from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
@@ -613,10 +637,7 @@ class __$$IzinDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$IzinDataImpl implements _IzinData {
   _$IzinDataImpl(
-      {@JsonKey(name: 'permission_submission_id') this.permission_submission_id,
-      @JsonKey(name: 'submision_id') this.submision_id,
-      @JsonKey(name: 'employee_file_id') this.employee_file_id,
-      @JsonKey(name: 'from') this.from,
+      {@JsonKey(name: 'from') this.from,
       @JsonKey(name: 'to') this.to,
       @JsonKey(name: 'permission_reason') this.permission_reason,
       @JsonKey(name: 'type') this.type});
@@ -624,15 +645,6 @@ class _$IzinDataImpl implements _IzinData {
   factory _$IzinDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$IzinDataImplFromJson(json);
 
-  @override
-  @JsonKey(name: 'permission_submission_id')
-  final int? permission_submission_id;
-  @override
-  @JsonKey(name: 'submision_id')
-  final int? submision_id;
-  @override
-  @JsonKey(name: 'employee_file_id')
-  final int? employee_file_id;
   @override
   @JsonKey(name: 'from')
   final String? from;
@@ -648,7 +660,7 @@ class _$IzinDataImpl implements _IzinData {
 
   @override
   String toString() {
-    return 'IzinData(permission_submission_id: $permission_submission_id, submision_id: $submision_id, employee_file_id: $employee_file_id, from: $from, to: $to, permission_reason: $permission_reason, type: $type)';
+    return 'IzinData(from: $from, to: $to, permission_reason: $permission_reason, type: $type)';
   }
 
   @override
@@ -656,13 +668,6 @@ class _$IzinDataImpl implements _IzinData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$IzinDataImpl &&
-            (identical(
-                    other.permission_submission_id, permission_submission_id) ||
-                other.permission_submission_id == permission_submission_id) &&
-            (identical(other.submision_id, submision_id) ||
-                other.submision_id == submision_id) &&
-            (identical(other.employee_file_id, employee_file_id) ||
-                other.employee_file_id == employee_file_id) &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
             (identical(other.permission_reason, permission_reason) ||
@@ -672,8 +677,8 @@ class _$IzinDataImpl implements _IzinData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, permission_submission_id,
-      submision_id, employee_file_id, from, to, permission_reason, type);
+  int get hashCode =>
+      Object.hash(runtimeType, from, to, permission_reason, type);
 
   @JsonKey(ignore: true)
   @override
@@ -691,11 +696,7 @@ class _$IzinDataImpl implements _IzinData {
 
 abstract class _IzinData implements IzinData {
   factory _IzinData(
-      {@JsonKey(name: 'permission_submission_id')
-      final int? permission_submission_id,
-      @JsonKey(name: 'submision_id') final int? submision_id,
-      @JsonKey(name: 'employee_file_id') final int? employee_file_id,
-      @JsonKey(name: 'from') final String? from,
+      {@JsonKey(name: 'from') final String? from,
       @JsonKey(name: 'to') final String? to,
       @JsonKey(name: 'permission_reason') final String? permission_reason,
       @JsonKey(name: 'type') final String? type}) = _$IzinDataImpl;
@@ -703,15 +704,6 @@ abstract class _IzinData implements IzinData {
   factory _IzinData.fromJson(Map<String, dynamic> json) =
       _$IzinDataImpl.fromJson;
 
-  @override
-  @JsonKey(name: 'permission_submission_id')
-  int? get permission_submission_id;
-  @override
-  @JsonKey(name: 'submision_id')
-  int? get submision_id;
-  @override
-  @JsonKey(name: 'employee_file_id')
-  int? get employee_file_id;
   @override
   @JsonKey(name: 'from')
   String? get from;

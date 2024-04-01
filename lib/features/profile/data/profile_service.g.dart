@@ -13,7 +13,7 @@ class _ProfileRepository implements ProfileRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://5c31-180-248-64-152.ngrok-free.app';
+    baseUrl ??= 'https://d0f9-180-248-64-152.ngrok-free.app';
   }
 
   final Dio _dio;

@@ -10,12 +10,5 @@ part 'cuti_repository.g.dart';
 abstract class CutiRepository {
   factory CutiRepository(Dio dio, {String baseUrl}) = _CutiRepository;
   @POST('/submission/leave')
-  @MultiPart()
-  Future<CutiResponse> postCuti(
-    @Part(name: 'from') String from,
-    @Part(name: 'leave_reason') String leave_reason,
-    @Part(name: 'leave_type') String leave_type,
-    @Part(name: 'leave_file') File leave_file,
-    @Part(name: 'to') String to,
-  );
+  Future<CutiResponse> postCuti(@Body() CutiRequest data);
 }

@@ -13,7 +13,7 @@ class _IzinRepository implements IzinRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://5c31-180-248-64-152.ngrok-free.app';
+    baseUrl ??= 'https://d0f9-180-248-64-152.ngrok-free.app';
   }
 
   final Dio _dio;
@@ -21,41 +21,16 @@ class _IzinRepository implements IzinRepository {
   String? baseUrl;
 
   @override
-  Future<IzinResponse> postIzin(
-    String from,
-    String permissionReason,
-    File permissionFile,
-    String to,
-  ) async {
+  Future<IzinResponse> postIzin(IzinRequest data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = FormData();
-    _data.fields.add(MapEntry(
-      'from',
-      from,
-    ));
-    _data.fields.add(MapEntry(
-      'permission_reason',
-      permissionReason,
-    ));
-    _data.files.add(MapEntry(
-      'permission_file',
-      MultipartFile.fromFileSync(
-        permissionFile.path,
-        filename: permissionFile.path.split(Platform.pathSeparator).last,
-      ),
-    ));
-    _data.fields.add(MapEntry(
-      'to',
-      to,
-    ));
+    final _data = data;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<IzinResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,

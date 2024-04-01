@@ -13,7 +13,7 @@ class _CutiRepository implements CutiRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://5c31-180-248-64-152.ngrok-free.app';
+    baseUrl ??= 'https://d0f9-180-248-64-152.ngrok-free.app';
   }
 
   final Dio _dio;
@@ -21,46 +21,16 @@ class _CutiRepository implements CutiRepository {
   String? baseUrl;
 
   @override
-  Future<CutiResponse> postCuti(
-    String from,
-    String leave_reason,
-    String leave_type,
-    File leave_file,
-    String to,
-  ) async {
+  Future<CutiResponse> postCuti(CutiRequest data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = FormData();
-    _data.fields.add(MapEntry(
-      'from',
-      from,
-    ));
-    _data.fields.add(MapEntry(
-      'leave_reason',
-      leave_reason,
-    ));
-    _data.fields.add(MapEntry(
-      'leave_type',
-      leave_type,
-    ));
-    _data.files.add(MapEntry(
-      'leave_file',
-      MultipartFile.fromFileSync(
-        leave_file.path,
-        filename: leave_file.path.split(Platform.pathSeparator).last,
-      ),
-    ));
-    _data.fields.add(MapEntry(
-      'to',
-      to,
-    ));
+    final _data = data;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<CutiResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,

@@ -26,11 +26,14 @@ class FileConverter implements JsonConverter<File, String> {
 @freezed
 class CutiRequest with _$CutiRequest {
   factory CutiRequest({
+    @JsonKey(name: 'to') required String to,
     @JsonKey(name: 'from') required String from,
     @JsonKey(name: 'leave_reason') required String leave_reason,
     @JsonKey(name: 'leave_type') required String leave_type,
-    @FileConverter() @JsonKey(name: 'leave_file') required File leave_file,
-    @JsonKey(name: 'to') required String to,
+    @JsonKey(name: 'file_name') required String file_name,
+    @JsonKey(name: 'file_size') required int file_size,
+    @JsonKey(name: 'file_type') required String file_type,
+    @JsonKey(name: 'file_url') required String file_url,
   }) = _CutiRequest;
 
   factory CutiRequest.fromJson(Map<String, dynamic> json) =>
@@ -51,9 +54,6 @@ class CutiResponse with _$CutiResponse {
 @freezed
 class CutiData with _$CutiData {
   factory CutiData({
-    @JsonKey(name: 'leave_submission_id') int? leave_submission_id,
-    @JsonKey(name: 'submision_id') int? submision_id,
-    @JsonKey(name: 'employee_file_id') int? employee_file_id,
     @JsonKey(name: 'from') String? from,
     @JsonKey(name: 'to') String? to,
     @JsonKey(name: 'leave_reason') String? leave_reason,

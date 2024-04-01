@@ -95,7 +95,7 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
                 onPressed: () async {
                   filePickerResult = await FilePicker.platform.pickFiles(
                     type: FileType.custom,
-                    allowedExtensions: ['pdf', 'jpg', 'png'],
+                    allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
                   );
                   setState(() {});
                 },
@@ -116,15 +116,13 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
                         print(formData['Alasan']);
                         print(File(filePickerResult!.files.first.path ?? '')
                             .path);
-                        handleIzinSubmission(IzinRequest(
-                          from: convertToIso8601(
-                              formData['izinDate'].start.toString()),
-                          permission_reason: formData['Alasan'],
-                          permission_file:
-                              File(filePickerResult!.files.first.path ?? ''),
-                          to: convertToIso8601(
-                              formData['izinDate'].end.toString()),
-                        ));
+                        handleIzinSubmission(
+                            convertToIso8601(
+                                formData['izinDate'].start.toString()),
+                            convertToIso8601(
+                                formData['izinDate'].end.toString()),
+                            formData['Alasan'],
+                            File(filePickerResult!.files.first.path ?? ''));
                       }
                     },
                     child: Text('Kirim Pengajuan'),

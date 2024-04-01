@@ -20,17 +20,22 @@ CutiRequest _$CutiRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CutiRequest {
+  @JsonKey(name: 'to')
+  String get to => throw _privateConstructorUsedError;
   @JsonKey(name: 'from')
   String get from => throw _privateConstructorUsedError;
   @JsonKey(name: 'leave_reason')
   String get leave_reason => throw _privateConstructorUsedError;
   @JsonKey(name: 'leave_type')
   String get leave_type => throw _privateConstructorUsedError;
-  @FileConverter()
-  @JsonKey(name: 'leave_file')
-  File get leave_file => throw _privateConstructorUsedError;
-  @JsonKey(name: 'to')
-  String get to => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_name')
+  String get file_name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_size')
+  int get file_size => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_type')
+  String get file_type => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_url')
+  String get file_url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,11 +50,14 @@ abstract class $CutiRequestCopyWith<$Res> {
       _$CutiRequestCopyWithImpl<$Res, CutiRequest>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'from') String from,
+      {@JsonKey(name: 'to') String to,
+      @JsonKey(name: 'from') String from,
       @JsonKey(name: 'leave_reason') String leave_reason,
       @JsonKey(name: 'leave_type') String leave_type,
-      @FileConverter() @JsonKey(name: 'leave_file') File leave_file,
-      @JsonKey(name: 'to') String to});
+      @JsonKey(name: 'file_name') String file_name,
+      @JsonKey(name: 'file_size') int file_size,
+      @JsonKey(name: 'file_type') String file_type,
+      @JsonKey(name: 'file_url') String file_url});
 }
 
 /// @nodoc
@@ -65,13 +73,20 @@ class _$CutiRequestCopyWithImpl<$Res, $Val extends CutiRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? to = null,
     Object? from = null,
     Object? leave_reason = null,
     Object? leave_type = null,
-    Object? leave_file = null,
-    Object? to = null,
+    Object? file_name = null,
+    Object? file_size = null,
+    Object? file_type = null,
+    Object? file_url = null,
   }) {
     return _then(_value.copyWith(
+      to: null == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String,
       from: null == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
@@ -84,13 +99,21 @@ class _$CutiRequestCopyWithImpl<$Res, $Val extends CutiRequest>
           ? _value.leave_type
           : leave_type // ignore: cast_nullable_to_non_nullable
               as String,
-      leave_file: null == leave_file
-          ? _value.leave_file
-          : leave_file // ignore: cast_nullable_to_non_nullable
-              as File,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      file_name: null == file_name
+          ? _value.file_name
+          : file_name // ignore: cast_nullable_to_non_nullable
+              as String,
+      file_size: null == file_size
+          ? _value.file_size
+          : file_size // ignore: cast_nullable_to_non_nullable
+              as int,
+      file_type: null == file_type
+          ? _value.file_type
+          : file_type // ignore: cast_nullable_to_non_nullable
+              as String,
+      file_url: null == file_url
+          ? _value.file_url
+          : file_url // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -105,11 +128,14 @@ abstract class _$$CutiRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'from') String from,
+      {@JsonKey(name: 'to') String to,
+      @JsonKey(name: 'from') String from,
       @JsonKey(name: 'leave_reason') String leave_reason,
       @JsonKey(name: 'leave_type') String leave_type,
-      @FileConverter() @JsonKey(name: 'leave_file') File leave_file,
-      @JsonKey(name: 'to') String to});
+      @JsonKey(name: 'file_name') String file_name,
+      @JsonKey(name: 'file_size') int file_size,
+      @JsonKey(name: 'file_type') String file_type,
+      @JsonKey(name: 'file_url') String file_url});
 }
 
 /// @nodoc
@@ -123,13 +149,20 @@ class __$$CutiRequestImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? to = null,
     Object? from = null,
     Object? leave_reason = null,
     Object? leave_type = null,
-    Object? leave_file = null,
-    Object? to = null,
+    Object? file_name = null,
+    Object? file_size = null,
+    Object? file_type = null,
+    Object? file_url = null,
   }) {
     return _then(_$CutiRequestImpl(
+      to: null == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String,
       from: null == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
@@ -142,13 +175,21 @@ class __$$CutiRequestImplCopyWithImpl<$Res>
           ? _value.leave_type
           : leave_type // ignore: cast_nullable_to_non_nullable
               as String,
-      leave_file: null == leave_file
-          ? _value.leave_file
-          : leave_file // ignore: cast_nullable_to_non_nullable
-              as File,
-      to: null == to
-          ? _value.to
-          : to // ignore: cast_nullable_to_non_nullable
+      file_name: null == file_name
+          ? _value.file_name
+          : file_name // ignore: cast_nullable_to_non_nullable
+              as String,
+      file_size: null == file_size
+          ? _value.file_size
+          : file_size // ignore: cast_nullable_to_non_nullable
+              as int,
+      file_type: null == file_type
+          ? _value.file_type
+          : file_type // ignore: cast_nullable_to_non_nullable
+              as String,
+      file_url: null == file_url
+          ? _value.file_url
+          : file_url // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -158,15 +199,21 @@ class __$$CutiRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CutiRequestImpl implements _CutiRequest {
   _$CutiRequestImpl(
-      {@JsonKey(name: 'from') required this.from,
+      {@JsonKey(name: 'to') required this.to,
+      @JsonKey(name: 'from') required this.from,
       @JsonKey(name: 'leave_reason') required this.leave_reason,
       @JsonKey(name: 'leave_type') required this.leave_type,
-      @FileConverter() @JsonKey(name: 'leave_file') required this.leave_file,
-      @JsonKey(name: 'to') required this.to});
+      @JsonKey(name: 'file_name') required this.file_name,
+      @JsonKey(name: 'file_size') required this.file_size,
+      @JsonKey(name: 'file_type') required this.file_type,
+      @JsonKey(name: 'file_url') required this.file_url});
 
   factory _$CutiRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$CutiRequestImplFromJson(json);
 
+  @override
+  @JsonKey(name: 'to')
+  final String to;
   @override
   @JsonKey(name: 'from')
   final String from;
@@ -177,16 +224,21 @@ class _$CutiRequestImpl implements _CutiRequest {
   @JsonKey(name: 'leave_type')
   final String leave_type;
   @override
-  @FileConverter()
-  @JsonKey(name: 'leave_file')
-  final File leave_file;
+  @JsonKey(name: 'file_name')
+  final String file_name;
   @override
-  @JsonKey(name: 'to')
-  final String to;
+  @JsonKey(name: 'file_size')
+  final int file_size;
+  @override
+  @JsonKey(name: 'file_type')
+  final String file_type;
+  @override
+  @JsonKey(name: 'file_url')
+  final String file_url;
 
   @override
   String toString() {
-    return 'CutiRequest(from: $from, leave_reason: $leave_reason, leave_type: $leave_type, leave_file: $leave_file, to: $to)';
+    return 'CutiRequest(to: $to, from: $from, leave_reason: $leave_reason, leave_type: $leave_type, file_name: $file_name, file_size: $file_size, file_type: $file_type, file_url: $file_url)';
   }
 
   @override
@@ -194,20 +246,26 @@ class _$CutiRequestImpl implements _CutiRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CutiRequestImpl &&
+            (identical(other.to, to) || other.to == to) &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.leave_reason, leave_reason) ||
                 other.leave_reason == leave_reason) &&
             (identical(other.leave_type, leave_type) ||
                 other.leave_type == leave_type) &&
-            (identical(other.leave_file, leave_file) ||
-                other.leave_file == leave_file) &&
-            (identical(other.to, to) || other.to == to));
+            (identical(other.file_name, file_name) ||
+                other.file_name == file_name) &&
+            (identical(other.file_size, file_size) ||
+                other.file_size == file_size) &&
+            (identical(other.file_type, file_type) ||
+                other.file_type == file_type) &&
+            (identical(other.file_url, file_url) ||
+                other.file_url == file_url));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, from, leave_reason, leave_type, leave_file, to);
+  int get hashCode => Object.hash(runtimeType, to, from, leave_reason,
+      leave_type, file_name, file_size, file_type, file_url);
 
   @JsonKey(ignore: true)
   @override
@@ -225,17 +283,22 @@ class _$CutiRequestImpl implements _CutiRequest {
 
 abstract class _CutiRequest implements CutiRequest {
   factory _CutiRequest(
-      {@JsonKey(name: 'from') required final String from,
-      @JsonKey(name: 'leave_reason') required final String leave_reason,
-      @JsonKey(name: 'leave_type') required final String leave_type,
-      @FileConverter()
-      @JsonKey(name: 'leave_file')
-      required final File leave_file,
-      @JsonKey(name: 'to') required final String to}) = _$CutiRequestImpl;
+          {@JsonKey(name: 'to') required final String to,
+          @JsonKey(name: 'from') required final String from,
+          @JsonKey(name: 'leave_reason') required final String leave_reason,
+          @JsonKey(name: 'leave_type') required final String leave_type,
+          @JsonKey(name: 'file_name') required final String file_name,
+          @JsonKey(name: 'file_size') required final int file_size,
+          @JsonKey(name: 'file_type') required final String file_type,
+          @JsonKey(name: 'file_url') required final String file_url}) =
+      _$CutiRequestImpl;
 
   factory _CutiRequest.fromJson(Map<String, dynamic> json) =
       _$CutiRequestImpl.fromJson;
 
+  @override
+  @JsonKey(name: 'to')
+  String get to;
   @override
   @JsonKey(name: 'from')
   String get from;
@@ -246,12 +309,17 @@ abstract class _CutiRequest implements CutiRequest {
   @JsonKey(name: 'leave_type')
   String get leave_type;
   @override
-  @FileConverter()
-  @JsonKey(name: 'leave_file')
-  File get leave_file;
+  @JsonKey(name: 'file_name')
+  String get file_name;
   @override
-  @JsonKey(name: 'to')
-  String get to;
+  @JsonKey(name: 'file_size')
+  int get file_size;
+  @override
+  @JsonKey(name: 'file_type')
+  String get file_type;
+  @override
+  @JsonKey(name: 'file_url')
+  String get file_url;
   @override
   @JsonKey(ignore: true)
   _$$CutiRequestImplCopyWith<_$CutiRequestImpl> get copyWith =>
@@ -470,12 +538,6 @@ CutiData _$CutiDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CutiData {
-  @JsonKey(name: 'leave_submission_id')
-  int? get leave_submission_id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'submision_id')
-  int? get submision_id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'employee_file_id')
-  int? get employee_file_id => throw _privateConstructorUsedError;
   @JsonKey(name: 'from')
   String? get from => throw _privateConstructorUsedError;
   @JsonKey(name: 'to')
@@ -497,10 +559,7 @@ abstract class $CutiDataCopyWith<$Res> {
       _$CutiDataCopyWithImpl<$Res, CutiData>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'leave_submission_id') int? leave_submission_id,
-      @JsonKey(name: 'submision_id') int? submision_id,
-      @JsonKey(name: 'employee_file_id') int? employee_file_id,
-      @JsonKey(name: 'from') String? from,
+      {@JsonKey(name: 'from') String? from,
       @JsonKey(name: 'to') String? to,
       @JsonKey(name: 'leave_reason') String? leave_reason,
       @JsonKey(name: 'leave_type') String? leave_type});
@@ -519,27 +578,12 @@ class _$CutiDataCopyWithImpl<$Res, $Val extends CutiData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? leave_submission_id = freezed,
-    Object? submision_id = freezed,
-    Object? employee_file_id = freezed,
     Object? from = freezed,
     Object? to = freezed,
     Object? leave_reason = freezed,
     Object? leave_type = freezed,
   }) {
     return _then(_value.copyWith(
-      leave_submission_id: freezed == leave_submission_id
-          ? _value.leave_submission_id
-          : leave_submission_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      submision_id: freezed == submision_id
-          ? _value.submision_id
-          : submision_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      employee_file_id: freezed == employee_file_id
-          ? _value.employee_file_id
-          : employee_file_id // ignore: cast_nullable_to_non_nullable
-              as int?,
       from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
@@ -569,10 +613,7 @@ abstract class _$$CutiDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'leave_submission_id') int? leave_submission_id,
-      @JsonKey(name: 'submision_id') int? submision_id,
-      @JsonKey(name: 'employee_file_id') int? employee_file_id,
-      @JsonKey(name: 'from') String? from,
+      {@JsonKey(name: 'from') String? from,
       @JsonKey(name: 'to') String? to,
       @JsonKey(name: 'leave_reason') String? leave_reason,
       @JsonKey(name: 'leave_type') String? leave_type});
@@ -589,27 +630,12 @@ class __$$CutiDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? leave_submission_id = freezed,
-    Object? submision_id = freezed,
-    Object? employee_file_id = freezed,
     Object? from = freezed,
     Object? to = freezed,
     Object? leave_reason = freezed,
     Object? leave_type = freezed,
   }) {
     return _then(_$CutiDataImpl(
-      leave_submission_id: freezed == leave_submission_id
-          ? _value.leave_submission_id
-          : leave_submission_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      submision_id: freezed == submision_id
-          ? _value.submision_id
-          : submision_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      employee_file_id: freezed == employee_file_id
-          ? _value.employee_file_id
-          : employee_file_id // ignore: cast_nullable_to_non_nullable
-              as int?,
       from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
@@ -634,10 +660,7 @@ class __$$CutiDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CutiDataImpl implements _CutiData {
   _$CutiDataImpl(
-      {@JsonKey(name: 'leave_submission_id') this.leave_submission_id,
-      @JsonKey(name: 'submision_id') this.submision_id,
-      @JsonKey(name: 'employee_file_id') this.employee_file_id,
-      @JsonKey(name: 'from') this.from,
+      {@JsonKey(name: 'from') this.from,
       @JsonKey(name: 'to') this.to,
       @JsonKey(name: 'leave_reason') this.leave_reason,
       @JsonKey(name: 'leave_type') this.leave_type});
@@ -645,15 +668,6 @@ class _$CutiDataImpl implements _CutiData {
   factory _$CutiDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$CutiDataImplFromJson(json);
 
-  @override
-  @JsonKey(name: 'leave_submission_id')
-  final int? leave_submission_id;
-  @override
-  @JsonKey(name: 'submision_id')
-  final int? submision_id;
-  @override
-  @JsonKey(name: 'employee_file_id')
-  final int? employee_file_id;
   @override
   @JsonKey(name: 'from')
   final String? from;
@@ -669,7 +683,7 @@ class _$CutiDataImpl implements _CutiData {
 
   @override
   String toString() {
-    return 'CutiData(leave_submission_id: $leave_submission_id, submision_id: $submision_id, employee_file_id: $employee_file_id, from: $from, to: $to, leave_reason: $leave_reason, leave_type: $leave_type)';
+    return 'CutiData(from: $from, to: $to, leave_reason: $leave_reason, leave_type: $leave_type)';
   }
 
   @override
@@ -677,12 +691,6 @@ class _$CutiDataImpl implements _CutiData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CutiDataImpl &&
-            (identical(other.leave_submission_id, leave_submission_id) ||
-                other.leave_submission_id == leave_submission_id) &&
-            (identical(other.submision_id, submision_id) ||
-                other.submision_id == submision_id) &&
-            (identical(other.employee_file_id, employee_file_id) ||
-                other.employee_file_id == employee_file_id) &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
             (identical(other.leave_reason, leave_reason) ||
@@ -693,8 +701,8 @@ class _$CutiDataImpl implements _CutiData {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, leave_submission_id,
-      submision_id, employee_file_id, from, to, leave_reason, leave_type);
+  int get hashCode =>
+      Object.hash(runtimeType, from, to, leave_reason, leave_type);
 
   @JsonKey(ignore: true)
   @override
@@ -712,10 +720,7 @@ class _$CutiDataImpl implements _CutiData {
 
 abstract class _CutiData implements CutiData {
   factory _CutiData(
-      {@JsonKey(name: 'leave_submission_id') final int? leave_submission_id,
-      @JsonKey(name: 'submision_id') final int? submision_id,
-      @JsonKey(name: 'employee_file_id') final int? employee_file_id,
-      @JsonKey(name: 'from') final String? from,
+      {@JsonKey(name: 'from') final String? from,
       @JsonKey(name: 'to') final String? to,
       @JsonKey(name: 'leave_reason') final String? leave_reason,
       @JsonKey(name: 'leave_type') final String? leave_type}) = _$CutiDataImpl;
@@ -723,15 +728,6 @@ abstract class _CutiData implements CutiData {
   factory _CutiData.fromJson(Map<String, dynamic> json) =
       _$CutiDataImpl.fromJson;
 
-  @override
-  @JsonKey(name: 'leave_submission_id')
-  int? get leave_submission_id;
-  @override
-  @JsonKey(name: 'submision_id')
-  int? get submision_id;
-  @override
-  @JsonKey(name: 'employee_file_id')
-  int? get employee_file_id;
   @override
   @JsonKey(name: 'from')
   String? get from;
