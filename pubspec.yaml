@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # mapbox_gl: ^latest_version
+  table_calendar: ^3.0.0
   flutter_form_builder: ^7.0.0
   calendar_date_picker2: ^0.2.5
   signature: ^5.0.1
@@ -54,6 +54,7 @@ dependencies:
   dio: ^5.4.1
   flutter_secure_storage: ^4.2.1
   shared_preferences: ^2.2.2
+  mapbox_gl: ^0.16.0
 
 dev_dependencies:
   flutter_test:

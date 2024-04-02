@@ -11,6 +11,7 @@ import 'package:meraih_mobile/features/payroll/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/form_izin.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/form_sakit.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/form_kehadiran_request.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/checkin_map.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/form_izin.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/checkin_map.dart';
@@ -22,7 +23,7 @@ part 'app_router.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: "/notif-page",
+    initialLocation: "/checkin-map",
     routes: [
       GoRoute(
         path: "/login",
@@ -137,6 +138,22 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: Notif_Page(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/checkin-map',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckinMap(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/sakit',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: FormSakit(),
           );
         },
       ),

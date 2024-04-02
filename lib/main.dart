@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 void main() {
   runApp(const ProviderScope(child: MyApp()));
   FilePicker.platform = FilePicker.platform;
-}
+  }
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});

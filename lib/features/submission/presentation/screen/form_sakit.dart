@@ -135,7 +135,7 @@ class _FormSakitState extends State<FormSakit> {
               ),
             ),
             child: const Text(
-              "Download Slip Gaji",
+              "Kirim Pengajuan Sakit",
               style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
