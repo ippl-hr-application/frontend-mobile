@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:retrofit/retrofit.dart';
@@ -12,5 +11,11 @@ part 'izin_repository.g.dart';
 abstract class IzinRepository {
   factory IzinRepository(Dio dio, {String baseUrl}) = _IzinRepository;
   @POST('/submission/permission')
-  Future<IzinResponse> postIzin(@Body() IzinRequest data);
+  @MultiPart()
+  Future<IzinResponse> postIzin(
+    @Part(name: 'from') String from,
+    @Part(name: 'permission_reason') String permissionReason,
+    @Part(name: 'permission_file') File permissionFile,
+    @Part(name: 'to') String to,
+  );
 }
