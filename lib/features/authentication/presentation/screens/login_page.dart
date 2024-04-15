@@ -82,8 +82,6 @@ class LoginPage extends ConsumerWidget {
                         password: _password.text));
 
                     context.go('/submission');
-
-                    ;
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(32, 81, 229, 1)),
@@ -91,8 +89,8 @@ class LoginPage extends ConsumerWidget {
                   // style: ElevatedButton.styleFrom(
                   //   primary: Color(0xFF2051E5), // Ubah warna latar belakang
                   // ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 14.0),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14.0),
                     child: Text(
                       "Login",
                       style: TextStyle(

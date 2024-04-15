@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_repository.dart';
+part of 'sakit_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'auth_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AuthRepository implements AuthRepository {
-  _AuthRepository(
+class _SakitRepository implements SakitRepository {
+  _SakitRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,20 +21,45 @@ class _AuthRepository implements AuthRepository {
   String? baseUrl;
 
   @override
-  Future<LoginResponse> login(LoginRequest data) async {
+  Future<SakitResponse> postSakit(
+    String from,
+    String permissionReason,
+    String to,
+    File sickFile,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = data;
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'from',
+      from,
+    ));
+    _data.fields.add(MapEntry(
+      'permission_reason',
+      permissionReason,
+    ));
+    _data.fields.add(MapEntry(
+      'to',
+      to,
+    ));
+    _data.files.add(MapEntry(
+      'sick_file',
+      MultipartFile.fromFileSync(
+        sickFile.path,
+        filename: sickFile.path.split(Platform.pathSeparator).last,
+      ),
+    ));
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<SakitResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
-              '/auth/employee-login/',
+              '/submission/sick',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,7 +68,7 @@ class _AuthRepository implements AuthRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = LoginResponse.fromJson(_result.data!);
+    final value = SakitResponse.fromJson(_result.data!);
     return value;
   }
 

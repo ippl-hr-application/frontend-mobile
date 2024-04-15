@@ -141,9 +141,10 @@ class HomeScreen extends ConsumerWidget {
           );
         }),
       ),
-      bottomNavigationBar: Container(
-        child: const ButtomBar(),
-      ),
+      bottomNavigationBar: const ButtomBar(),
+      // bottomNavigationBar: Container(
+      //   child: const ButtomBar(),
+      // ),
     );
   }
 }

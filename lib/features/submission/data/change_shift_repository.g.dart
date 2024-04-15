@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_repository.dart';
+part of 'change_shift_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'auth_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AuthRepository implements AuthRepository {
-  _AuthRepository(
+class _ShiftRepository implements ShiftRepository {
+  _ShiftRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,20 +21,37 @@ class _AuthRepository implements AuthRepository {
   String? baseUrl;
 
   @override
-  Future<LoginResponse> login(LoginRequest data) async {
+  Future<ChangeShiftResponse> postChangeShift(
+    String targetDate,
+    String currentShift,
+    String targetShift,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = data;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponse>(Options(
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'target_date',
+      targetDate,
+    ));
+    _data.fields.add(MapEntry(
+      'current_shift_id',
+      currentShift,
+    ));
+    _data.fields.add(MapEntry(
+      'target_shift_id',
+      targetShift,
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ChangeShiftResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
-              '/auth/employee-login/',
+              '/submission/sick',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,7 +60,7 @@ class _AuthRepository implements AuthRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = LoginResponse.fromJson(_result.data!);
+    final value = ChangeShiftResponse.fromJson(_result.data!);
     return value;
   }
 

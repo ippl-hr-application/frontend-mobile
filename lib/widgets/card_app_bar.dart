@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ButtomBar extends StatelessWidget {
+class ButtomBar extends StatefulWidget {
   const ButtomBar({super.key});
 
-  final int _currentIndex = 0;
+  @override
+  State<ButtomBar> createState() => _ButtomBarState();
+}
+
+class _ButtomBarState extends State<ButtomBar> {
+  int _currentIndex = 0;
+
+  // static const List<Widget> _pages = <Widget>[
+
+  //   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    _handleNavigation(context, index);
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      currentIndex: _currentIndex,
       selectedItemColor: Colors.blue,
-      onTap: (int index) {
-        _handleNavigation(context, index);
-      },
+      currentIndex: _currentIndex,
+      onTap: _onItemTapped,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -37,6 +51,9 @@ class ButtomBar extends StatelessWidget {
   }
 
   void _handleNavigation(BuildContext context, int index) {
+    // setState(() {
+    //   _currentIndex = index;
+    // });
     switch (index) {
       case 0:
         context.go('/');
@@ -53,5 +70,9 @@ class ButtomBar extends StatelessWidget {
       default:
         break;
     }
+
+    // setState(() {
+    //   _currentIndex = index;
+    // });
   }
 }

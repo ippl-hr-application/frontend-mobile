@@ -220,9 +220,10 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        child: const ButtomBar(),
-      ),
+      bottomNavigationBar: const ButtomBar(),
+      // bottomNavigationBar: Container(
+      //   child: const ButtomBar(),
+      // ),
     );
   }
 

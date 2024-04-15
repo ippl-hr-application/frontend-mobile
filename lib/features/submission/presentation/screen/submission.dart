@@ -94,9 +94,9 @@ class Submission extends ConsumerWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        child: const ButtomBar(),
-      ),
+      // bottomNavigationBar: Container(
+      //   child: const ButtomBar(),
+      // ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/routes/app_router.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/configs/app_configs.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
