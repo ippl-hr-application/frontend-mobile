@@ -11,10 +11,7 @@ part 'change_shift_repository.g.dart';
 @RestApi(baseUrl: AppConfigs.baseUrl)
 abstract class ShiftRepository {
   factory ShiftRepository(Dio dio, {String baseUrl}) = _ShiftRepository;
-  @POST('/submission/sick')
-  @MultiPart()
+  @POST('/submission/change-shift')
   Future<ChangeShiftResponse> postChangeShift(
-      @Part(name: 'target_date') String targetDate,
-      @Part(name: 'current_shift_id') String currentShift,
-      @Part(name: 'target_shift_id') String targetShift);
+      @Body() ChangeShiftRequest changeShiftRequest);
 }

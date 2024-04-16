@@ -22,36 +22,20 @@ class _ShiftRepository implements ShiftRepository {
 
   @override
   Future<ChangeShiftResponse> postChangeShift(
-    String targetDate,
-    String currentShift,
-    String targetShift,
-  ) async {
+      ChangeShiftRequest changeShiftRequest) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = FormData();
-    _data.fields.add(MapEntry(
-      'target_date',
-      targetDate,
-    ));
-    _data.fields.add(MapEntry(
-      'current_shift_id',
-      currentShift,
-    ));
-    _data.fields.add(MapEntry(
-      'target_shift_id',
-      targetShift,
-    ));
+    final _data = changeShiftRequest;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ChangeShiftResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
-              '/submission/sick',
+              '/submission/change-shift',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -39,7 +39,9 @@ class _ButtomBarState extends State<ButtomBar> {
           label: 'Notifikasi',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.content_paste_sharp),
+          icon: Icon(
+            Icons.content_paste_sharp,
+          ),
           label: 'pengajuan',
         ),
         BottomNavigationBarItem(

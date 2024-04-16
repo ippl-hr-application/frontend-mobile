@@ -88,7 +88,7 @@ class SubmissionMutasi extends StatelessWidget {
                             color: Color.fromRGBO(32, 81, 229, 1),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: const Icon(
-                          Icons.timelapse_outlined,
+                          Icons.type_specimen,
                           color: Colors.white,
                         )),
                     const SizedBox(width: 16.0),
@@ -105,7 +105,7 @@ class SubmissionMutasi extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      items: [
+                      items: const [
                         DropdownMenuItem(
                           child: Text('Cuti Tahunan'),
                           value: 'Cuti Tahunan',
@@ -139,7 +139,7 @@ class SubmissionMutasi extends StatelessWidget {
                             color: Color.fromRGBO(32, 81, 229, 1),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: const Icon(
-                          Icons.timelapse_outlined,
+                          Icons.type_specimen,
                           color: Colors.white,
                         )),
                     const SizedBox(width: 16.0),
@@ -156,7 +156,7 @@ class SubmissionMutasi extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      items: [
+                      items: const [
                         DropdownMenuItem(
                           child: Text('Cuti Tahunan'),
                           value: 'Cuti Tahunan',

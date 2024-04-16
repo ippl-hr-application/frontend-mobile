@@ -29,6 +29,7 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
     penColor: Colors.black,
   );
 
+  String? showFileName = "";
   FilePickerResult? filePickerResult;
 
   @override
@@ -68,62 +69,206 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FormBuilderDropdown(
-                name: 'Jenis_Cuti',
-                decoration: InputDecoration(
-                  labelText: 'Pilih Jenis Cuti',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
                   ),
                 ),
-                items: [
-                  DropdownMenuItem(
-                    child: Text('Tahunan'),
-                    value: 'Tahunan',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Bulanan'),
-                    value: 'Bulanan',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Lahiran'),
-                    value: 'Lahiran',
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              FormBuilderTextField(
-                name: 'Alasan',
-                decoration: InputDecoration(
-                  labelText: 'Alasan Cuti',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(
+                          Icons.type_specimen,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: FormBuilderDropdown(
+                        name: 'Jenis_Cuti',
+                        decoration: InputDecoration(
+                          labelText: 'Pilih Jenis Cuti',
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 16.0, horizontal: 10.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        items: const [
+                          DropdownMenuItem(
+                            child: Text('Tahunan'),
+                            value: 'Tahunan',
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Bulanan'),
+                            value: 'Bulanan',
+                          ),
+                          DropdownMenuItem(
+                            child: Text('Lahiran'),
+                            value: 'Lahiran',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 20),
-              FormBuilderDateRangePicker(
-                name: 'CutiDate',
-                format: DateFormat('yyyy-MM-dd'),
-                decoration: InputDecoration(
-                  labelText: 'Pilih Tanggal Cuti',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
                   ),
                 ),
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(Duration(days: 365)),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(
+                          Icons.edit_square,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'Alasan',
+                        decoration: InputDecoration(
+                          labelText: 'Alasan Cuti',
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 16.0, horizontal: 10.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  filePickerResult = await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['pdf', 'jpg', 'png'],
-                  );
-                  setState(() {});
-                },
-                child: Text('Upload Bukti'),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(
+                          Icons.date_range_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: FormBuilderDateRangePicker(
+                        name: 'CutiDate',
+                        format: DateFormat('yyyy-MM-dd'),
+                        decoration: InputDecoration(
+                          labelText: 'Pilih Tanggal Cuti',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(Duration(days: 365)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(
+                          Icons.drive_file_move,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8.0)),
+                            border:
+                                Border.all(color: Colors.black, width: 0.5)),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () async {
+                                filePickerResult =
+                                    await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions: ['pdf', 'jpg', 'png'],
+                                );
+                                if (filePickerResult != null) {
+                                  setState(() {
+                                    showFileName =
+                                        filePickerResult!.files.first.name;
+                                  });
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 13.0, horizontal: 8.0),
+                                  backgroundColor:
+                                      const Color.fromRGBO(243, 243, 243, 1),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0)))),
+                              child: const Text(
+                                'Pilih File',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            const SizedBox(width: 8.0),
+                            Expanded(
+                                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                showFileName.toString(),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 20),
               Spacer(),
@@ -152,7 +297,21 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
                         ));
                       }
                     },
-                    child: Text('Kirim Pengajuan'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10)))),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      child: Text(
+                        'Kirim Pengajuan',
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
               ),

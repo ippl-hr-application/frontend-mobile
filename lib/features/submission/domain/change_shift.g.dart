@@ -10,8 +10,8 @@ _$ChangeShiftRequestImpl _$$ChangeShiftRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$ChangeShiftRequestImpl(
       targetDate: json['target_date'] as String,
-      currentShift: json['current_shift_id'] as String,
-      targetShift: json['target_shift_id'] as String,
+      currentShift: json['current_shift_id'] as int,
+      targetShift: json['target_shift_id'] as int,
     );
 
 Map<String, dynamic> _$$ChangeShiftRequestImplToJson(
@@ -25,33 +25,39 @@ Map<String, dynamic> _$$ChangeShiftRequestImplToJson(
 _$ChangeShiftResponseImpl _$$ChangeShiftResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$ChangeShiftResponseImpl(
-      success: json['success'] as bool?,
-      message: json['message'] as String?,
-      data: json['data'] == null
-          ? null
-          : ShiftData.fromJson(json['data'] as Map<String, dynamic>),
+      success: json['success'] as bool,
+      data: Data.fromJson(json['data'] as Map<String, dynamic>),
+      message: json['message'] as String,
     );
 
 Map<String, dynamic> _$$ChangeShiftResponseImplToJson(
         _$ChangeShiftResponseImpl instance) =>
     <String, dynamic>{
       'success': instance.success,
-      'message': instance.message,
       'data': instance.data,
+      'message': instance.message,
     };
 
-_$ShiftDataImpl _$$ShiftDataImplFromJson(Map<String, dynamic> json) =>
-    _$ShiftDataImpl(
-      targetDate: json['target_date'] as String,
-      currentShift: json['current_shift_id'] as String,
-      targetShift: json['target_shift_id'] as String,
-      type: json['type'] as String,
+_$DataImpl _$$DataImplFromJson(Map<String, dynamic> json) => _$DataImpl(
+      result: Result.fromJson(json['result'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ShiftDataImplToJson(_$ShiftDataImpl instance) =>
+Map<String, dynamic> _$$DataImplToJson(_$DataImpl instance) =>
     <String, dynamic>{
+      'result': instance.result,
+    };
+
+_$ResultImpl _$$ResultImplFromJson(Map<String, dynamic> json) => _$ResultImpl(
+      employeeId: json['employee_id'] as String,
+      targetShiftId: json['target_shift_id'] as int,
+      currentShiftId: json['current_shift_id'] as int,
+      targetDate: json['target_date'] as String,
+    );
+
+Map<String, dynamic> _$$ResultImplToJson(_$ResultImpl instance) =>
+    <String, dynamic>{
+      'employee_id': instance.employeeId,
+      'target_shift_id': instance.targetShiftId,
+      'current_shift_id': instance.currentShiftId,
       'target_date': instance.targetDate,
-      'current_shift_id': instance.currentShift,
-      'target_shift_id': instance.targetShift,
-      'type': instance.type,
     };

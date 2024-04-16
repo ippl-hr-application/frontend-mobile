@@ -163,7 +163,7 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                             color: Color.fromRGBO(32, 81, 229, 1),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: const Icon(
-                          Icons.upload_file_sharp,
+                          Icons.drive_file_move,
                           color: Colors.white,
                           size: 30,
                         )),

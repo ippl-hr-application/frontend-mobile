@@ -23,9 +23,9 @@ mixin _$ChangeShiftRequest {
   @JsonKey(name: 'target_date')
   String get targetDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'current_shift_id')
-  String get currentShift => throw _privateConstructorUsedError;
+  int get currentShift => throw _privateConstructorUsedError;
   @JsonKey(name: 'target_shift_id')
-  String get targetShift => throw _privateConstructorUsedError;
+  int get targetShift => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,8 +41,8 @@ abstract class $ChangeShiftRequestCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'target_date') String targetDate,
-      @JsonKey(name: 'current_shift_id') String currentShift,
-      @JsonKey(name: 'target_shift_id') String targetShift});
+      @JsonKey(name: 'current_shift_id') int currentShift,
+      @JsonKey(name: 'target_shift_id') int targetShift});
 }
 
 /// @nodoc
@@ -70,11 +70,11 @@ class _$ChangeShiftRequestCopyWithImpl<$Res, $Val extends ChangeShiftRequest>
       currentShift: null == currentShift
           ? _value.currentShift
           : currentShift // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       targetShift: null == targetShift
           ? _value.targetShift
           : targetShift // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ) as $Val);
   }
 }
@@ -89,8 +89,8 @@ abstract class _$$ChangeShiftRequestImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'target_date') String targetDate,
-      @JsonKey(name: 'current_shift_id') String currentShift,
-      @JsonKey(name: 'target_shift_id') String targetShift});
+      @JsonKey(name: 'current_shift_id') int currentShift,
+      @JsonKey(name: 'target_shift_id') int targetShift});
 }
 
 /// @nodoc
@@ -116,11 +116,11 @@ class __$$ChangeShiftRequestImplCopyWithImpl<$Res>
       currentShift: null == currentShift
           ? _value.currentShift
           : currentShift // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       targetShift: null == targetShift
           ? _value.targetShift
           : targetShift // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ));
   }
 }
@@ -141,10 +141,10 @@ class _$ChangeShiftRequestImpl implements _ChangeShiftRequest {
   final String targetDate;
   @override
   @JsonKey(name: 'current_shift_id')
-  final String currentShift;
+  final int currentShift;
   @override
   @JsonKey(name: 'target_shift_id')
-  final String targetShift;
+  final int targetShift;
 
   @override
   String toString() {
@@ -186,10 +186,10 @@ class _$ChangeShiftRequestImpl implements _ChangeShiftRequest {
 
 abstract class _ChangeShiftRequest implements ChangeShiftRequest {
   factory _ChangeShiftRequest(
-      {@JsonKey(name: 'target_date') required final String targetDate,
-      @JsonKey(name: 'current_shift_id') required final String currentShift,
-      @JsonKey(name: 'target_shift_id')
-      required final String targetShift}) = _$ChangeShiftRequestImpl;
+          {@JsonKey(name: 'target_date') required final String targetDate,
+          @JsonKey(name: 'current_shift_id') required final int currentShift,
+          @JsonKey(name: 'target_shift_id') required final int targetShift}) =
+      _$ChangeShiftRequestImpl;
 
   factory _ChangeShiftRequest.fromJson(Map<String, dynamic> json) =
       _$ChangeShiftRequestImpl.fromJson;
@@ -199,10 +199,10 @@ abstract class _ChangeShiftRequest implements ChangeShiftRequest {
   String get targetDate;
   @override
   @JsonKey(name: 'current_shift_id')
-  String get currentShift;
+  int get currentShift;
   @override
   @JsonKey(name: 'target_shift_id')
-  String get targetShift;
+  int get targetShift;
   @override
   @JsonKey(ignore: true)
   _$$ChangeShiftRequestImplCopyWith<_$ChangeShiftRequestImpl> get copyWith =>
@@ -216,11 +216,11 @@ ChangeShiftResponse _$ChangeShiftResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ChangeShiftResponse {
   @JsonKey(name: 'success')
-  bool? get success => throw _privateConstructorUsedError;
-  @JsonKey(name: 'message')
-  String? get message => throw _privateConstructorUsedError;
+  bool get success => throw _privateConstructorUsedError;
   @JsonKey(name: 'data')
-  ShiftData? get data => throw _privateConstructorUsedError;
+  Data get data => throw _privateConstructorUsedError;
+  @JsonKey(name: 'message')
+  String get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -235,11 +235,11 @@ abstract class $ChangeShiftResponseCopyWith<$Res> {
       _$ChangeShiftResponseCopyWithImpl<$Res, ChangeShiftResponse>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'success') bool? success,
-      @JsonKey(name: 'message') String? message,
-      @JsonKey(name: 'data') ShiftData? data});
+      {@JsonKey(name: 'success') bool success,
+      @JsonKey(name: 'data') Data data,
+      @JsonKey(name: 'message') String message});
 
-  $ShiftDataCopyWith<$Res>? get data;
+  $DataCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -255,34 +255,30 @@ class _$ChangeShiftResponseCopyWithImpl<$Res, $Val extends ChangeShiftResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? data = freezed,
+    Object? success = null,
+    Object? data = null,
+    Object? message = null,
   }) {
     return _then(_value.copyWith(
-      success: freezed == success
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-      data: freezed == data
+              as bool,
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as ShiftData?,
+              as Data,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ShiftDataCopyWith<$Res>? get data {
-    if (_value.data == null) {
-      return null;
-    }
-
-    return $ShiftDataCopyWith<$Res>(_value.data!, (value) {
+  $DataCopyWith<$Res> get data {
+    return $DataCopyWith<$Res>(_value.data, (value) {
       return _then(_value.copyWith(data: value) as $Val);
     });
   }
@@ -297,12 +293,12 @@ abstract class _$$ChangeShiftResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'success') bool? success,
-      @JsonKey(name: 'message') String? message,
-      @JsonKey(name: 'data') ShiftData? data});
+      {@JsonKey(name: 'success') bool success,
+      @JsonKey(name: 'data') Data data,
+      @JsonKey(name: 'message') String message});
 
   @override
-  $ShiftDataCopyWith<$Res>? get data;
+  $DataCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -316,23 +312,23 @@ class __$$ChangeShiftResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? data = freezed,
+    Object? success = null,
+    Object? data = null,
+    Object? message = null,
   }) {
     return _then(_$ChangeShiftResponseImpl(
-      success: freezed == success
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-      data: freezed == data
+              as bool,
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as ShiftData?,
+              as Data,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -341,26 +337,26 @@ class __$$ChangeShiftResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ChangeShiftResponseImpl implements _ChangeShiftResponse {
   _$ChangeShiftResponseImpl(
-      {@JsonKey(name: 'success') this.success,
-      @JsonKey(name: 'message') this.message,
-      @JsonKey(name: 'data') this.data});
+      {@JsonKey(name: 'success') required this.success,
+      @JsonKey(name: 'data') required this.data,
+      @JsonKey(name: 'message') required this.message});
 
   factory _$ChangeShiftResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChangeShiftResponseImplFromJson(json);
 
   @override
   @JsonKey(name: 'success')
-  final bool? success;
-  @override
-  @JsonKey(name: 'message')
-  final String? message;
+  final bool success;
   @override
   @JsonKey(name: 'data')
-  final ShiftData? data;
+  final Data data;
+  @override
+  @JsonKey(name: 'message')
+  final String message;
 
   @override
   String toString() {
-    return 'ChangeShiftResponse(success: $success, message: $message, data: $data)';
+    return 'ChangeShiftResponse(success: $success, data: $data, message: $message)';
   }
 
   @override
@@ -369,13 +365,13 @@ class _$ChangeShiftResponseImpl implements _ChangeShiftResponse {
         (other.runtimeType == runtimeType &&
             other is _$ChangeShiftResponseImpl &&
             (identical(other.success, success) || other.success == success) &&
-            (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.data, data) || other.data == data) &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, success, message, data);
+  int get hashCode => Object.hash(runtimeType, success, data, message);
 
   @JsonKey(ignore: true)
   @override
@@ -394,9 +390,9 @@ class _$ChangeShiftResponseImpl implements _ChangeShiftResponse {
 
 abstract class _ChangeShiftResponse implements ChangeShiftResponse {
   factory _ChangeShiftResponse(
-          {@JsonKey(name: 'success') final bool? success,
-          @JsonKey(name: 'message') final String? message,
-          @JsonKey(name: 'data') final ShiftData? data}) =
+          {@JsonKey(name: 'success') required final bool success,
+          @JsonKey(name: 'data') required final Data data,
+          @JsonKey(name: 'message') required final String message}) =
       _$ChangeShiftResponseImpl;
 
   factory _ChangeShiftResponse.fromJson(Map<String, dynamic> json) =
@@ -404,56 +400,47 @@ abstract class _ChangeShiftResponse implements ChangeShiftResponse {
 
   @override
   @JsonKey(name: 'success')
-  bool? get success;
-  @override
-  @JsonKey(name: 'message')
-  String? get message;
+  bool get success;
   @override
   @JsonKey(name: 'data')
-  ShiftData? get data;
+  Data get data;
+  @override
+  @JsonKey(name: 'message')
+  String get message;
   @override
   @JsonKey(ignore: true)
   _$$ChangeShiftResponseImplCopyWith<_$ChangeShiftResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ShiftData _$ShiftDataFromJson(Map<String, dynamic> json) {
-  return _ShiftData.fromJson(json);
+Data _$DataFromJson(Map<String, dynamic> json) {
+  return _Data.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ShiftData {
-  @JsonKey(name: 'target_date')
-  String get targetDate => throw _privateConstructorUsedError;
-  @JsonKey(name: 'current_shift_id')
-  String get currentShift => throw _privateConstructorUsedError;
-  @JsonKey(name: 'target_shift_id')
-  String get targetShift => throw _privateConstructorUsedError;
-  @JsonKey(name: 'type')
-  String get type => throw _privateConstructorUsedError;
+mixin _$Data {
+  @JsonKey(name: 'result')
+  Result get result => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ShiftDataCopyWith<ShiftData> get copyWith =>
-      throw _privateConstructorUsedError;
+  $DataCopyWith<Data> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ShiftDataCopyWith<$Res> {
-  factory $ShiftDataCopyWith(ShiftData value, $Res Function(ShiftData) then) =
-      _$ShiftDataCopyWithImpl<$Res, ShiftData>;
+abstract class $DataCopyWith<$Res> {
+  factory $DataCopyWith(Data value, $Res Function(Data) then) =
+      _$DataCopyWithImpl<$Res, Data>;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'target_date') String targetDate,
-      @JsonKey(name: 'current_shift_id') String currentShift,
-      @JsonKey(name: 'target_shift_id') String targetShift,
-      @JsonKey(name: 'type') String type});
+  $Res call({@JsonKey(name: 'result') Result result});
+
+  $ResultCopyWith<$Res> get result;
 }
 
 /// @nodoc
-class _$ShiftDataCopyWithImpl<$Res, $Val extends ShiftData>
-    implements $ShiftDataCopyWith<$Res> {
-  _$ShiftDataCopyWithImpl(this._value, this._then);
+class _$DataCopyWithImpl<$Res, $Val extends Data>
+    implements $DataCopyWith<$Res> {
+  _$DataCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -463,79 +450,234 @@ class _$ShiftDataCopyWithImpl<$Res, $Val extends ShiftData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? targetDate = null,
-    Object? currentShift = null,
-    Object? targetShift = null,
-    Object? type = null,
+    Object? result = null,
   }) {
     return _then(_value.copyWith(
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as Result,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ResultCopyWith<$Res> get result {
+    return $ResultCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$DataImplCopyWith<$Res> implements $DataCopyWith<$Res> {
+  factory _$$DataImplCopyWith(
+          _$DataImpl value, $Res Function(_$DataImpl) then) =
+      __$$DataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'result') Result result});
+
+  @override
+  $ResultCopyWith<$Res> get result;
+}
+
+/// @nodoc
+class __$$DataImplCopyWithImpl<$Res>
+    extends _$DataCopyWithImpl<$Res, _$DataImpl>
+    implements _$$DataImplCopyWith<$Res> {
+  __$$DataImplCopyWithImpl(_$DataImpl _value, $Res Function(_$DataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? result = null,
+  }) {
+    return _then(_$DataImpl(
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as Result,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DataImpl implements _Data {
+  _$DataImpl({@JsonKey(name: 'result') required this.result});
+
+  factory _$DataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DataImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'result')
+  final Result result;
+
+  @override
+  String toString() {
+    return 'Data(result: $result)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DataImpl &&
+            (identical(other.result, result) || other.result == result));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, result);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DataImplCopyWith<_$DataImpl> get copyWith =>
+      __$$DataImplCopyWithImpl<_$DataImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Data implements Data {
+  factory _Data({@JsonKey(name: 'result') required final Result result}) =
+      _$DataImpl;
+
+  factory _Data.fromJson(Map<String, dynamic> json) = _$DataImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'result')
+  Result get result;
+  @override
+  @JsonKey(ignore: true)
+  _$$DataImplCopyWith<_$DataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Result _$ResultFromJson(Map<String, dynamic> json) {
+  return _Result.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Result {
+  @JsonKey(name: 'employee_id')
+  String get employeeId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'target_shift_id')
+  int get targetShiftId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'current_shift_id')
+  int get currentShiftId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'target_date')
+  String get targetDate => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ResultCopyWith<Result> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ResultCopyWith<$Res> {
+  factory $ResultCopyWith(Result value, $Res Function(Result) then) =
+      _$ResultCopyWithImpl<$Res, Result>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'employee_id') String employeeId,
+      @JsonKey(name: 'target_shift_id') int targetShiftId,
+      @JsonKey(name: 'current_shift_id') int currentShiftId,
+      @JsonKey(name: 'target_date') String targetDate});
+}
+
+/// @nodoc
+class _$ResultCopyWithImpl<$Res, $Val extends Result>
+    implements $ResultCopyWith<$Res> {
+  _$ResultCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? employeeId = null,
+    Object? targetShiftId = null,
+    Object? currentShiftId = null,
+    Object? targetDate = null,
+  }) {
+    return _then(_value.copyWith(
+      employeeId: null == employeeId
+          ? _value.employeeId
+          : employeeId // ignore: cast_nullable_to_non_nullable
+              as String,
+      targetShiftId: null == targetShiftId
+          ? _value.targetShiftId
+          : targetShiftId // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentShiftId: null == currentShiftId
+          ? _value.currentShiftId
+          : currentShiftId // ignore: cast_nullable_to_non_nullable
+              as int,
       targetDate: null == targetDate
           ? _value.targetDate
           : targetDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      currentShift: null == currentShift
-          ? _value.currentShift
-          : currentShift // ignore: cast_nullable_to_non_nullable
-              as String,
-      targetShift: null == targetShift
-          ? _value.targetShift
-          : targetShift // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$ShiftDataImplCopyWith<$Res>
-    implements $ShiftDataCopyWith<$Res> {
-  factory _$$ShiftDataImplCopyWith(
-          _$ShiftDataImpl value, $Res Function(_$ShiftDataImpl) then) =
-      __$$ShiftDataImplCopyWithImpl<$Res>;
+abstract class _$$ResultImplCopyWith<$Res> implements $ResultCopyWith<$Res> {
+  factory _$$ResultImplCopyWith(
+          _$ResultImpl value, $Res Function(_$ResultImpl) then) =
+      __$$ResultImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'target_date') String targetDate,
-      @JsonKey(name: 'current_shift_id') String currentShift,
-      @JsonKey(name: 'target_shift_id') String targetShift,
-      @JsonKey(name: 'type') String type});
+      {@JsonKey(name: 'employee_id') String employeeId,
+      @JsonKey(name: 'target_shift_id') int targetShiftId,
+      @JsonKey(name: 'current_shift_id') int currentShiftId,
+      @JsonKey(name: 'target_date') String targetDate});
 }
 
 /// @nodoc
-class __$$ShiftDataImplCopyWithImpl<$Res>
-    extends _$ShiftDataCopyWithImpl<$Res, _$ShiftDataImpl>
-    implements _$$ShiftDataImplCopyWith<$Res> {
-  __$$ShiftDataImplCopyWithImpl(
-      _$ShiftDataImpl _value, $Res Function(_$ShiftDataImpl) _then)
+class __$$ResultImplCopyWithImpl<$Res>
+    extends _$ResultCopyWithImpl<$Res, _$ResultImpl>
+    implements _$$ResultImplCopyWith<$Res> {
+  __$$ResultImplCopyWithImpl(
+      _$ResultImpl _value, $Res Function(_$ResultImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? employeeId = null,
+    Object? targetShiftId = null,
+    Object? currentShiftId = null,
     Object? targetDate = null,
-    Object? currentShift = null,
-    Object? targetShift = null,
-    Object? type = null,
   }) {
-    return _then(_$ShiftDataImpl(
+    return _then(_$ResultImpl(
+      employeeId: null == employeeId
+          ? _value.employeeId
+          : employeeId // ignore: cast_nullable_to_non_nullable
+              as String,
+      targetShiftId: null == targetShiftId
+          ? _value.targetShiftId
+          : targetShiftId // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentShiftId: null == currentShiftId
+          ? _value.currentShiftId
+          : currentShiftId // ignore: cast_nullable_to_non_nullable
+              as int,
       targetDate: null == targetDate
           ? _value.targetDate
           : targetDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      currentShift: null == currentShift
-          ? _value.currentShift
-          : currentShift // ignore: cast_nullable_to_non_nullable
-              as String,
-      targetShift: null == targetShift
-          ? _value.targetShift
-          : targetShift // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -543,91 +685,92 @@ class __$$ShiftDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ShiftDataImpl implements _ShiftData {
-  _$ShiftDataImpl(
-      {@JsonKey(name: 'target_date') required this.targetDate,
-      @JsonKey(name: 'current_shift_id') required this.currentShift,
-      @JsonKey(name: 'target_shift_id') required this.targetShift,
-      @JsonKey(name: 'type') required this.type});
+class _$ResultImpl implements _Result {
+  _$ResultImpl(
+      {@JsonKey(name: 'employee_id') required this.employeeId,
+      @JsonKey(name: 'target_shift_id') required this.targetShiftId,
+      @JsonKey(name: 'current_shift_id') required this.currentShiftId,
+      @JsonKey(name: 'target_date') required this.targetDate});
 
-  factory _$ShiftDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ShiftDataImplFromJson(json);
+  factory _$ResultImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ResultImplFromJson(json);
 
+  @override
+  @JsonKey(name: 'employee_id')
+  final String employeeId;
+  @override
+  @JsonKey(name: 'target_shift_id')
+  final int targetShiftId;
+  @override
+  @JsonKey(name: 'current_shift_id')
+  final int currentShiftId;
   @override
   @JsonKey(name: 'target_date')
   final String targetDate;
-  @override
-  @JsonKey(name: 'current_shift_id')
-  final String currentShift;
-  @override
-  @JsonKey(name: 'target_shift_id')
-  final String targetShift;
-  @override
-  @JsonKey(name: 'type')
-  final String type;
 
   @override
   String toString() {
-    return 'ShiftData(targetDate: $targetDate, currentShift: $currentShift, targetShift: $targetShift, type: $type)';
+    return 'Result(employeeId: $employeeId, targetShiftId: $targetShiftId, currentShiftId: $currentShiftId, targetDate: $targetDate)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ShiftDataImpl &&
+            other is _$ResultImpl &&
+            (identical(other.employeeId, employeeId) ||
+                other.employeeId == employeeId) &&
+            (identical(other.targetShiftId, targetShiftId) ||
+                other.targetShiftId == targetShiftId) &&
+            (identical(other.currentShiftId, currentShiftId) ||
+                other.currentShiftId == currentShiftId) &&
             (identical(other.targetDate, targetDate) ||
-                other.targetDate == targetDate) &&
-            (identical(other.currentShift, currentShift) ||
-                other.currentShift == currentShift) &&
-            (identical(other.targetShift, targetShift) ||
-                other.targetShift == targetShift) &&
-            (identical(other.type, type) || other.type == type));
+                other.targetDate == targetDate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, targetDate, currentShift, targetShift, type);
+  int get hashCode => Object.hash(
+      runtimeType, employeeId, targetShiftId, currentShiftId, targetDate);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ShiftDataImplCopyWith<_$ShiftDataImpl> get copyWith =>
-      __$$ShiftDataImplCopyWithImpl<_$ShiftDataImpl>(this, _$identity);
+  _$$ResultImplCopyWith<_$ResultImpl> get copyWith =>
+      __$$ResultImplCopyWithImpl<_$ResultImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ShiftDataImplToJson(
+    return _$$ResultImplToJson(
       this,
     );
   }
 }
 
-abstract class _ShiftData implements ShiftData {
-  factory _ShiftData(
-      {@JsonKey(name: 'target_date') required final String targetDate,
-      @JsonKey(name: 'current_shift_id') required final String currentShift,
-      @JsonKey(name: 'target_shift_id') required final String targetShift,
-      @JsonKey(name: 'type') required final String type}) = _$ShiftDataImpl;
+abstract class _Result implements Result {
+  factory _Result(
+          {@JsonKey(name: 'employee_id') required final String employeeId,
+          @JsonKey(name: 'target_shift_id') required final int targetShiftId,
+          @JsonKey(name: 'current_shift_id') required final int currentShiftId,
+          @JsonKey(name: 'target_date') required final String targetDate}) =
+      _$ResultImpl;
 
-  factory _ShiftData.fromJson(Map<String, dynamic> json) =
-      _$ShiftDataImpl.fromJson;
+  factory _Result.fromJson(Map<String, dynamic> json) = _$ResultImpl.fromJson;
 
+  @override
+  @JsonKey(name: 'employee_id')
+  String get employeeId;
+  @override
+  @JsonKey(name: 'target_shift_id')
+  int get targetShiftId;
+  @override
+  @JsonKey(name: 'current_shift_id')
+  int get currentShiftId;
   @override
   @JsonKey(name: 'target_date')
   String get targetDate;
   @override
-  @JsonKey(name: 'current_shift_id')
-  String get currentShift;
-  @override
-  @JsonKey(name: 'target_shift_id')
-  String get targetShift;
-  @override
-  @JsonKey(name: 'type')
-  String get type;
-  @override
   @JsonKey(ignore: true)
-  _$$ShiftDataImplCopyWith<_$ShiftDataImpl> get copyWith =>
+  _$$ResultImplCopyWith<_$ResultImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
