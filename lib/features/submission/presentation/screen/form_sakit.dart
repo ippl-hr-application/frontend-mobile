@@ -121,7 +121,6 @@ class _FormSakitState extends State<FormSakit> {
         child: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
-            // color: Color.fromRGBO(255, 255, 255, 1),
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           child: ElevatedButton(

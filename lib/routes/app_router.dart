@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/attendance_list.dart';
 import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
 import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
@@ -12,6 +13,7 @@ import 'package:meraih_mobile/features/submission/presentation/screen/form_izin.
 import 'package:meraih_mobile/features/submission/presentation/screen/form_sakit.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/form_kehadiran_request.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/checkin_map.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/attendance_list.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/form_izin.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/checkin_map.dart';
@@ -49,6 +51,12 @@ GoRouter goRouter(GoRouterRef ref) {
         path: "/reset-password",
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: ForgetPassword());
+        },
+      ),
+      GoRoute(
+        path: "/attendance-list",
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AttendanceList());
         },
       ),
       GoRoute(
@@ -141,14 +149,7 @@ GoRouter goRouter(GoRouterRef ref) {
           );
         },
       ),
-      GoRoute(
-        path: '/checkin-map',
-        pageBuilder: (context, state) {
-          return const NoTransitionPage(
-            child: CheckinMap(),
-          );
-        },
-      ),
+
       GoRoute(
         path: '/sakit',
         pageBuilder: (context, state) {
