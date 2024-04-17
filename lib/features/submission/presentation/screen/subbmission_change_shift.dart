@@ -11,6 +11,7 @@ import 'package:signature/signature.dart';
 import 'dart:io';
 import 'package:meraih_mobile/features/submission/domain/change_shift.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/change_shift.dart';
+import 'package:meraih_mobile/features/submission/presentation/providers/shift_company_provider.dart';
 
 class SubmissionShift extends ConsumerStatefulWidget {
   const SubmissionShift({super.key});
@@ -31,6 +32,7 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
   @override
   Widget build(BuildContext context) {
     final int shiftId = 1;
+    final shiftCompanyData = ref.watch(shiftCompanyProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -191,10 +193,10 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                           child: Text('Siang 12:00 - 18:00'),
                           value: 2,
                         ),
-                        DropdownMenuItem(
-                          child: Text('Malam 19:00 - 23:59'),
-                          value: 3,
-                        ),
+                        // DropdownMenuItem(
+                        //   child: Text('Malam 19:00 - 23:59'),
+                        //   value: 3,
+                        // ),
                       ],
                     )))
                   ],
