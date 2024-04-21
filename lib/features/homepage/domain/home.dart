@@ -18,13 +18,15 @@ class HomeResponse with _$HomeResponse {
 
 @freezed
 class HomeData with _$HomeData {
-  factory HomeData({
-    @JsonKey(name: 'company_name') String? companyName,
-    @JsonKey(name: 'employee_name') String? employeeName,
-    @JsonKey(name: 'date') String? date,
-    @JsonKey(name: 'from') String? from,
-    @JsonKey(name: 'to') String? to,
-  }) = _HomeData;
+  factory HomeData(
+      {@JsonKey(name: 'company_name') String? companyName,
+      @JsonKey(name: 'employee_name') String? employeeName,
+      @JsonKey(name: 'date') String? date,
+      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'to') String? to,
+      @JsonKey(name: 'shift_id') int? shiftId,
+      @JsonKey(name: 'shift_name') String? shiftName,
+      @JsonKey(name: 'job_position') String? jobPosition}) = _HomeData;
 
   factory HomeData.fromJson(Map<String, dynamic> json) =>
       _$HomeDataFromJson(json);

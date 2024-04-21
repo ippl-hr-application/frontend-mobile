@@ -12,6 +12,7 @@ import 'dart:io';
 import 'package:meraih_mobile/features/submission/domain/change_shift.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/change_shift.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/shift_company_provider.dart';
+import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 
 class SubmissionShift extends ConsumerStatefulWidget {
   const SubmissionShift({super.key});
@@ -33,6 +34,10 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
   Widget build(BuildContext context) {
     final int shiftId = 1;
     final shiftCompanyData = ref.watch(shiftCompanyProvider);
+    final homeHistoryData = ref.watch(homeProvider);
+
+    final int _selectedShiftId; // Variable to store the selected shift_id
+    String _selectedShiftName = '';
 
     return Scaffold(
       appBar: AppBar(
@@ -127,20 +132,26 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                         )),
                     const SizedBox(width: 16.0),
                     Expanded(
-                        child: FormBuilderTextField(
-                      // key: _formkey,
-                      initialValue: "1",
-                      readOnly: true,
-                      name: "shift",
-                      decoration: InputDecoration(
-                        labelText: 'Pilih Shift',
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 10.0),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: const BorderSide(
-                                width: 1.0, color: Colors.black)),
-                      ),
+                        child: homeHistoryData.when(
+                      data: (data) {
+                        return FormBuilderTextField(
+                            initialValue: data!.shiftName.toString(),
+                            readOnly: true,
+                            name: "shift",
+                            decoration: InputDecoration(
+                              labelText: 'Pilih Shift',
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 10.0),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: const BorderSide(
+                                      width: 1.0, color: Colors.black)),
+                            ));
+                      },
+                      error: (error, stackTrace) =>
+                          Center(child: Text('Error: $error')),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
                     ))
                   ],
                 ),
@@ -167,38 +178,40 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                         )),
                     const SizedBox(width: 16.0),
                     Expanded(
-                        child: FormBuilder(
+                        child: shiftCompanyData.when(
+                      data: (data) {
+                        return FormBuilder(
                             child: FormBuilderDropdown(
-                      borderRadius: BorderRadius.circular(8.0),
-                      name: 'shift-baru',
-                      decoration: InputDecoration(
-                        labelText: 'Pilih Shift Baru',
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 10.0),
-                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          selectedShiftBaru = value;
-                        });
+                          name: 'shift-baru',
+                          decoration: InputDecoration(
+                            labelText: 'Pilih Shift Baru',
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 10.0),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedShiftBaru = value;
+                            });
+                          },
+                          items: (data!.shifts!
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  child: Text(e.name.toString()),
+                                  value: e.shift_id,
+                                ),
+                              )
+                              .toList()),
+                        ));
                       },
-                      items: const [
-                        DropdownMenuItem(
-                          child: Text('Pagi 07:00 - 12:00'),
-                          value: 1,
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Siang 12:00 - 18:00'),
-                          value: 2,
-                        ),
-                        // DropdownMenuItem(
-                        //   child: Text('Malam 19:00 - 23:59'),
-                        //   value: 3,
-                        // ),
-                      ],
-                    )))
+                      error: (error, stackTrace) =>
+                          Center(child: Text('Error: $error')),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                    ))
                   ],
                 ),
               ),
@@ -215,11 +228,14 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                         print(int.parse(formData['shift']));
                         print(formData['izinDate']);
                         print(selectedShiftBaru);
+                        print(homeHistoryData.asData!.value!.shiftId);
 
                         handleChangeShift(ChangeShiftRequest(
                             targetDate: convertToIso8601(
                                 formData['izinDate'].start.toString()),
-                            currentShift: int.parse(formData['shift']),
+                            currentShift: int.parse(homeHistoryData
+                                .asData!.value!.shiftId
+                                .toString()),
                             targetShift: selectedShiftBaru!));
                       }
                     },
