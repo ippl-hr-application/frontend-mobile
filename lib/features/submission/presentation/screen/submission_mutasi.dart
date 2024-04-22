@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:signature/signature.dart';
 
-class SubmissionMutasi extends StatelessWidget {
+class SubmissionMutasi extends ConsumerStatefulWidget {
   const SubmissionMutasi({super.key});
+
+  @override
+  SubmissionMutasiState createState() => SubmissionMutasiState();
+}
+
+class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  final SignatureController _signatureController = SignatureController(
+    penStrokeWidth: 5,
+    penColor: Colors.black,
+  );
 
   @override
   Widget build(BuildContext context) {

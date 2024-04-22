@@ -135,7 +135,9 @@ class HomeScreen extends ConsumerWidget {
                         companyName: data.companyName,
                         date: data.date,
                         from: data.from,
-                        to: data.to)),
+                        to: data.to,
+                        jobPosition: data.jobPosition,
+                        )),
               ],
             ),
           );
