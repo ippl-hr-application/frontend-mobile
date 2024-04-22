@@ -21,16 +21,46 @@ class _CutiRepository implements CutiRepository {
   String? baseUrl;
 
   @override
-  Future<CutiResponse> postCuti(CutiRequest data) async {
+  Future<CutiResponse> postCuti(
+    String to,
+    String from,
+    String leaveReason,
+    String leavetype,
+    File leave_file,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = data;
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'to',
+      to,
+    ));
+    _data.fields.add(MapEntry(
+      'from',
+      from,
+    ));
+    _data.fields.add(MapEntry(
+      'leave_reason',
+      leaveReason,
+    ));
+    _data.fields.add(MapEntry(
+      'leave_type',
+      leavetype,
+    ));
+    _data.files.add(MapEntry(
+      'leave_file',
+      MultipartFile.fromFileSync(
+        leave_file.path,
+        filename: leave_file.path.split(Platform.pathSeparator).last,
+      ),
+    ));
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<CutiResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,

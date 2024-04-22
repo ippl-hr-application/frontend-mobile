@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -28,12 +26,9 @@ class CutiRequest with _$CutiRequest {
   factory CutiRequest({
     @JsonKey(name: 'to') required String to,
     @JsonKey(name: 'from') required String from,
-    @JsonKey(name: 'leave_reason') required String leave_reason,
-    @JsonKey(name: 'leave_type') required String leave_type,
-    @JsonKey(name: 'file_name') required String file_name,
-    @JsonKey(name: 'file_size') required int file_size,
-    @JsonKey(name: 'file_type') required String file_type,
-    @JsonKey(name: 'file_url') required String file_url,
+    @JsonKey(name: 'leave_reason') required String leaveReason,
+    @JsonKey(name: 'leave_type') required String leaveType,
+    @FileConverter() @JsonKey(name: 'leave_file') required File leave_file,
   }) = _CutiRequest;
 
   factory CutiRequest.fromJson(Map<String, dynamic> json) =>
@@ -55,9 +50,9 @@ class CutiResponse with _$CutiResponse {
 class CutiData with _$CutiData {
   factory CutiData({
     @JsonKey(name: 'from') String? from,
+    @JsonKey(name: 'leave_reason') String? leaveReason,
+    @JsonKey(name: 'leave_type') String? leaveType,
     @JsonKey(name: 'to') String? to,
-    @JsonKey(name: 'leave_reason') String? leave_reason,
-    @JsonKey(name: 'leave_type') String? leave_type,
   }) = _CutiData;
 
   factory CutiData.fromJson(Map<String, dynamic> json) =>

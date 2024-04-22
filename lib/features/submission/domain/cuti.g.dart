@@ -10,24 +10,18 @@ _$CutiRequestImpl _$$CutiRequestImplFromJson(Map<String, dynamic> json) =>
     _$CutiRequestImpl(
       to: json['to'] as String,
       from: json['from'] as String,
-      leave_reason: json['leave_reason'] as String,
-      leave_type: json['leave_type'] as String,
-      file_name: json['file_name'] as String,
-      file_size: json['file_size'] as int,
-      file_type: json['file_type'] as String,
-      file_url: json['file_url'] as String,
+      leaveReason: json['leave_reason'] as String,
+      leaveType: json['leave_type'] as String,
+      leave_file: const FileConverter().fromJson(json['leave_file'] as String),
     );
 
 Map<String, dynamic> _$$CutiRequestImplToJson(_$CutiRequestImpl instance) =>
     <String, dynamic>{
       'to': instance.to,
       'from': instance.from,
-      'leave_reason': instance.leave_reason,
-      'leave_type': instance.leave_type,
-      'file_name': instance.file_name,
-      'file_size': instance.file_size,
-      'file_type': instance.file_type,
-      'file_url': instance.file_url,
+      'leave_reason': instance.leaveReason,
+      'leave_type': instance.leaveType,
+      'leave_file': const FileConverter().toJson(instance.leave_file),
     };
 
 _$CutiResponseImpl _$$CutiResponseImplFromJson(Map<String, dynamic> json) =>
@@ -49,15 +43,15 @@ Map<String, dynamic> _$$CutiResponseImplToJson(_$CutiResponseImpl instance) =>
 _$CutiDataImpl _$$CutiDataImplFromJson(Map<String, dynamic> json) =>
     _$CutiDataImpl(
       from: json['from'] as String?,
+      leaveReason: json['leave_reason'] as String?,
+      leaveType: json['leave_type'] as String?,
       to: json['to'] as String?,
-      leave_reason: json['leave_reason'] as String?,
-      leave_type: json['leave_type'] as String?,
     );
 
 Map<String, dynamic> _$$CutiDataImplToJson(_$CutiDataImpl instance) =>
     <String, dynamic>{
       'from': instance.from,
+      'leave_reason': instance.leaveReason,
+      'leave_type': instance.leaveType,
       'to': instance.to,
-      'leave_reason': instance.leave_reason,
-      'leave_type': instance.leave_type,
     };

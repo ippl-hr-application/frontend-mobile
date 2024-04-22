@@ -79,15 +79,15 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
                 items: [
                   DropdownMenuItem(
                     child: Text('Tahunan'),
-                    value: 'Tahunan',
+                    value: 'tahunan',
                   ),
                   DropdownMenuItem(
                     child: Text('Bulanan'),
-                    value: 'Bulanan',
+                    value: 'bulanan',
                   ),
                   DropdownMenuItem(
                     child: Text('Lahiran'),
-                    value: 'Lahiran',
+                    value: 'lahiran',
                   ),
                 ],
               ),
@@ -137,17 +137,24 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
                         Map<String, dynamic> formData =
                             _formKey.currentState!.value;
 
-                        print(formData['Alasan']);
+                        print(formData['Alasan'].runtimeType);
+                        print(convertToIso8601(
+                            formData['CutiDate'].start.toString()));
+                        print(convertToIso8601(
+                            formData['CutiDate'].end.toString()));
                         print(File(filePickerResult!.files.first.path ?? '')
-                            .path);
-                        handleCutiSubmission(
-                            convertToIso8601(
+                            .path
+                            .runtimeType);
+                        print(formData['Jenis_Cuti'].runtimeType);
+                        handleCutiSubmission(CutiRequest(
+                            to: convertToIso8601(
                                 formData['CutiDate'].start.toString()),
-                            convertToIso8601(
+                            from: convertToIso8601(
                                 formData['CutiDate'].end.toString()),
-                            formData['Alasan'],
-                            formData['Jenis_Cuti'],
-                            File(filePickerResult!.files.first.path ?? ''));
+                            leaveReason: formData['Alasan'],
+                            leaveType: formData['Jenis_Cuti'].toString(),
+                            leave_file: File(
+                                filePickerResult!.files.first.path ?? '')));
                       }
                     },
                     child: Text('Kirim Pengajuan'),
