@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/submission/domain/resign.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/resign_provider.dart';
 import 'package:signature/signature.dart';
 
@@ -26,8 +29,6 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
 
   FilePickerResult? filePickerResult;
 
-  ResignController controller = ResignController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +40,7 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
             color: Colors.white,
           ),
           onPressed: () {
-            context.go('/daftarPengajuan');
+            context.go('/submission');
           },
         ),
         flexibleSpace: const Stack(
@@ -96,10 +97,10 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
                       if (_formKey.currentState!.saveAndValidate()) {
                         Map<String, dynamic> formData =
                             _formKey.currentState!.value;
-                        controller.handleResign(
-                          permission_reason: formData['Keterangan'],
-                          permission_file: filePickerResult!.files.first.path,
-                        );
+                        handleResignSubmission(ResignRequest(
+                            reason: formData['Keterangan'],
+                            resign_file: File(
+                                filePickerResult!.files.first.path ?? '')));
                       }
                     },
                     child: Text('Kirim Pengajuan'),

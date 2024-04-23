@@ -8,14 +8,15 @@ part of 'resign.dart';
 
 _$ResignRequestImpl _$$ResignRequestImplFromJson(Map<String, dynamic> json) =>
     _$ResignRequestImpl(
-      permission_reason: json['permission_reason'] as String,
-      permission_file: json['permission_file'] as String?,
+      reason: json['reason'] as String,
+      resign_file:
+          const FileConverter().fromJson(json['resign_file'] as String),
     );
 
 Map<String, dynamic> _$$ResignRequestImplToJson(_$ResignRequestImpl instance) =>
     <String, dynamic>{
-      'permission_reason': instance.permission_reason,
-      'permission_file': instance.permission_file,
+      'reason': instance.reason,
+      'resign_file': const FileConverter().toJson(instance.resign_file),
     };
 
 _$ResignResponseImpl _$$ResignResponseImplFromJson(Map<String, dynamic> json) =>
@@ -37,18 +38,12 @@ Map<String, dynamic> _$$ResignResponseImplToJson(
 
 _$ResignDataImpl _$$ResignDataImplFromJson(Map<String, dynamic> json) =>
     _$ResignDataImpl(
-      permission_submission_id: json['permission_submission_id'] as int?,
-      submision_id: json['submision_id'] as int?,
-      employee_file_id: json['employee_file_id'] as int?,
-      permission_reason: json['permission_reason'] as String?,
-      type: json['type'] as String?,
+      reason: json['reason'] as String?,
+      employee_id: json['employee_id'] as String?,
     );
 
 Map<String, dynamic> _$$ResignDataImplToJson(_$ResignDataImpl instance) =>
     <String, dynamic>{
-      'permission_submission_id': instance.permission_submission_id,
-      'submision_id': instance.submision_id,
-      'employee_file_id': instance.employee_file_id,
-      'permission_reason': instance.permission_reason,
-      'type': instance.type,
+      'reason': instance.reason,
+      'employee_id': instance.employee_id,
     };
