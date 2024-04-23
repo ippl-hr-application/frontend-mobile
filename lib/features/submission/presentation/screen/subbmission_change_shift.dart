@@ -32,12 +32,8 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
 
   @override
   Widget build(BuildContext context) {
-    final int shiftId = 1;
     final shiftCompanyData = ref.watch(shiftCompanyProvider);
     final homeHistoryData = ref.watch(homeProvider);
-
-    final int _selectedShiftId; // Variable to store the selected shift_id
-    String _selectedShiftName = '';
 
     return Scaffold(
       appBar: AppBar(

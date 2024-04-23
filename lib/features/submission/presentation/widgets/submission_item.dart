@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meraih_mobile/utils/format_date.dart';
+import 'package:meraih_mobile/features/submission/presentation/providers/delete_submission_provider.dart';
 
 class SubmissionItem extends StatelessWidget {
   final int? submissionId;
@@ -62,7 +63,10 @@ class SubmissionItem extends StatelessWidget {
                           Icons.delete_outline,
                           color: Colors.red,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          handleDeleteSubmission(submissionId);
+                          print(submissionId.toString());
+                        },
                       )
                     : SizedBox())
           ],
@@ -70,4 +74,4 @@ class SubmissionItem extends StatelessWidget {
       ),
     );
   }
-}  
+}

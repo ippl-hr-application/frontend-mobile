@@ -1,8 +1,19 @@
+import 'dart:io';
+import 'package:intl/intl.dart';
+import 'package:meraih_mobile/utils/date.dart';
+import 'package:signature/signature.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:signature/signature.dart';
+import 'package:meraih_mobile/features/submission/domain/mutasi.dart';
+import 'package:meraih_mobile/features/submission/presentation/providers/mutasi_provider.dart';
+import 'package:meraih_mobile/utils/format_date.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 
 class SubmissionMutasi extends ConsumerStatefulWidget {
   const SubmissionMutasi({super.key});
@@ -18,8 +29,14 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
     penColor: Colors.black,
   );
 
+  String? showFileName = "";
+  String? selectTargetBranch = "";
+  FilePickerResult? filePickerResult;
+
   @override
   Widget build(BuildContext context) {
+    final homeHistoryData = ref.watch(homeProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -48,9 +65,10 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FormBuilder(
+          key: _formKey,
           child: Column(
             children: [
               Container(
@@ -69,19 +87,77 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                             color: Color.fromRGBO(32, 81, 229, 1),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: const Icon(
-                          Icons.date_range_outlined,
+                          Icons.type_specimen,
                           color: Colors.white,
                         )),
                     const SizedBox(width: 16.0),
-                    const Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                    Expanded(
+                        child: homeHistoryData.when(
+                      data: (data) {
+                        return FormBuilderTextField(
+                          initialValue: data!.jobPosition.toString(),
+                          readOnly: true,
+                          name: 'Jabatan',
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 6.0),
-                            border: OutlineInputBorder(),
-                            hintText: "Muhammad Saman"),
-                      ),
-                    )
+                            labelText: 'Jabatan',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        );
+                      },
+                      error: (error, stackTrace) =>
+                          Center(child: Text('Error: $error')),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                    ))
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(
+                          Icons.type_specimen,
+                          color: Colors.white,
+                        )),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                        child: homeHistoryData.when(
+                      data: (data) {
+                        return FormBuilderTextField(
+                          initialValue: data!.companyName.toString(),
+                          readOnly: true,
+                          name: 'Cabang Sekarang',
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 6.0),
+                            labelText: 'Cabang Sekarang',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        );
+                      },
+                      error: (error, stackTrace) =>
+                          Center(child: Text('Error: $error')),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                    ))
                   ],
                 ),
               ),
@@ -109,58 +185,7 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                         child: FormBuilder(
                             // key: _formkey,
                             child: FormBuilderDropdown(
-                      name: 'Jabatan',
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 6.0),
-                        labelText: 'Jabatan',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      items: const [
-                        DropdownMenuItem(
-                          child: Text('Cuti Tahunan'),
-                          value: 'Cuti Tahunan',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Cuti Bulanan'),
-                          value: 'Cuti Bulanan',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Cuti Lahiran'),
-                          value: 'Cuti Lahiran',
-                        ),
-                      ],
-                    )))
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.type_specimen,
-                          color: Colors.white,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                        child: FormBuilder(
-                            // key: _formkey,
-                            child: FormBuilderDropdown(
-                      name: 'Cabang',
+                      name: 'cabang',
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 0, horizontal: 6.0),
@@ -169,18 +194,19 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          selectTargetBranch = value;
+                        });
+                      },
                       items: const [
                         DropdownMenuItem(
-                          child: Text('Cuti Tahunan'),
-                          value: 'Cuti Tahunan',
+                          child: Text('Balikpapan'),
+                          value: '48931c6d-451e-4183-a9ff-30b3686a7f32',
                         ),
                         DropdownMenuItem(
-                          child: Text('Cuti Bulanan'),
-                          value: 'Cuti Bulanan',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Cuti Lahiran'),
-                          value: 'Cuti Lahiran',
+                          child: Text('Samarinda'),
+                          value: 'c2f985e5-c77b-4620-8367-ce410d20a9d1',
                         ),
                       ],
                     )))
@@ -207,18 +233,142 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                           color: Colors.white,
                         )),
                     const SizedBox(width: 16.0),
-                    const Expanded(
-                      child: TextField(
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'keterangan',
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 6.0),
-                            border: OutlineInputBorder(),
-                            hintText: "Alasan"),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 16.0, horizontal: 10.0),
+                          labelText: 'Alasan Mutasi',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(
+                          Icons.drive_file_move,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8.0)),
+                            border:
+                                Border.all(color: Colors.black, width: 0.5)),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () async {
+                                filePickerResult =
+                                    await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions: ['pdf', 'jpg', 'png'],
+                                );
+                                if (filePickerResult != null) {
+                                  setState(() {
+                                    showFileName =
+                                        filePickerResult!.files.first.name;
+                                  });
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 13.0, horizontal: 8.0),
+                                  backgroundColor:
+                                      const Color.fromRGBO(243, 243, 243, 1),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0)))),
+                              child: const Text(
+                                'Pilih File',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            const SizedBox(width: 8.0),
+                            Expanded(
+                                child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                showFileName.toString(),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // const SizedBox(height: 20),
+              // const Spacer(),
+              // Align(
+              //   child: SizedBox(
+              //     width: double.infinity,
+              //     child: ElevatedButton(
+              //       onPressed: () {
+              //         if (_formKey.currentState!.saveAndValidate()) {
+              //           Map<String, dynamic> formData =
+              //               _formKey.currentState!.value;
+              //           print(formData['keterangan']);
+              //           print(selectTargetBranch);
+              //           print(homeHistoryData.asData?.value?.companyBranchId
+              //               .toString());
+              //           print(File(filePickerResult!.files.first.path ?? '')
+              //               .path);
+
+              //           // handleMutation(MutasiRequest(
+              //           //     mutationReason: formData['alasan'],
+              //           //     currenCompanyBranchId: homeHistoryData
+              //           //         .asData!.value!.companyBranchId
+              //           //         .toString(),
+              //           //     targetCompanyBranchId: selectTargetBranch.toString(),
+              //           //     mutationFile:
+              //           //         File(filePickerResult!.files.first.path ?? '')));
+              //         }
+              //       },
+              //       style: ElevatedButton.styleFrom(
+              //           backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+              //           shape: const RoundedRectangleBorder(
+              //               borderRadius:
+              //                   BorderRadius.all(Radius.circular(10)))),
+              //       child: const Padding(
+              //         padding: EdgeInsets.symmetric(vertical: 16.0),
+              //         child: Text(
+              //           'Kirim Pengajuan',
+              //           style: TextStyle(
+              //               fontSize: 16.0,
+              //               fontWeight: FontWeight.bold,
+              //               color: Colors.white),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -232,7 +382,26 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              if (_formKey.currentState!.saveAndValidate()) {
+                Map<String, dynamic> formData = _formKey.currentState!.value;
+
+                print(formData['keterangan']);
+                print(selectTargetBranch);
+                print(
+                    homeHistoryData.asData?.value?.companyBranchId.toString());
+                print(File(filePickerResult!.files.first.path ?? '').path);
+
+                handleMutation(MutasiRequest(
+                    mutationReason: formData['keterangan'],
+                    currenCompanyBranchId: homeHistoryData
+                        .asData!.value!.companyBranchId
+                        .toString(),
+                    targetCompanyBranchId: selectTargetBranch.toString(),
+                    mutationFile:
+                        File(filePickerResult!.files.first.path ?? '')));
+              }
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
               shape: const RoundedRectangleBorder(

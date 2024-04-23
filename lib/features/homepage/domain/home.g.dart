@@ -32,6 +32,8 @@ _$HomeDataImpl _$$HomeDataImplFromJson(Map<String, dynamic> json) =>
       shiftId: json['shift_id'] as int?,
       shiftName: json['shift_name'] as String?,
       jobPosition: json['job_position'] as String?,
+      companyBranchId: json['company_branch_id'] as String?,
+      city: json['city'] as String?,
     );
 
 Map<String, dynamic> _$$HomeDataImplToJson(_$HomeDataImpl instance) =>
@@ -44,4 +46,6 @@ Map<String, dynamic> _$$HomeDataImplToJson(_$HomeDataImpl instance) =>
       'shift_id': instance.shiftId,
       'shift_name': instance.shiftName,
       'job_position': instance.jobPosition,
+      'company_branch_id': instance.companyBranchId,
+      'city': instance.city,
     };

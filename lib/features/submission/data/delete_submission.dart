@@ -9,5 +9,5 @@ part 'delete_submission.g.dart';
 abstract class DeleteSubmission {
   factory DeleteSubmission(Dio dio, {String baseUrl}) = _DeleteSubmission;
   @DELETE('/submission/{id}')
-  Future<dynamic> deleteSubmission();
+  Future<void> deleteSubmission(@Path() int id);
 }

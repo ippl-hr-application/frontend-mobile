@@ -39,14 +39,24 @@ class Submission extends ConsumerWidget {
                   data: (data) {
                     return ListView.builder(
                       shrinkWrap: true,
-                      itemCount: data?.length,
-                      itemBuilder: (context, index) {
-                        return SubmissionItem(
-                          submissionId: data?[index].submission_id,
-                          submissionDate: data?[index].submission_date,
-                          status: data?[index].status,
-                          type: data?[index].type,
-                        );
+                      itemCount: data == null ? 0 : data.length,
+                      itemBuilder: (context, int index) {
+                        if (data?[index] == null) {
+                          return Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: const Text(
+                              "Anda belum Melakukan pengajuan",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          );
+                        } else {
+                          return SubmissionItem(
+                            submissionId: data?[index].submission_id,
+                            submissionDate: data?[index].submission_date,
+                            status: data?[index].status,
+                            type: data?[index].type,
+                          );
+                        }
                       },
                     );
                   },

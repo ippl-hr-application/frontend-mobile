@@ -26,7 +26,9 @@ class HomeData with _$HomeData {
       @JsonKey(name: 'to') String? to,
       @JsonKey(name: 'shift_id') int? shiftId,
       @JsonKey(name: 'shift_name') String? shiftName,
-      @JsonKey(name: 'job_position') String? jobPosition}) = _HomeData;
+      @JsonKey(name: 'job_position') String? jobPosition,
+      @JsonKey(name: 'company_branch_id') String? companyBranchId,
+      @JsonKey(name: 'city') String? city}) = _HomeData;
 
   factory HomeData.fromJson(Map<String, dynamic> json) =>
       _$HomeDataFromJson(json);
