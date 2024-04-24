@@ -18,11 +18,9 @@ class _CheckinMapState extends State<AttendanceList> {
   void initState() {
     super.initState();
     _selectedDay = DateTime.now();
-    // Initialize statusMap with default values
     _initializeStatusMap();
   }
 
-  // Method to initialize statusMap with default values
   void _initializeStatusMap() {
     statusMap = {
       DateTime(2024, 4, 1): true, 
@@ -30,7 +28,6 @@ class _CheckinMapState extends State<AttendanceList> {
     };
   }
 
-  // Method to update statusMap from external data
   void updateStatusMap(Map<DateTime, bool> newStatusMap) {
     setState(() {
       statusMap = newStatusMap;
@@ -49,7 +46,7 @@ class _CheckinMapState extends State<AttendanceList> {
           },
         ),
         title: Text(
-          'Check In',
+          'Riwayat Kehadiran',
           style: TextStyle(color: Colors.white),
         ),
       ),
