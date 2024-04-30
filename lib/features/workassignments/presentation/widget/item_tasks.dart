@@ -18,7 +18,7 @@ class ItemTasks extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      // padding: const EdgeInsets.symmetric(vertical: 10.0),
       decoration: const BoxDecoration(
         border: Border(
           bottom:
