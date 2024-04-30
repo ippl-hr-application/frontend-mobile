@@ -26,6 +26,8 @@ mixin _$ChangeShiftRequest {
   int get currentShift => throw _privateConstructorUsedError;
   @JsonKey(name: 'target_shift_id')
   int get targetShift => throw _privateConstructorUsedError;
+  @JsonKey(name: 'reason')
+  String get reason => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +44,8 @@ abstract class $ChangeShiftRequestCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'target_date') String targetDate,
       @JsonKey(name: 'current_shift_id') int currentShift,
-      @JsonKey(name: 'target_shift_id') int targetShift});
+      @JsonKey(name: 'target_shift_id') int targetShift,
+      @JsonKey(name: 'reason') String reason});
 }
 
 /// @nodoc
@@ -61,6 +64,7 @@ class _$ChangeShiftRequestCopyWithImpl<$Res, $Val extends ChangeShiftRequest>
     Object? targetDate = null,
     Object? currentShift = null,
     Object? targetShift = null,
+    Object? reason = null,
   }) {
     return _then(_value.copyWith(
       targetDate: null == targetDate
@@ -75,6 +79,10 @@ class _$ChangeShiftRequestCopyWithImpl<$Res, $Val extends ChangeShiftRequest>
           ? _value.targetShift
           : targetShift // ignore: cast_nullable_to_non_nullable
               as int,
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -90,7 +98,8 @@ abstract class _$$ChangeShiftRequestImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'target_date') String targetDate,
       @JsonKey(name: 'current_shift_id') int currentShift,
-      @JsonKey(name: 'target_shift_id') int targetShift});
+      @JsonKey(name: 'target_shift_id') int targetShift,
+      @JsonKey(name: 'reason') String reason});
 }
 
 /// @nodoc
@@ -107,6 +116,7 @@ class __$$ChangeShiftRequestImplCopyWithImpl<$Res>
     Object? targetDate = null,
     Object? currentShift = null,
     Object? targetShift = null,
+    Object? reason = null,
   }) {
     return _then(_$ChangeShiftRequestImpl(
       targetDate: null == targetDate
@@ -121,6 +131,10 @@ class __$$ChangeShiftRequestImplCopyWithImpl<$Res>
           ? _value.targetShift
           : targetShift // ignore: cast_nullable_to_non_nullable
               as int,
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -131,7 +145,8 @@ class _$ChangeShiftRequestImpl implements _ChangeShiftRequest {
   _$ChangeShiftRequestImpl(
       {@JsonKey(name: 'target_date') required this.targetDate,
       @JsonKey(name: 'current_shift_id') required this.currentShift,
-      @JsonKey(name: 'target_shift_id') required this.targetShift});
+      @JsonKey(name: 'target_shift_id') required this.targetShift,
+      @JsonKey(name: 'reason') required this.reason});
 
   factory _$ChangeShiftRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChangeShiftRequestImplFromJson(json);
@@ -145,10 +160,13 @@ class _$ChangeShiftRequestImpl implements _ChangeShiftRequest {
   @override
   @JsonKey(name: 'target_shift_id')
   final int targetShift;
+  @override
+  @JsonKey(name: 'reason')
+  final String reason;
 
   @override
   String toString() {
-    return 'ChangeShiftRequest(targetDate: $targetDate, currentShift: $currentShift, targetShift: $targetShift)';
+    return 'ChangeShiftRequest(targetDate: $targetDate, currentShift: $currentShift, targetShift: $targetShift, reason: $reason)';
   }
 
   @override
@@ -161,13 +179,14 @@ class _$ChangeShiftRequestImpl implements _ChangeShiftRequest {
             (identical(other.currentShift, currentShift) ||
                 other.currentShift == currentShift) &&
             (identical(other.targetShift, targetShift) ||
-                other.targetShift == targetShift));
+                other.targetShift == targetShift) &&
+            (identical(other.reason, reason) || other.reason == reason));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, targetDate, currentShift, targetShift);
+      Object.hash(runtimeType, targetDate, currentShift, targetShift, reason);
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +207,8 @@ abstract class _ChangeShiftRequest implements ChangeShiftRequest {
   factory _ChangeShiftRequest(
           {@JsonKey(name: 'target_date') required final String targetDate,
           @JsonKey(name: 'current_shift_id') required final int currentShift,
-          @JsonKey(name: 'target_shift_id') required final int targetShift}) =
+          @JsonKey(name: 'target_shift_id') required final int targetShift,
+          @JsonKey(name: 'reason') required final String reason}) =
       _$ChangeShiftRequestImpl;
 
   factory _ChangeShiftRequest.fromJson(Map<String, dynamic> json) =
@@ -203,6 +223,9 @@ abstract class _ChangeShiftRequest implements ChangeShiftRequest {
   @override
   @JsonKey(name: 'target_shift_id')
   int get targetShift;
+  @override
+  @JsonKey(name: 'reason')
+  String get reason;
   @override
   @JsonKey(ignore: true)
   _$$ChangeShiftRequestImplCopyWith<_$ChangeShiftRequestImpl> get copyWith =>

@@ -9,10 +9,10 @@ part 'change_shift.g.dart';
 @freezed
 class ChangeShiftRequest with _$ChangeShiftRequest {
   factory ChangeShiftRequest(
-          {@JsonKey(name: 'target_date') required String targetDate,
-          @JsonKey(name: 'current_shift_id') required int currentShift,
-          @JsonKey(name: 'target_shift_id') required int targetShift}) =
-      _ChangeShiftRequest;
+      {@JsonKey(name: 'target_date') required String targetDate,
+      @JsonKey(name: 'current_shift_id') required int currentShift,
+      @JsonKey(name: 'target_shift_id') required int targetShift,
+      @JsonKey(name: 'reason') required String reason}) = _ChangeShiftRequest;
 
   factory ChangeShiftRequest.fromJson(Map<String, dynamic> json) =>
       _$ChangeShiftRequestFromJson(json);

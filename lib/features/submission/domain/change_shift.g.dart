@@ -12,6 +12,7 @@ _$ChangeShiftRequestImpl _$$ChangeShiftRequestImplFromJson(
       targetDate: json['target_date'] as String,
       currentShift: json['current_shift_id'] as int,
       targetShift: json['target_shift_id'] as int,
+      reason: json['reason'] as String,
     );
 
 Map<String, dynamic> _$$ChangeShiftRequestImplToJson(
@@ -20,6 +21,7 @@ Map<String, dynamic> _$$ChangeShiftRequestImplToJson(
       'target_date': instance.targetDate,
       'current_shift_id': instance.currentShift,
       'target_shift_id': instance.targetShift,
+      'reason': instance.reason,
     };
 
 _$ChangeShiftResponseImpl _$$ChangeShiftResponseImplFromJson(

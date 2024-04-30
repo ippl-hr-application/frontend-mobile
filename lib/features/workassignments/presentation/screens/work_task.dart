@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meraih_mobile/features/workassignments/presentation/provider/tasks_provider.dart';
 import 'package:meraih_mobile/features/workassignments/presentation/widget/detail_task.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/workassignments/presentation/widget/detail_task.dart';
+import 'package:meraih_mobile/features/workassignments/presentation/widget/item_tasks.dart';
 
-class WorkTask extends StatelessWidget {
+class WorkTask extends ConsumerWidget {
   const WorkTask({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tasksHistoryData = ref.watch(tasksProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -38,80 +43,38 @@ class WorkTask extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            const Text("Select Tanggal"),
+            // const Text("Select Tanggal"),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1.0,
-                            color: Color.fromARGB(255, 186, 186, 186)),
-                      ),
-                    ),
-                    child: const Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Arwin",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(width: 4.0),
-                                Text(
-                                  "||",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(width: 4.0),
-                                Text(
-                                  "Owner",
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+                padding: const EdgeInsets.all(16.0),
+                child: tasksHistoryData.when(
+                  data: (data) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: data == null ? 0 : data.tasks?.length,
+                      itemBuilder: (context, int index) {
+                        if (data?.tasks?[index] == null) {
+                          return Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: const Text(
+                              "Anda belum Melakukan pengajuan",
+                              style: TextStyle(color: Colors.red),
                             ),
-                            DetailTask()
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Rekapitulasi",
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.normal),
-                                ),
-                                Text("DL 20 Januari")
-                              ],
-                            ),
-                            Text("Done")
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )
+                          );
+                        } else {
+                          return ItemTasks(
+                            title: data?.tasks?[index].title,
+                            description: data?.tasks?[index].description,
+                            endDate: data?.tasks?[index].endDate
+                            );
+                        }
+                      },
+                    );
+                  },
+                  error: (error, stackTrace) =>
+                      Center(child: Text('Error: $error')),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                ))
           ],
         ),
       ),

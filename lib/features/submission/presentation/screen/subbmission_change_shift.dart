@@ -211,6 +211,43 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                   ],
                 ),
               ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(
+                          Icons.timelapse_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'keterangan',
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 16.0, horizontal: 10.0),
+                          labelText: 'Alasan ganti shift',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 20),
               const Spacer(),
               Align(
@@ -221,10 +258,10 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                       if (_formKey.currentState!.saveAndValidate()) {
                         Map<String, dynamic> formData =
                             _formKey.currentState!.value;
-                        print(int.parse(formData['shift']));
-                        print(formData['izinDate']);
-                        print(selectedShiftBaru);
-                        print(homeHistoryData.asData!.value!.shiftId);
+
+                        // print(formData['izinDate']);
+                        // print(selectedShiftBaru);
+                        // print(homeHistoryData.asData!.value!.shiftId);
 
                         handleChangeShift(ChangeShiftRequest(
                             targetDate: convertToIso8601(
@@ -232,7 +269,8 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                             currentShift: int.parse(homeHistoryData
                                 .asData!.value!.shiftId
                                 .toString()),
-                            targetShift: selectedShiftBaru!));
+                            targetShift: selectedShiftBaru!,
+                            reason: formData['keterangan']));
                       }
                     },
                     style: ElevatedButton.styleFrom(
