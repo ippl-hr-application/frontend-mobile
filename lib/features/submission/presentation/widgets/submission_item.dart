@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meraih_mobile/utils/format_date.dart';
-import 'package:meraih_mobile/features/submission/presentation/providers/delete_submission_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/alert_delete_submission.dart';
 
 class SubmissionItem extends StatelessWidget {
   final int? submissionId;
@@ -64,8 +64,11 @@ class SubmissionItem extends StatelessWidget {
                           color: Colors.red,
                         ),
                         onPressed: () {
-                          handleDeleteSubmission(submissionId);
-                          print(submissionId.toString());
+                          //jika pake alert
+                          AlertDeleteSubmission.show(context,
+                              type: type, submissionId: submissionId);
+                          // handleDeleteSubmission(submissionId);
+                          // print(submissionId.toString());
                         },
                       )
                     : SizedBox())

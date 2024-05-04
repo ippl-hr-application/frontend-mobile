@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/profile/presentation/provider/profile_provider.dart';
@@ -96,59 +97,62 @@ class MyProfile extends ConsumerWidget {
                               ),
                             ],
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${data?.firstName.toString()} ${data?.lastName.toString()}',
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                data!.email.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                data.residentialAddress.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                '${data?.firstName.toString()} ${data?.lastName.toString()}',
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                data.jobPosition!.name.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                data.employmentStatus!.name.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text(
-                                data.phoneNumber.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
+                          const SizedBox(width: 30.0),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${data?.firstName.toString()} ${data?.lastName.toString()}',
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data!.email.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.residentialAddress.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  '${data?.firstName.toString()} ${data?.lastName.toString()}',
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.jobPosition!.name.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.employmentStatus!.name.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.phoneNumber.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),

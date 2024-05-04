@@ -3,6 +3,7 @@ import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/attendance_list.dart';
 import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
 import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
+import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
 import 'package:meraih_mobile/features/payroll/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/DaftarPengajuanPage.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
@@ -180,14 +181,14 @@ GoRouter goRouter(GoRouterRef ref) {
           );
         },
       ),
+      GoRoute(
+        path: '/notifications',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: Notif_Page(),
+          );
+        },
+      ),
     ],
-    // redirect: (context, state) async {
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   String? token = prefs.getString('token');
-    //   if (token != null) {
-    //     return '/';
-    //   }
-    //   return '/login';
-    // }
   );
 }

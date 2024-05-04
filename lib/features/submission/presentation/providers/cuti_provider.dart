@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/submission/data/cuti_repository.dart';
 import 'package:meraih_mobile/features/submission/domain/cuti.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 
 // part 'cuti_provider.g.dart';
 

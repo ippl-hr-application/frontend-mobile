@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:meraih_mobile/features/submission/data/change_shift_repository.dart';
 import 'package:meraih_mobile/features/submission/data/submission_repository.dart';
 import 'package:meraih_mobile/features/submission/domain/change_shift.dart';
+import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 
 Future<dynamic> handleChangeShift(ChangeShiftRequest changeShif) async {
   final dio = Dio();

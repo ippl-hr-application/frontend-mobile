@@ -45,7 +45,7 @@ class WorkTask extends ConsumerWidget {
           children: <Widget>[
             // const Text("Select Tanggal"),
             Container(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: tasksHistoryData.when(
                   data: (data) {
                     return ListView.builder(
@@ -56,16 +56,15 @@ class WorkTask extends ConsumerWidget {
                           return Container(
                             padding: const EdgeInsets.all(8.0),
                             child: const Text(
-                              "Anda belum Melakukan pengajuan",
+                              "Task perkerjaan belum tersedia",
                               style: TextStyle(color: Colors.red),
                             ),
                           );
                         } else {
                           return ItemTasks(
-                            title: data?.tasks?[index].title,
-                            description: data?.tasks?[index].description,
-                            endDate: data?.tasks?[index].endDate
-                            );
+                              title: data?.tasks?[index].title,
+                              description: data?.tasks?[index].description,
+                              endDate: data?.tasks?[index].endDate);
                         }
                       },
                     );

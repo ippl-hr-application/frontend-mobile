@@ -30,7 +30,7 @@ class ItemTasks extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
+              const Row(
                 children: [
                   Text(
                     "Arwin",
@@ -57,7 +57,7 @@ class ItemTasks extends StatelessWidget {
                   ),
                 ],
               ),
-              DetailTask()
+              DetailTask(title: title, description: description)
             ],
           ),
           Row(
@@ -68,13 +68,13 @@ class ItemTasks extends StatelessWidget {
                 children: [
                   Text(
                     title.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16.0, fontWeight: FontWeight.normal),
                   ),
                   Text(formatDate(endDate.toString()))
                 ],
               ),
-              Text("Done")
+              const Text("Done")
             ],
           )
         ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
+import 'package:meraih_mobile/utils/auth.dart';
 import 'package:meraih_mobile/widgets/card_attendance.dart';
 // import 'package:meraih_mobile/widgets/card_attendance.dart';
 import 'package:meraih_mobile/data/image_home.dart';
@@ -7,6 +9,7 @@ import 'package:meraih_mobile/models/image_model.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
+import 'package:meraih_mobile/widgets/dialog_redirect.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -15,6 +18,10 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     double screenWidth = MediaQuery.of(context).size.width;
     final homeHistoryData = ref.watch(homeProvider);
+    final authProvider = ref.watch(authTokenProvider);
+    if (authProvider == null || AuthUtils.isTokenExpired(authProvider)) {
+      return DialogRedirect();
+    }
 
     return Scaffold(
       // appBar: AppBar(
@@ -22,7 +29,6 @@ class HomeScreen extends ConsumerWidget {
       // ),
       body: homeHistoryData.when(
         loading: () => Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Text('Error: $error'),
         data: ((data) {
           return SafeArea(
             child: Stack(
@@ -45,7 +51,7 @@ class HomeScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              data!.employeeName.toString(),
+                              data?.employeeName ?? "",
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
@@ -132,16 +138,19 @@ class HomeScreen extends ConsumerWidget {
                     margin: const EdgeInsets.only(
                         top: 90.0, left: 16.0, right: 16.0),
                     child: CardAttendance(
-                        companyName: data.companyName,
-                        date: data.date,
-                        from: data.from,
-                        to: data.to,
-                        jobPosition: data.jobPosition,
-                        )),
+                      companyName: data?.companyName,
+                      date: data?.date,
+                      from: data?.from,
+                      to: data?.to,
+                      jobPosition: data?.jobPosition,
+                    )),
               ],
             ),
           );
         }),
+        error: (Object error, StackTrace stackTrace) {
+          const DialogRedirect();
+        },
       ),
       bottomNavigationBar: const ButtomBar(),
       // bottomNavigationBar: Container(

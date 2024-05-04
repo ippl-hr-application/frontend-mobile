@@ -61,7 +61,7 @@ class _ButtomBarState extends State<ButtomBar> {
         context.go('/');
         break;
       case 1:
-        context.go('/login');
+        context.go('/notifications');
         break;
       case 2:
         context.go('/submission');
