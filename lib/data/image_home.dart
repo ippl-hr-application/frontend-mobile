@@ -10,7 +10,7 @@ var imageHome = [
       category: "Task Pekerjaan",
       path: "/work-assignment"),
   ImageModel(
-      imageAssets: "assets/slip_gaji.png", category: "Slip Gaji", path: "/"),
+      imageAssets: "assets/slip_gaji.png", category: "Slip Gaji", path: "/payroll"),
   ImageModel(
       imageAssets: "assets/calender.png",
       category: "Pelanggaran",

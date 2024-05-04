@@ -8,7 +8,7 @@ import 'package:meraih_mobile/configs/app_configs.dart';
 void main() {
   runApp(const ProviderScope(child: MyApp()));
   FilePicker.platform = FilePicker.platform;
-}
+  }
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});

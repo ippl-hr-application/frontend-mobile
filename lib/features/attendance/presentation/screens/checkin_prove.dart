@@ -1,9 +1,57 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:go_router/go_router.dart';
 
 class CheckinProve extends StatelessWidget {
-  const CheckinProve({super.key});
+    const CheckinProve({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return _CheckinProve();
+  }
+}
+
+class _CheckinProve extends StatefulWidget {
+  @override
+  _CheckinProveState createState() => _CheckinProveState();
+}
+
+class _CheckinProveState extends State<_CheckinProve> {
+  String ipAddress = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    _getIPAddress();
+  }
+
+  Future<void> _getIPAddress() async {
+    try {
+      final String result = await _getDeviceIP();
+      setState(() {
+        ipAddress = result;
+      });
+    } catch (e) {
+      setState(() {
+        ipAddress = 'Failed to get IP address';
+      });
+    }
+  }
+
+  Future<String> _getDeviceIP() async {
+    for (var interface in await NetworkInterface.list()) {
+      for (var addr in interface.addresses) {
+        if (!addr.isLoopback) {
+          if (addr.type.name.toLowerCase() == 'ipv4') {
+            return addr.address;
+          }
+        }
+      }
+    }
+    throw Exception('No IP address found');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +111,16 @@ class CheckinProve extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'IP Address',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+              ),
+              controller: TextEditingController(text: ipAddress),
+            ),
+            SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -80,9 +138,10 @@ class CheckinProve extends StatelessWidget {
 
   Future<void> _captureImage(BuildContext context) async {
     final picker = ImagePicker();
-    // final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
 
-    // if (pickedFile != null) {
-    // }
+    if (pickedFile != null) {
+
+    }
   }
 }

@@ -1,7 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/attendance_list.dart';
 import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
 import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
+import 'package:meraih_mobile/features/payroll/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/DaftarPengajuanPage.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';
@@ -31,15 +33,27 @@ GoRouter goRouter(GoRouterRef ref) {
         },
       ),
       GoRoute(
-        path: "/resset-password",
+        path: "/izin-test",
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: SubmissionIzin());
+        },
+      ),
+      GoRoute(
+        path: "/reset-password",
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: ForgetPassword());
         },
       ),
       GoRoute(
+        path: "/attendance-list",
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(child: AttendanceList());
+        },
+      ),
+      GoRoute(
         path: "/attendance",
         pageBuilder: (context, state) {
-          return const NoTransitionPage(child: Attendance());
+          return const NoTransitionPage(child: AttendanceList());
         },
       ),
       GoRoute(
@@ -155,6 +169,14 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: SubmissionMutasi(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/payroll',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: PayrollPage(),
           );
         },
       ),

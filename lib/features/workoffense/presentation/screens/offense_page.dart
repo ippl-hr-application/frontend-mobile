@@ -63,7 +63,6 @@ class _OffenceScreenState extends State<OffenceScreen> {
                         borderRadius: BorderRadius.circular(8)),
                     padding: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 16.0),
-                    // width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -79,7 +78,7 @@ class _OffenceScreenState extends State<OffenceScreen> {
                           child: const Icon(Icons.calendar_month),
                         )
                       ],
-                    )), // Replace with your actual widget
+                    )),
               ),
             ),
             Container(

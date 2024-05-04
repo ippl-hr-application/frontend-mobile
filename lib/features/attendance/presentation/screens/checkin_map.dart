@@ -1,46 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
-class CheckinMap extends StatefulWidget {
-  const CheckinMap({Key? key}) : super(key: key);
-
-  @override
-  _CheckinMapState createState() => _CheckinMapState();
-}
-
-class _CheckinMapState extends State<CheckinMap> {
-  late GoogleMapController mapController;
+class CheckinMap extends StatelessWidget {
+  const CheckinMap({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF2051E5),
-        title: Row(
+        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        flexibleSpace: Stack(
           children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            Text(
-              'Check In',
-              style: TextStyle(color: Colors.white),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 18,
+              child: Center(
+                child: Text(
+                  "Lokasi Kamu !",
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+              ),
             ),
           ],
         ),
       ),
-      body: GoogleMap(
-        onMapCreated: (controller) {
-          setState(() {
-            mapController = controller;
-          });
-        },
-        initialCameraPosition: CameraPosition(
-          target: LatLng(40.7128, -74.0060),
-          zoom: 15.0,
-        ),
+      body: Stack(
+        children: [
+          FlutterMap(
+            options: MapOptions(
+              center: LatLng(-2.5489, 118.0149),
+              zoom: 5.0,
+            ),
+            children: [
+              TileLayer(
+                urlTemplate:
+                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                subdomains: ['a', 'b', 'c'],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
