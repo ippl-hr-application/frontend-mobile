@@ -41,9 +41,10 @@ Map<String, dynamic> _$$IzinResponseImplToJson(_$IzinResponseImpl instance) =>
 
 _$IzinDataImpl _$$IzinDataImplFromJson(Map<String, dynamic> json) =>
     _$IzinDataImpl(
-      permission_submission_id: json['permission_submission_id'] as int?,
-      submision_id: json['submision_id'] as int?,
-      employee_file_id: json['employee_file_id'] as int?,
+      permission_submission_id:
+          (json['permission_submission_id'] as num?)?.toInt(),
+      submision_id: (json['submision_id'] as num?)?.toInt(),
+      employee_file_id: (json['employee_file_id'] as num?)?.toInt(),
       from: json['from'] as String?,
       to: json['to'] as String?,
       permission_reason: json['permission_reason'] as String?,

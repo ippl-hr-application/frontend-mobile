@@ -37,7 +37,7 @@ Map<String, dynamic> _$$ShiftImplToJson(_$ShiftImpl instance) =>
 
 _$DataShiftImpl _$$DataShiftImplFromJson(Map<String, dynamic> json) =>
     _$DataShiftImpl(
-      shift_id: json['shift_id'] as int?,
+      shift_id: (json['shift_id'] as num?)?.toInt(),
       companyBranchId: json['company_branch_id'] as String?,
       name: json['name'] as String?,
       startTime: json['start_time'] as String?,

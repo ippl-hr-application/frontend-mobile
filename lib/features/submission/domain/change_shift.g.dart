@@ -10,8 +10,8 @@ _$ChangeShiftRequestImpl _$$ChangeShiftRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$ChangeShiftRequestImpl(
       targetDate: json['target_date'] as String,
-      currentShift: json['current_shift_id'] as int,
-      targetShift: json['target_shift_id'] as int,
+      currentShift: (json['current_shift_id'] as num).toInt(),
+      targetShift: (json['target_shift_id'] as num).toInt(),
       reason: json['reason'] as String,
     );
 
@@ -51,8 +51,8 @@ Map<String, dynamic> _$$DataImplToJson(_$DataImpl instance) =>
 
 _$ResultImpl _$$ResultImplFromJson(Map<String, dynamic> json) => _$ResultImpl(
       employeeId: json['employee_id'] as String,
-      targetShiftId: json['target_shift_id'] as int,
-      currentShiftId: json['current_shift_id'] as int,
+      targetShiftId: (json['target_shift_id'] as num).toInt(),
+      currentShiftId: (json['current_shift_id'] as num).toInt(),
       targetDate: json['target_date'] as String,
     );
 

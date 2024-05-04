@@ -89,7 +89,7 @@ class LoginPage extends ConsumerWidget {
                   // style: ElevatedButton.styleFrom(
                   //   primary: Color(0xFF2051E5), // Ubah warna latar belakang
                   // ),
-                  child: const Padding(
+                  child:  Padding(
                     padding: EdgeInsets.symmetric(vertical: 14.0),
                     child: Text(
                       "Login",

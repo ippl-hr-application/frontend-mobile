@@ -288,10 +288,10 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
                         handleCutiSubmission(CutiRequest(
                           from: convertToIso8601(
                               formData['CutiDate'].start.toString()),
-                          leave_reason: formData['Alasan'],
+                          leaveReason: formData['Alasan'],
                           leave_file:
                               File(filePickerResult!.files.first.path ?? ''),
-                          leave_type: formData['Jenis_Cuti'],
+                          leaveType: formData['Jenis_Cuti'],
                           to: convertToIso8601(
                               formData['CutiDate'].end.toString()),
                         ));

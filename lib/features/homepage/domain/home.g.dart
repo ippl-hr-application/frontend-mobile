@@ -29,7 +29,7 @@ _$HomeDataImpl _$$HomeDataImplFromJson(Map<String, dynamic> json) =>
       date: json['date'] as String?,
       from: json['from'] as String?,
       to: json['to'] as String?,
-      shiftId: json['shift_id'] as int?,
+      shiftId: (json['shift_id'] as num?)?.toInt(),
       shiftName: json['shift_name'] as String?,
       jobPosition: json['job_position'] as String?,
       companyBranchId: json['company_branch_id'] as String?,

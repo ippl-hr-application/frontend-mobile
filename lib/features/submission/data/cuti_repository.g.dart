@@ -22,27 +22,31 @@ class _CutiRepository implements CutiRepository {
 
   @override
   Future<CutiResponse> postCuti(
-    String from,
-    String leave_reason,
-    String leave_type,
-    File leave_file,
     String to,
+    String from,
+    String leaveReason,
+    String leavetype,
+    File leave_file,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = FormData();
     _data.fields.add(MapEntry(
+      'to',
+      to,
+    ));
+    _data.fields.add(MapEntry(
       'from',
       from,
     ));
     _data.fields.add(MapEntry(
       'leave_reason',
-      leave_reason,
+      leaveReason,
     ));
     _data.fields.add(MapEntry(
       'leave_type',
-      leave_type,
+      leavetype,
     ));
     _data.files.add(MapEntry(
       'leave_file',
@@ -50,10 +54,6 @@ class _CutiRepository implements CutiRepository {
         leave_file.path,
         filename: leave_file.path.split(Platform.pathSeparator).last,
       ),
-    ));
-    _data.fields.add(MapEntry(
-      'to',
-      to,
     ));
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<CutiResponse>(Options(

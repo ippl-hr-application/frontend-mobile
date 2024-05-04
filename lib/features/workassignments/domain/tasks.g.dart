@@ -35,7 +35,7 @@ Map<String, dynamic> _$$TasksImplToJson(_$TasksImpl instance) =>
 
 _$TasksDataImpl _$$TasksDataImplFromJson(Map<String, dynamic> json) =>
     _$TasksDataImpl(
-      taskId: json['task_id'] as int?,
+      taskId: (json['task_id'] as num?)?.toInt(),
       companybranchid: json['company_branch_id'] as String?,
       employeeid: json['employee_id'] as String?,
       title: json['title'] as String?,

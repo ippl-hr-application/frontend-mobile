@@ -21,20 +21,31 @@ class _ResignRepository implements ResignRepository {
   String? baseUrl;
 
   @override
-  Future<ResignResponse> resign(String token) async {
+  Future<ResignResponse> postResign(
+    String reason,
+    File resign_file,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6ImE3OTQ0MjFiLTYwMzctNGY5MS1iNTY3LTFjZTZhYTlhNjVlMCIsImNvbXBhbnlfYnJhbmNoX2lkIjo1LCJpYXQiOjE3MTExNzcwNzYsImV4cCI6MTcxMTc4MTg3Nn0.estJ0dXQuiKWNKmE2ogCrpI0wE-A8GuBnsczYaSnA0c':
-          token
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'reason',
+      reason,
+    ));
+    _data.files.add(MapEntry(
+      'resign_file',
+      MultipartFile.fromFileSync(
+        resign_file.path,
+        filename: resign_file.path.split(Platform.pathSeparator).last,
+      ),
+    ));
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<ResignResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,

@@ -11,20 +11,21 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 Future<dynamic> handleCutiSubmission(CutiRequest cuti) async {
   const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6IjA4YWIyOWU5LWU4NWItNDM1ZS05OTVlLWRkM2IzZDUxMjNjMSIsImNvbXBhbnlfYnJhbmNoX2lkIjoiNzNjOTBlM2QtMTkyMC00ZjUyLWI1YzAtZjM1ZmIzYjcyNzBiIiwiaWF0IjoxNzEyMDY5MDQyLCJleHAiOjE3MTI2NzM4NDJ9.pLt0OHUjaAY78a_xgY4shKDI_sKJa5OUuo7xGb71rm4";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6IjA0MWQ3ZjVhLTI4NmQtNGMzOS1hNjgyLWY4NmI5MDZmNzgyYyIsImNvbXBhbnlfYnJhbmNoX2lkIjoiNDg5MzFjNmQtNDUxZS00MTgzLWE5ZmYtMzBiMzY4NmE3ZjMyIiwiaWF0IjoxNzEzODAxNzM3LCJleHAiOjE3MTQ0MDY1Mzd9.aZgOthS42GM6_3XbAWp8bcnwDrsjiGZ-A15OXg148lY";
   final dio = Dio();
   dio.options.contentType = "multipart/form-data";
   dio.options.headers["Authorization"] = "Bearer $token";
   final cutiRepository = CutiRepository(dio);
   try {
-    final cutiSubmission = await cutiRepository.postCuti(cuti.from,
-        cuti.leave_reason, cuti.leave_type, cuti.leave_file, cuti.to);
+    final cutiSubmission = await cutiRepository.postCuti(
+        cuti.to, cuti.from, cuti.leaveReason, cuti.leaveType, cuti.leave_file);
 
     if (cutiSubmission.success == true) {
       print(cutiSubmission.message);
       return cutiSubmission;
     }
   } on DioException catch (e) {
+    print(e.toString());
     if (e.response != null) {
       print(e.response?.data);
     }

@@ -20,10 +20,11 @@ ResignRequest _$ResignRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ResignRequest {
-  @JsonKey(name: 'permission_reason')
-  String get permission_reason => throw _privateConstructorUsedError;
-  @JsonKey(name: 'permission_file')
-  String? get permission_file => throw _privateConstructorUsedError;
+  @JsonKey(name: 'reason')
+  String get reason => throw _privateConstructorUsedError;
+  @FileConverter()
+  @JsonKey(name: 'resign_file')
+  File get resign_file => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,8 +39,8 @@ abstract class $ResignRequestCopyWith<$Res> {
       _$ResignRequestCopyWithImpl<$Res, ResignRequest>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'permission_reason') String permission_reason,
-      @JsonKey(name: 'permission_file') String? permission_file});
+      {@JsonKey(name: 'reason') String reason,
+      @FileConverter() @JsonKey(name: 'resign_file') File resign_file});
 }
 
 /// @nodoc
@@ -55,18 +56,18 @@ class _$ResignRequestCopyWithImpl<$Res, $Val extends ResignRequest>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? permission_reason = null,
-    Object? permission_file = freezed,
+    Object? reason = null,
+    Object? resign_file = null,
   }) {
     return _then(_value.copyWith(
-      permission_reason: null == permission_reason
-          ? _value.permission_reason
-          : permission_reason // ignore: cast_nullable_to_non_nullable
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
               as String,
-      permission_file: freezed == permission_file
-          ? _value.permission_file
-          : permission_file // ignore: cast_nullable_to_non_nullable
-              as String?,
+      resign_file: null == resign_file
+          ? _value.resign_file
+          : resign_file // ignore: cast_nullable_to_non_nullable
+              as File,
     ) as $Val);
   }
 }
@@ -80,8 +81,8 @@ abstract class _$$ResignRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'permission_reason') String permission_reason,
-      @JsonKey(name: 'permission_file') String? permission_file});
+      {@JsonKey(name: 'reason') String reason,
+      @FileConverter() @JsonKey(name: 'resign_file') File resign_file});
 }
 
 /// @nodoc
@@ -95,18 +96,18 @@ class __$$ResignRequestImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? permission_reason = null,
-    Object? permission_file = freezed,
+    Object? reason = null,
+    Object? resign_file = null,
   }) {
     return _then(_$ResignRequestImpl(
-      permission_reason: null == permission_reason
-          ? _value.permission_reason
-          : permission_reason // ignore: cast_nullable_to_non_nullable
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
               as String,
-      permission_file: freezed == permission_file
-          ? _value.permission_file
-          : permission_file // ignore: cast_nullable_to_non_nullable
-              as String?,
+      resign_file: null == resign_file
+          ? _value.resign_file
+          : resign_file // ignore: cast_nullable_to_non_nullable
+              as File,
     ));
   }
 }
@@ -115,22 +116,25 @@ class __$$ResignRequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ResignRequestImpl implements _ResignRequest {
   _$ResignRequestImpl(
-      {@JsonKey(name: 'permission_reason') required this.permission_reason,
-      @JsonKey(name: 'permission_file') required this.permission_file});
+      {@JsonKey(name: 'reason') required this.reason,
+      @FileConverter()
+      @JsonKey(name: 'resign_file')
+      required this.resign_file});
 
   factory _$ResignRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$ResignRequestImplFromJson(json);
 
   @override
-  @JsonKey(name: 'permission_reason')
-  final String permission_reason;
+  @JsonKey(name: 'reason')
+  final String reason;
   @override
-  @JsonKey(name: 'permission_file')
-  final String? permission_file;
+  @FileConverter()
+  @JsonKey(name: 'resign_file')
+  final File resign_file;
 
   @override
   String toString() {
-    return 'ResignRequest(permission_reason: $permission_reason, permission_file: $permission_file)';
+    return 'ResignRequest(reason: $reason, resign_file: $resign_file)';
   }
 
   @override
@@ -138,16 +142,14 @@ class _$ResignRequestImpl implements _ResignRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ResignRequestImpl &&
-            (identical(other.permission_reason, permission_reason) ||
-                other.permission_reason == permission_reason) &&
-            (identical(other.permission_file, permission_file) ||
-                other.permission_file == permission_file));
+            (identical(other.reason, reason) || other.reason == reason) &&
+            (identical(other.resign_file, resign_file) ||
+                other.resign_file == resign_file));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, permission_reason, permission_file);
+  int get hashCode => Object.hash(runtimeType, reason, resign_file);
 
   @JsonKey(ignore: true)
   @override
@@ -165,20 +167,21 @@ class _$ResignRequestImpl implements _ResignRequest {
 
 abstract class _ResignRequest implements ResignRequest {
   factory _ResignRequest(
-      {@JsonKey(name: 'permission_reason')
-      required final String permission_reason,
-      @JsonKey(name: 'permission_file')
-      required final String? permission_file}) = _$ResignRequestImpl;
+      {@JsonKey(name: 'reason') required final String reason,
+      @FileConverter()
+      @JsonKey(name: 'resign_file')
+      required final File resign_file}) = _$ResignRequestImpl;
 
   factory _ResignRequest.fromJson(Map<String, dynamic> json) =
       _$ResignRequestImpl.fromJson;
 
   @override
-  @JsonKey(name: 'permission_reason')
-  String get permission_reason;
+  @JsonKey(name: 'reason')
+  String get reason;
   @override
-  @JsonKey(name: 'permission_file')
-  String? get permission_file;
+  @FileConverter()
+  @JsonKey(name: 'resign_file')
+  File get resign_file;
   @override
   @JsonKey(ignore: true)
   _$$ResignRequestImplCopyWith<_$ResignRequestImpl> get copyWith =>
@@ -398,16 +401,10 @@ ResignData _$ResignDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ResignData {
-  @JsonKey(name: 'permission_submission_id')
-  int? get permission_submission_id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'submision_id')
-  int? get submision_id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'employee_file_id')
-  int? get employee_file_id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'permission_reason')
-  String? get permission_reason => throw _privateConstructorUsedError;
-  @JsonKey(name: 'type')
-  String? get type => throw _privateConstructorUsedError;
+  @JsonKey(name: 'reason')
+  String? get reason => throw _privateConstructorUsedError;
+  @JsonKey(name: 'employee_id')
+  String? get employee_id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -422,11 +419,8 @@ abstract class $ResignDataCopyWith<$Res> {
       _$ResignDataCopyWithImpl<$Res, ResignData>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'permission_submission_id') int? permission_submission_id,
-      @JsonKey(name: 'submision_id') int? submision_id,
-      @JsonKey(name: 'employee_file_id') int? employee_file_id,
-      @JsonKey(name: 'permission_reason') String? permission_reason,
-      @JsonKey(name: 'type') String? type});
+      {@JsonKey(name: 'reason') String? reason,
+      @JsonKey(name: 'employee_id') String? employee_id});
 }
 
 /// @nodoc
@@ -442,32 +436,17 @@ class _$ResignDataCopyWithImpl<$Res, $Val extends ResignData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? permission_submission_id = freezed,
-    Object? submision_id = freezed,
-    Object? employee_file_id = freezed,
-    Object? permission_reason = freezed,
-    Object? type = freezed,
+    Object? reason = freezed,
+    Object? employee_id = freezed,
   }) {
     return _then(_value.copyWith(
-      permission_submission_id: freezed == permission_submission_id
-          ? _value.permission_submission_id
-          : permission_submission_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      submision_id: freezed == submision_id
-          ? _value.submision_id
-          : submision_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      employee_file_id: freezed == employee_file_id
-          ? _value.employee_file_id
-          : employee_file_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      permission_reason: freezed == permission_reason
-          ? _value.permission_reason
-          : permission_reason // ignore: cast_nullable_to_non_nullable
+      reason: freezed == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      employee_id: freezed == employee_id
+          ? _value.employee_id
+          : employee_id // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -482,11 +461,8 @@ abstract class _$$ResignDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'permission_submission_id') int? permission_submission_id,
-      @JsonKey(name: 'submision_id') int? submision_id,
-      @JsonKey(name: 'employee_file_id') int? employee_file_id,
-      @JsonKey(name: 'permission_reason') String? permission_reason,
-      @JsonKey(name: 'type') String? type});
+      {@JsonKey(name: 'reason') String? reason,
+      @JsonKey(name: 'employee_id') String? employee_id});
 }
 
 /// @nodoc
@@ -500,32 +476,17 @@ class __$$ResignDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? permission_submission_id = freezed,
-    Object? submision_id = freezed,
-    Object? employee_file_id = freezed,
-    Object? permission_reason = freezed,
-    Object? type = freezed,
+    Object? reason = freezed,
+    Object? employee_id = freezed,
   }) {
     return _then(_$ResignDataImpl(
-      permission_submission_id: freezed == permission_submission_id
-          ? _value.permission_submission_id
-          : permission_submission_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      submision_id: freezed == submision_id
-          ? _value.submision_id
-          : submision_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      employee_file_id: freezed == employee_file_id
-          ? _value.employee_file_id
-          : employee_file_id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      permission_reason: freezed == permission_reason
-          ? _value.permission_reason
-          : permission_reason // ignore: cast_nullable_to_non_nullable
+      reason: freezed == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      employee_id: freezed == employee_id
+          ? _value.employee_id
+          : employee_id // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -535,34 +496,22 @@ class __$$ResignDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ResignDataImpl implements _ResignData {
   _$ResignDataImpl(
-      {@JsonKey(name: 'permission_submission_id') this.permission_submission_id,
-      @JsonKey(name: 'submision_id') this.submision_id,
-      @JsonKey(name: 'employee_file_id') this.employee_file_id,
-      @JsonKey(name: 'permission_reason') this.permission_reason,
-      @JsonKey(name: 'type') this.type});
+      {@JsonKey(name: 'reason') this.reason,
+      @JsonKey(name: 'employee_id') this.employee_id});
 
   factory _$ResignDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$ResignDataImplFromJson(json);
 
   @override
-  @JsonKey(name: 'permission_submission_id')
-  final int? permission_submission_id;
+  @JsonKey(name: 'reason')
+  final String? reason;
   @override
-  @JsonKey(name: 'submision_id')
-  final int? submision_id;
-  @override
-  @JsonKey(name: 'employee_file_id')
-  final int? employee_file_id;
-  @override
-  @JsonKey(name: 'permission_reason')
-  final String? permission_reason;
-  @override
-  @JsonKey(name: 'type')
-  final String? type;
+  @JsonKey(name: 'employee_id')
+  final String? employee_id;
 
   @override
   String toString() {
-    return 'ResignData(permission_submission_id: $permission_submission_id, submision_id: $submision_id, employee_file_id: $employee_file_id, permission_reason: $permission_reason, type: $type)';
+    return 'ResignData(reason: $reason, employee_id: $employee_id)';
   }
 
   @override
@@ -570,22 +519,14 @@ class _$ResignDataImpl implements _ResignData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ResignDataImpl &&
-            (identical(
-                    other.permission_submission_id, permission_submission_id) ||
-                other.permission_submission_id == permission_submission_id) &&
-            (identical(other.submision_id, submision_id) ||
-                other.submision_id == submision_id) &&
-            (identical(other.employee_file_id, employee_file_id) ||
-                other.employee_file_id == employee_file_id) &&
-            (identical(other.permission_reason, permission_reason) ||
-                other.permission_reason == permission_reason) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.reason, reason) || other.reason == reason) &&
+            (identical(other.employee_id, employee_id) ||
+                other.employee_id == employee_id));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, permission_submission_id,
-      submision_id, employee_file_id, permission_reason, type);
+  int get hashCode => Object.hash(runtimeType, reason, employee_id);
 
   @JsonKey(ignore: true)
   @override
@@ -603,31 +544,19 @@ class _$ResignDataImpl implements _ResignData {
 
 abstract class _ResignData implements ResignData {
   factory _ResignData(
-      {@JsonKey(name: 'permission_submission_id')
-      final int? permission_submission_id,
-      @JsonKey(name: 'submision_id') final int? submision_id,
-      @JsonKey(name: 'employee_file_id') final int? employee_file_id,
-      @JsonKey(name: 'permission_reason') final String? permission_reason,
-      @JsonKey(name: 'type') final String? type}) = _$ResignDataImpl;
+          {@JsonKey(name: 'reason') final String? reason,
+          @JsonKey(name: 'employee_id') final String? employee_id}) =
+      _$ResignDataImpl;
 
   factory _ResignData.fromJson(Map<String, dynamic> json) =
       _$ResignDataImpl.fromJson;
 
   @override
-  @JsonKey(name: 'permission_submission_id')
-  int? get permission_submission_id;
+  @JsonKey(name: 'reason')
+  String? get reason;
   @override
-  @JsonKey(name: 'submision_id')
-  int? get submision_id;
-  @override
-  @JsonKey(name: 'employee_file_id')
-  int? get employee_file_id;
-  @override
-  @JsonKey(name: 'permission_reason')
-  String? get permission_reason;
-  @override
-  @JsonKey(name: 'type')
-  String? get type;
+  @JsonKey(name: 'employee_id')
+  String? get employee_id;
   @override
   @JsonKey(ignore: true)
   _$$ResignDataImplCopyWith<_$ResignDataImpl> get copyWith =>
