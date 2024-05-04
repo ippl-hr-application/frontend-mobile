@@ -1,14 +1,24 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/authentication/application/auth_service.dart';
-import 'package:meraih_mobile/features/authentication/domain/auth.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final jwtProvider = FutureProvider<String?>((ref) async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getString('token');
-});
+final authTokenProvider = StateProvider<String?>((ref) => null);
 
-Future<void> handleLogin(LoginRequest auth) async {
-  await AuthService.login(auth);
+Future<dynamic> handleLogin(WidgetRef ref, LoginRequest auth) async {
+  try {
+    await AuthService.login(auth);
+    final authToken = ref.watch(authTokenProvider);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final retrievedToken = prefs.getString('token');
+
+    if (retrievedToken != null && retrievedToken != authToken) {
+      ref.read(authTokenProvider.notifier).state = retrievedToken;
+    }
+  } on DioException catch (e) {
+    if (e.response?.statusCode == 400) {
+      throw Exception(e.response?.data['message']);
+    }
+  }
 }

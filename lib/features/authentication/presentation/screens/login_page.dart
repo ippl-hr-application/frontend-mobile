@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +11,27 @@ class LoginPage extends ConsumerWidget {
   final TextEditingController _password = TextEditingController();
 
   LoginPage({super.key});
+  void onPressedLogin(
+      BuildContext context, WidgetRef ref, LoginRequest auth) async {
+    try {
+      await handleLogin(ref, auth);
+      context.pushReplacement('/');
+    } on Exception {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("OK"))
+                ],
+                title: Text("Login Failed"),
+              ));
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -73,22 +95,17 @@ class LoginPage extends ConsumerWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    print(_companyId.text);
-                    print(_employeeId.text);
-                    print(_password.text);
-                    handleLogin(LoginRequest(
-                        employee_id: _employeeId.text,
-                        company_id: _companyId.text,
-                        password: _password.text));
-
-                    context.go('/submission');
+                    print("sdnmnds");
+                    onPressedLogin(
+                        context,
+                        ref,
+                        LoginRequest(
+                            employee_id: _employeeId.text,
+                            company_id: _companyId.text,
+                            password: _password.text));
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(32, 81, 229, 1)),
-
-                  // style: ElevatedButton.styleFrom(
-                  //   primary: Color(0xFF2051E5), // Ubah warna latar belakang
-                  // ),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 14.0),
                     child: Text(

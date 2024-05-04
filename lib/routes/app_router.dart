@@ -159,13 +159,5 @@ GoRouter goRouter(GoRouterRef ref) {
         },
       ),
     ],
-    // redirect: (context, state) async {
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   String? token = prefs.getString('token');
-    //   if (token != null) {
-    //     return '/';
-    //   }
-    //   return '/login';
-    // }
   );
 }
