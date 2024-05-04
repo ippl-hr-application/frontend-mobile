@@ -48,7 +48,7 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
             Positioned(
               left: 0,
               right: 0,
-              top: 40,
+              top: 20,
               child: Center(
                 child: Text(
                   "Pengajuan Resign",
@@ -84,7 +84,7 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
                   );
                   setState(() {});
                 },
-                child: Text('Upload TTD'),
+                child: Text('Upload File'),
               ),
               SizedBox(height: 20),
               Spacer(),

@@ -50,7 +50,7 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
             Positioned(
               left: 0,
               right: 0,
-              top: 40,
+              top: 20,
               child: Center(
                 child: Text(
                   "Pengajuan Izin",
