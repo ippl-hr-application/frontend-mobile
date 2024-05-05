@@ -10,8 +10,10 @@ final submissionProvider = FutureProvider((ref) async {
   dio.options.headers['Authorization'] = 'Bearer $token';
 
   final submissionRepository = SubmissionRepository(dio);
-  final submissionHistory = await submissionRepository.getSubmissionHistory();
-  if (submissionHistory.success == true) {
+  try {
+    final submissionHistory = await submissionRepository.getSubmissionHistory();
     return submissionHistory.data;
+  } on DioException {
+    rethrow;
   }
 });
