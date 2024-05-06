@@ -46,3 +46,4 @@ import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.d
 import 'package:meraih_mobile/features/profile/presentation/screens/change_password.dart';
 import 'package:meraih_mobile/features/payroll/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screen/absensiPage.dart';

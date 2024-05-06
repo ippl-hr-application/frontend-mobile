@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meraih_mobile/features/attendance/presentation/widget/attandance_request.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/card_attandance_today.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
 
-class Attendance extends StatelessWidget {
+class Attendance extends ConsumerStatefulWidget {
   const Attendance({super.key});
+
+  @override
+  ConsumerState<Attendance> createState() => _AttendanceState();
+}
+
+class _AttendanceState extends ConsumerState<Attendance> {
+  String? selectAttandance = "Hari ini";
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +62,24 @@ class Attendance extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            selectAttandance = "Hari ini";
+                          });
+                        },
                         child: const Text(
-                          "Hari Ini",
+                          "Hari ini",
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w500,
                               color: Colors.black),
                         )),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            selectAttandance = "Kehadiran";
+                          });
+                        },
                         child: const Text(
                           "Kehadiran",
                           style: TextStyle(
@@ -70,7 +88,11 @@ class Attendance extends StatelessWidget {
                               color: Colors.black),
                         )),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            selectAttandance = "Request";
+                          });
+                        },
                         child: const Text(
                           "Request",
                           style: TextStyle(
@@ -81,12 +103,24 @@ class Attendance extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 30.0, horizontal: 16.0),
-                child: const CardAttandanceToday(),
-              ),
-              Container()
+              selectAttandance == "Hari ini"
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30.0, horizontal: 16.0),
+                      child: const CardAttandanceToday())
+                  : selectAttandance == "Kehadiran"
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0.0, horizontal: 16.0),
+                          child: const AttendanceList())
+                      : selectAttandance == "Request"
+                          ? Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0.0, horizontal: 16.0),
+                              child: const RequestAttandance())
+                          : Container()
+
+              // Container()
             ],
           ),
         ));

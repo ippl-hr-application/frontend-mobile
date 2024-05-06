@@ -1,8 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
-import 'package:meraih_mobile/features/attendance/presentation/screens/attendance_list.dart';
-import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
-import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screen/absensiPage.dart';
+import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
 import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
 import 'package:meraih_mobile/features/payroll/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/DaftarPengajuanPage.dart';
@@ -10,7 +9,6 @@ import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.d
 import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/submission_izin.dart';
 
 part 'app_router.g.dart';
 
@@ -54,7 +52,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: "/attendance",
         pageBuilder: (context, state) {
-          return const NoTransitionPage(child: AttendanceList());
+          return const NoTransitionPage(child: Attendance());
         },
       ),
       GoRoute(

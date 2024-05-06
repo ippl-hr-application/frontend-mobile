@@ -36,21 +36,8 @@ class _CheckinMapState extends State<AttendanceList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF2051E5),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-            context.go("/");
-          },
-        ),
-        title: const Text(
-          'Riwayat Kehadiran',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Column(
+    return SizedBox(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TableCalendar(
