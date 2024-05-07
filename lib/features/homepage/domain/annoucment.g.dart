@@ -24,7 +24,7 @@ Map<String, dynamic> _$$AnnoucmentResponseImplToJson(
 
 _$AnnoucmentDataImpl _$$AnnoucmentDataImplFromJson(Map<String, dynamic> json) =>
     _$AnnoucmentDataImpl(
-      companyAnnouncementId: json['company_announcement_id'] as String?,
+      companyAnnouncementId: (json['company_announcement_id'] as num?)?.toInt(),
       companyId: json['company_id'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,

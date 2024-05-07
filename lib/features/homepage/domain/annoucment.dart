@@ -20,7 +20,7 @@ class AnnoucmentResponse with _$AnnoucmentResponse {
 class AnnoucmentData with _$AnnoucmentData {
   factory AnnoucmentData({
     @JsonKey(name: 'company_announcement_id')
-    required String? companyAnnouncementId,
+    required int? companyAnnouncementId,
     @JsonKey(name: 'company_id') required String? companyId,
     @JsonKey(name: 'title') required String? title,
     @JsonKey(name: 'description') required String? description,

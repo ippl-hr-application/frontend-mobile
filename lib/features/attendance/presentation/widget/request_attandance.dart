@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:meraih_mobile/models/kehadiran_model.dart';
 import 'package:meraih_mobile/data/kehadiran.dart';
 
-class RequestAttandance extends StatelessWidget {
-  const RequestAttandance({super.key});
+class ShowRequestAttandance extends StatelessWidget {
+  const ShowRequestAttandance({super.key});
 
   @override
   Widget build(BuildContext context) {

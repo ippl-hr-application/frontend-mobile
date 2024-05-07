@@ -198,7 +198,7 @@ AnnoucmentData _$AnnoucmentDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AnnoucmentData {
   @JsonKey(name: 'company_announcement_id')
-  String? get companyAnnouncementId => throw _privateConstructorUsedError;
+  int? get companyAnnouncementId => throw _privateConstructorUsedError;
   @JsonKey(name: 'company_id')
   String? get companyId => throw _privateConstructorUsedError;
   @JsonKey(name: 'title')
@@ -219,7 +219,7 @@ abstract class $AnnoucmentDataCopyWith<$Res> {
       _$AnnoucmentDataCopyWithImpl<$Res, AnnoucmentData>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'company_announcement_id') String? companyAnnouncementId,
+      {@JsonKey(name: 'company_announcement_id') int? companyAnnouncementId,
       @JsonKey(name: 'company_id') String? companyId,
       @JsonKey(name: 'title') String? title,
       @JsonKey(name: 'description') String? description});
@@ -247,7 +247,7 @@ class _$AnnoucmentDataCopyWithImpl<$Res, $Val extends AnnoucmentData>
       companyAnnouncementId: freezed == companyAnnouncementId
           ? _value.companyAnnouncementId
           : companyAnnouncementId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       companyId: freezed == companyId
           ? _value.companyId
           : companyId // ignore: cast_nullable_to_non_nullable
@@ -273,7 +273,7 @@ abstract class _$$AnnoucmentDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'company_announcement_id') String? companyAnnouncementId,
+      {@JsonKey(name: 'company_announcement_id') int? companyAnnouncementId,
       @JsonKey(name: 'company_id') String? companyId,
       @JsonKey(name: 'title') String? title,
       @JsonKey(name: 'description') String? description});
@@ -299,7 +299,7 @@ class __$$AnnoucmentDataImplCopyWithImpl<$Res>
       companyAnnouncementId: freezed == companyAnnouncementId
           ? _value.companyAnnouncementId
           : companyAnnouncementId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       companyId: freezed == companyId
           ? _value.companyId
           : companyId // ignore: cast_nullable_to_non_nullable
@@ -331,7 +331,7 @@ class _$AnnoucmentDataImpl implements _AnnoucmentData {
 
   @override
   @JsonKey(name: 'company_announcement_id')
-  final String? companyAnnouncementId;
+  final int? companyAnnouncementId;
   @override
   @JsonKey(name: 'company_id')
   final String? companyId;
@@ -384,7 +384,7 @@ class _$AnnoucmentDataImpl implements _AnnoucmentData {
 abstract class _AnnoucmentData implements AnnoucmentData {
   factory _AnnoucmentData(
           {@JsonKey(name: 'company_announcement_id')
-          required final String? companyAnnouncementId,
+          required final int? companyAnnouncementId,
           @JsonKey(name: 'company_id') required final String? companyId,
           @JsonKey(name: 'title') required final String? title,
           @JsonKey(name: 'description') required final String? description}) =
@@ -395,7 +395,7 @@ abstract class _AnnoucmentData implements AnnoucmentData {
 
   @override
   @JsonKey(name: 'company_announcement_id')
-  String? get companyAnnouncementId;
+  int? get companyAnnouncementId;
   @override
   @JsonKey(name: 'company_id')
   String? get companyId;
