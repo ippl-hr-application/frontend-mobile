@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:meraih_mobile/features/submission/domain/resign.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/resign_provider.dart';
 import 'package:signature/signature.dart';
@@ -26,7 +27,7 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
     penStrokeWidth: 5,
     penColor: Colors.black,
   );
-
+  String? showFileName = "";
   FilePickerResult? filePickerResult;
 
   @override
@@ -66,25 +67,108 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FormBuilderTextField(
-                name: 'Keterangan',
-                decoration: InputDecoration(
-                  labelText: 'Keterangan',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
                   ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(
+                          Icons.edit_square,
+                          color: Colors.white,
+                          size: 30,
+                        )),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: FormBuilderTextField(
+                        name: 'Alasan',
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 16.0, horizontal: 10.0),
+                          labelText: 'Alasan Resign',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  filePickerResult = await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['pdf', 'jpg', 'png'],
-                  );
-                  setState(() {});
-                },
-                child: Text('Upload TTD'),
+              Row(
+                children: [
+                  Container(
+                      padding: const EdgeInsets.all(12.0),
+                      decoration: const BoxDecoration(
+                          color: Color.fromRGBO(32, 81, 229, 1),
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      child: const Icon(
+                        Icons.upload_file_sharp,
+                        color: Colors.white,
+                        size: 30,
+                      )),
+                  const SizedBox(width: 16.0),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8.0)),
+                          border: Border.all(color: Colors.black, width: 0.5)),
+                      child: Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              filePickerResult =
+                                  await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: ['pdf', 'jpg', 'png'],
+                              );
+
+                              if (filePickerResult != null) {
+                                setState(() {
+                                  showFileName =
+                                      filePickerResult!.files.first.name;
+                                });
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 13.0, horizontal: 8.0),
+                                backgroundColor:
+                                    const Color.fromRGBO(243, 243, 243, 1),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(8.0)))),
+                            child: const Text(
+                              'Pilih File',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ),
+                          Expanded(
+                              child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              showFileName.toString(),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ))
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 20),
               Spacer(),
@@ -98,7 +182,7 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
                         Map<String, dynamic> formData =
                             _formKey.currentState!.value;
                         handleResignSubmission(ResignRequest(
-                            reason: formData['Keterangan'],
+                            reason: formData['Alasan'],
                             resign_file: File(
                                 filePickerResult!.files.first.path ?? '')));
                       }
