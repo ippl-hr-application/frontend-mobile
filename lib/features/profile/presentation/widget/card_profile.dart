@@ -15,11 +15,12 @@ class CardProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final String name = '${firstName ?? ''} ${lastName ?? ''}';
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
       decoration: BoxDecoration(
-          color: const Color.fromRGBO(235, 243, 252, 1),
+          color: const Color.fromRGBO(32, 81, 229, 1),
           // border: Border.all(color: Colors.black, width: 0.2),
-          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          // borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -30,14 +31,27 @@ class CardProfile extends StatelessWidget {
           ]),
       child: Column(
         children: [
-          Text(
-            name.toString(),
-            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          const Center(
+            child: Icon(
+              Icons.person,
+              size: 100,
+              color: Colors.white70,
+            ),
           ),
-          const SizedBox(height: 10.0),
+          const SizedBox(height: 8.0),
+          Text(
+            name.toString().toUpperCase(),
+            style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+          ),
+          const SizedBox(height: 3.0),
           Text(positon.toString(),
               style: const TextStyle(
-                  fontSize: 20.0, fontWeight: FontWeight.normal))
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white))
         ],
       ),
     );

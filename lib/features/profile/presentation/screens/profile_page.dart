@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/profile/presentation/provider/profile_provider.dart';
 import 'package:meraih_mobile/features/profile/presentation/widget/card_profile.dart';
@@ -13,6 +15,12 @@ class Profile extends ConsumerWidget {
     final profileData = ref.watch(profileProvider);
 
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.zero,
+        child: AppBar(
+          backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+        ),
+      ),
       body: profileData.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Text('Error: $error'),
@@ -21,27 +29,27 @@ class Profile extends ConsumerWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: 50.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: CardProfile(
+                        firstName: data?.firstName,
+                        lastName: data?.lastName,
+                        positon: data?.jobPosition?.name),
+                  ),
                   Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      width: double.infinity,
-                      child: CardProfile(
-                          firstName: data?.firstName,
-                          lastName: data?.lastName,
-                          positon: data?.jobPosition?.name)),
-                  const SizedBox(height: 50.0),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
                     child: Column(
                       children: [
                         Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                  width: 1.0,
-                                  color: Color.fromARGB(255, 186, 186, 186)),
-                            ),
-                          ),
+                          width: double.infinity,
+                          // decoration: const BoxDecoration(
+                          //   border: Border(
+                          //     bottom: BorderSide(
+                          //         width: 1.0,
+                          //         color: Color.fromARGB(255, 186, 186, 186)),
+                          //   ),
+                          // ),
                           child: InkWell(
                             onTap: () {
                               context.go('/my-profile');
@@ -53,24 +61,34 @@ class Profile extends ConsumerWidget {
                                     iconSize: 35.0,
                                     onPressed: () {},
                                     icon: const Icon(Icons.person_outlined)),
-                                const Text(
-                                  "Profile Saya",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.0),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0),
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            width: 1.0,
+                                            color: Color.fromARGB(
+                                                255, 186, 186, 186)),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "Data Diri",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0),
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
                           ),
                         ),
-                        Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                  width: 1.0,
-                                  color: Color.fromARGB(255, 186, 186, 186)),
-                            ),
-                          ),
+                        const SizedBox(height: 5.0),
+                        SizedBox(
+                          width: double.infinity,
                           child: InkWell(
                             onTap: () {
                               context.go('/change-password');
@@ -82,24 +100,34 @@ class Profile extends ConsumerWidget {
                                     iconSize: 35.0,
                                     onPressed: () {},
                                     icon: const Icon(Icons.settings_outlined)),
-                                const Text(
-                                  "Ganti Kata Sandi",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.0),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0),
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            width: 1.0,
+                                            color: Color.fromARGB(
+                                                255, 186, 186, 186)),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "Ganti Kata Sandi",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0),
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
                           ),
                         ),
-                        Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                  width: 1.0,
-                                  color: Color.fromARGB(255, 186, 186, 186)),
-                            ),
-                          ),
+                        const SizedBox(height: 5.0),
+                        SizedBox(
+                          width: double.infinity,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -107,11 +135,26 @@ class Profile extends ConsumerWidget {
                                   iconSize: 35.0,
                                   onPressed: () {},
                                   icon: const Icon(Icons.person_outlined)),
-                              const Text(
-                                "Keluar",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0),
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          width: 1.0,
+                                          color: Color.fromARGB(
+                                              255, 186, 186, 186)),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "Keluar",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18.0),
+                                  ),
+                                ),
                               )
                             ],
                           ),
@@ -125,9 +168,7 @@ class Profile extends ConsumerWidget {
           );
         }),
       ),
-      bottomNavigationBar: Container(
-        child: const ButtomBar(),
-      ),
+      bottomNavigationBar: const ButtomBar(),
     );
   }
 }

@@ -13,14 +13,33 @@ class MyProfile extends ConsumerWidget {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
             onPressed: () {
               context.go('/profile');
             },
+          ),
+          flexibleSpace: const Stack(
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 40,
+                child: Center(
+                  child: Text(
+                    "Data Diri",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         body: profileData.when(
@@ -30,14 +49,14 @@ class MyProfile extends ConsumerWidget {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: const Text(
-                        "Informasi Pribadi",
-                        style: TextStyle(
-                            fontSize: 24.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //   child: const Text(
+                    //     "Informasi Pribadi",
+                    //     style: TextStyle(
+                    //         fontSize: 24.0, fontWeight: FontWeight.bold),
+                    //   ),
+                    // ),
                     const SizedBox(height: 30.0),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -125,7 +144,7 @@ class MyProfile extends ConsumerWidget {
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text(
-                                  '${data?.firstName.toString()} ${data?.lastName.toString()}',
+                                  '${data.firstName.toString()} ${data.lastName.toString()}',
                                   style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500),
