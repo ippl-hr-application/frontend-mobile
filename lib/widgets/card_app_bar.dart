@@ -11,10 +11,6 @@ class ButtomBar extends StatefulWidget {
 class _ButtomBarState extends State<ButtomBar> {
   int _currentIndex = 0;
 
-  // static const List<Widget> _pages = <Widget>[
-
-  //   ];
-
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -34,10 +30,10 @@ class _ButtomBarState extends State<ButtomBar> {
           icon: Icon(Icons.home),
           label: 'Beranda',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          label: 'Notifikasi',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.notifications),
+        //   label: 'Notifikasi',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.content_paste_sharp,
@@ -61,12 +57,9 @@ class _ButtomBarState extends State<ButtomBar> {
         context.go('/');
         break;
       case 1:
-        context.go('/notifications');
-        break;
-      case 2:
         context.go('/submission');
         break;
-      case 3:
+      case 2:
         context.go('/profile');
         break;
       default:

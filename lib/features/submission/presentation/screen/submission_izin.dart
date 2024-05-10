@@ -10,6 +10,7 @@ import 'package:meraih_mobile/features/submission/presentation/providers/izin_pr
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:signature/signature.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/alert_success_submission.dart';
 
 class SubmissionIzin extends ConsumerStatefulWidget {
   const SubmissionIzin({super.key});
@@ -212,51 +213,53 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Spacer(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.saveAndValidate()) {
-                        Map<String, dynamic> formData =
-                            _formKey.currentState!.value;
-
-                        print(formData['Alasan']);
-                        print(File(filePickerResult!.files.first.path ?? '')
-                            .path);
-                        handleIzinSubmission(IzinRequest(
-                          from: convertToIso8601(
-                              formData['izinDate'].start.toString()),
-                          permission_reason: formData['Alasan'],
-                          permission_file:
-                              File(filePickerResult!.files.first.path ?? ''),
-                          to: convertToIso8601(
-                              formData['izinDate'].end.toString()),
-                        ));
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                    child: const Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Kirim Pengajuan',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState!.saveAndValidate()) {
+                Map<String, dynamic> formData = _formKey.currentState!.value;
+
+                print(formData['Alasan']);
+                print(File(filePickerResult!.files.first.path ?? '').path);
+                handleIzinSubmission(
+                    ref,
+                    IzinRequest(
+                      from: convertToIso8601(
+                          formData['izinDate'].start.toString()),
+                      permission_reason: formData['Alasan'],
+                      permission_file:
+                          File(filePickerResult!.files.first.path ?? ''),
+                      to: convertToIso8601(formData['izinDate'].end.toString()),
+                    )).then((izinSubmission) {
+                  return showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertSuccessSubmission(
+                      message: izinSubmission.message,
+                    ),
+                  );
+                });
+              }
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)))),
+            child: const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Kirim Pengajuan',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                    color: Colors.white),
+              ),
+            ),
           ),
         ),
       ),

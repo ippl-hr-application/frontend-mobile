@@ -26,7 +26,7 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.zero, 
+        preferredSize: Size.zero,
         child: AppBar(
           backgroundColor: Color.fromRGBO(32, 81, 229, 1),
         ),
@@ -34,11 +34,11 @@ class HomeScreen extends ConsumerWidget {
       body: homeHistoryData.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         data: ((data) {
-          return SafeArea(
-            child: Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
+          return SingleChildScrollView(
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  Column(
                     children: <Widget>[
                       Container(
                         height: 250.0,
@@ -100,7 +100,6 @@ class HomeScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 15.0),
-
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16.0, vertical: 10.0),
@@ -151,56 +150,22 @@ class HomeScreen extends ConsumerWidget {
                           ],
                         ),
                       )
-
-                      // Container(
-                      //   padding: const EdgeInsets.symmetric(
-                      //       horizontal: 16.0, vertical: 10.0),
-                      //   child: const Column(
-                      //     children: [
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           Text(
-                      //             "Pengumuman",
-                      //             style: TextStyle(
-                      //                 fontSize: 20.0,
-                      //                 fontWeight: FontWeight.bold),
-                      //           ),
-                      //           Text(
-                      //             'Lihat Semua',
-                      //             // style: TextStyle(
-                      //             //   color: Color.fromARGB(31, 12, 113, 235),
-                      //             // ),
-                      //           )
-                      //         ],
-                      //       ),
-                      //       SizedBox(height: 8.0),
-                      //       Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           Text("Libur Imlek 14 February"),
-                      //           Text("02 Feb 2023")
-                      //         ],
-                      //       )
-                      //     ],
-                      //   ),
-                      // )
                     ],
                   ),
-                ),
 
-                // Komponen bagian absen
-                Container(
-                    margin: const EdgeInsets.only(
-                        top: 90.0, left: 16.0, right: 16.0),
-                    child: CardAttendance(
-                      companyName: data?.companyName,
-                      date: data?.date,
-                      from: data?.from,
-                      to: data?.to,
-                      jobPosition: data?.jobPosition,
-                    )),
-              ],
+                  // Komponen bagian absen
+                  Container(
+                      margin: const EdgeInsets.only(
+                          top: 90.0, left: 16.0, right: 16.0),
+                      child: CardAttendance(
+                        companyName: data?.companyName,
+                        date: data?.date,
+                        from: data?.from,
+                        to: data?.to,
+                        jobPosition: data?.jobPosition,
+                      )),
+                ],
+              ),
             ),
           );
         }),

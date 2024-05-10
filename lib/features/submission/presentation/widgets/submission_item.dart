@@ -34,7 +34,7 @@ class SubmissionItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  type.toString(),
+                  type.toString().toUpperCase(),
                   style: const TextStyle(
                       fontWeight: FontWeight.w700, fontSize: 20.0),
                 ),

@@ -3,14 +3,14 @@ import 'package:meraih_mobile/features/submission/data/change_shift_repository.d
 import 'package:meraih_mobile/features/submission/data/submission_repository.dart';
 import 'package:meraih_mobile/features/submission/domain/change_shift.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-Future<dynamic> handleChangeShift(ChangeShiftRequest changeShif) async {
+Future<dynamic> handleChangeShift(
+    WidgetRef ref, ChangeShiftRequest changeShif) async {
   final dio = Dio();
-
-  dio.options.headers['Authorization'] =
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6IjA0MWQ3ZjVhLTI4NmQtNGMzOS1hNjgyLWY4NmI5MDZmNzgyYyIsImNvbXBhbnlfYnJhbmNoX2lkIjoiNDg5MzFjNmQtNDUxZS00MTgzLWE5ZmYtMzBiMzY4NmE3ZjMyIiwiaWF0IjoxNzEzODQ1MDQ3LCJleHAiOjE3MTQ0NDk4NDd9.nFyBg4fGqPyXFa1Wvef2rjIqZ0FOnbZErk72i4j-fD0';
+  final token = ref.watch(authTokenProvider);
   dio.options.contentType = "application/json";
-
+  dio.options.headers['Authorization'] = 'Bearer $token';
   final changeShiftRepository = ShiftRepository(dio);
   try {
     final changeShiftSubmission =

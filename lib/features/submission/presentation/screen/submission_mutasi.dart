@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:signature/signature.dart';
@@ -28,6 +29,20 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
     penStrokeWidth: 5,
     penColor: Colors.black,
   );
+  final _keteranganValidator = TextEditingController();
+  final _fileController = TextEditingController();
+  final _cabangController = TextEditingController();
+
+  final int maxFileSize = 10 * 1024 * 1024; // Contoh: 10 MB
+
+  bool isFileSizeValid(FilePickerResult? result) {
+    if (result != null && result.files.isNotEmpty) {
+      if (result.files.first.size > maxFileSize) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   String? showFileName = "";
   String? selectTargetBranch = "";
@@ -183,33 +198,40 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                     const SizedBox(width: 16.0),
                     Expanded(
                         child: FormBuilder(
-                            // key: _formkey,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             child: FormBuilderDropdown(
-                      name: 'cabang',
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 6.0),
-                        labelText: 'Cabang',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          selectTargetBranch = value;
-                        });
-                      },
-                      items: const [
-                        DropdownMenuItem(
-                          child: Text('Balikpapan'),
-                          value: '48931c6d-451e-4183-a9ff-30b3686a7f32',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Samarinda'),
-                          value: 'c2f985e5-c77b-4620-8367-ce410d20a9d1',
-                        ),
-                      ],
-                    )))
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Cabang tidak boleh kosong";
+                                }
+                                return null;
+                              },
+                              name: 'cabang',
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 6.0),
+                                labelText: 'Cabang',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectTargetBranch = value;
+                                });
+                              },
+                              items: const [
+                                DropdownMenuItem(
+                                  child: Text('Balikpapan'),
+                                  value: '48931c6d-451e-4183-a9ff-30b3686a7f32',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text('Samarinda'),
+                                  value: 'c2f985e5-c77b-4620-8367-ce410d20a9d1',
+                                ),
+                              ],
+                            )))
                   ],
                 ),
               ),
@@ -235,6 +257,14 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                     const SizedBox(width: 16.0),
                     Expanded(
                       child: FormBuilderTextField(
+                        controller: _keteranganValidator,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Alasan tidak boleh kosong";
+                          }
+                          return null;
+                        },
                         name: 'keterangan',
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
@@ -287,6 +317,15 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                                   allowedExtensions: ['pdf', 'jpg', 'png'],
                                 );
                                 if (filePickerResult != null) {
+                                  if (!isFileSizeValid(filePickerResult)) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Ukuran file terlalu besar. Maksimum $maxFileSize bytes.'),
+                                      ),
+                                    );
+                                    return;
+                                  }
                                   setState(() {
                                     showFileName =
                                         filePickerResult!.files.first.name;
@@ -324,51 +363,6 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                   ],
                 ),
               ),
-              // const SizedBox(height: 20),
-              // const Spacer(),
-              // Align(
-              //   child: SizedBox(
-              //     width: double.infinity,
-              //     child: ElevatedButton(
-              //       onPressed: () {
-              //         if (_formKey.currentState!.saveAndValidate()) {
-              //           Map<String, dynamic> formData =
-              //               _formKey.currentState!.value;
-              //           print(formData['keterangan']);
-              //           print(selectTargetBranch);
-              //           print(homeHistoryData.asData?.value?.companyBranchId
-              //               .toString());
-              //           print(File(filePickerResult!.files.first.path ?? '')
-              //               .path);
-
-              //           // handleMutation(MutasiRequest(
-              //           //     mutationReason: formData['alasan'],
-              //           //     currenCompanyBranchId: homeHistoryData
-              //           //         .asData!.value!.companyBranchId
-              //           //         .toString(),
-              //           //     targetCompanyBranchId: selectTargetBranch.toString(),
-              //           //     mutationFile:
-              //           //         File(filePickerResult!.files.first.path ?? '')));
-              //         }
-              //       },
-              //       style: ElevatedButton.styleFrom(
-              //           backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-              //           shape: const RoundedRectangleBorder(
-              //               borderRadius:
-              //                   BorderRadius.all(Radius.circular(10)))),
-              //       child: const Padding(
-              //         padding: EdgeInsets.symmetric(vertical: 16.0),
-              //         child: Text(
-              //           'Kirim Pengajuan',
-              //           style: TextStyle(
-              //               fontSize: 16.0,
-              //               fontWeight: FontWeight.bold,
-              //               color: Colors.white),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -388,18 +382,32 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
 
                 print(formData['keterangan']);
                 print(selectTargetBranch);
-                print(
-                    homeHistoryData.asData?.value?.companyBranchId.toString());
-                print(File(filePickerResult!.files.first.path ?? '').path);
 
-                handleMutation(MutasiRequest(
-                    mutationReason: formData['keterangan'],
-                    currenCompanyBranchId: homeHistoryData
-                        .asData!.value!.companyBranchId
-                        .toString(),
-                    targetCompanyBranchId: selectTargetBranch.toString(),
-                    mutationFile:
-                        File(filePickerResult!.files.first.path ?? '')));
+                // Memeriksa apakah nilai 'keterangan' tidak kosong
+
+                try {
+                  handleMutation(
+                      ref,
+                      MutasiRequest(
+                        mutationReason: formData['keterangan'],
+                        currenCompanyBranchId: homeHistoryData
+                            .asData!.value!.companyBranchId
+                            .toString(),
+                        targetCompanyBranchId: selectTargetBranch.toString(),
+                        mutationFile:
+                            File(filePickerResult!.files.first.path ?? ''),
+                      ));
+                } catch (e) {
+                  print("Error: $e");
+                }
+                // } else {
+                //   // Menampilkan pesan kesalahan jika 'keterangan' kosong
+                //   ScaffoldMessenger.of(context).showSnackBar(
+                //     const SnackBar(
+                //       content: Text('Alasan mutasi tidak boleh kosong.'),
+                //     ),
+                //   );
+                // }
               }
             },
             style: ElevatedButton.styleFrom(

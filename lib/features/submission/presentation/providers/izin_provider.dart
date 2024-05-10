@@ -9,9 +9,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // part 'izin_provider.g.dart';
 
-Future<dynamic> handleIzinSubmission(IzinRequest izin) async {
-  const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6IjA0MWQ3ZjVhLTI4NmQtNGMzOS1hNjgyLWY4NmI5MDZmNzgyYyIsImNvbXBhbnlfYnJhbmNoX2lkIjoiNDg5MzFjNmQtNDUxZS00MTgzLWE5ZmYtMzBiMzY4NmE3ZjMyIiwiaWF0IjoxNzEzODAxNzM3LCJleHAiOjE3MTQ0MDY1Mzd9.aZgOthS42GM6_3XbAWp8bcnwDrsjiGZ-A15OXg148lY";
+Future<dynamic> handleIzinSubmission(WidgetRef ref, IzinRequest izin) async {
+  final token = ref.watch(authTokenProvider);
   final dio = Dio();
   dio.options.contentType = "multipart/form-data";
   dio.options.headers["Authorization"] = "Bearer $token";

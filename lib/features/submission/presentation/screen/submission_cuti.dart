@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:meraih_mobile/features/submission/domain/cuti.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/cuti_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/alert_success_submission.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:signature/signature.dart';
@@ -270,52 +271,55 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              Spacer(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.saveAndValidate()) {
-                        Map<String, dynamic> formData =
-                            _formKey.currentState!.value;
-
-                        print(formData['Alasan']);
-                        print(File(filePickerResult!.files.first.path ?? '')
-                            .path);
-                        handleCutiSubmission(CutiRequest(
-                          from: convertToIso8601(
-                              formData['CutiDate'].start.toString()),
-                          leaveReason: formData['Alasan'],
-                          leave_file:
-                              File(filePickerResult!.files.first.path ?? ''),
-                          leaveType: formData['Jenis_Cuti'],
-                          to: convertToIso8601(
-                              formData['CutiDate'].end.toString()),
-                        ));
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text(
-                        'Kirim Pengajuan',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState!.saveAndValidate()) {
+                Map<String, dynamic> formData = _formKey.currentState!.value;
+
+                print(formData['Alasan']);
+                print(File(filePickerResult!.files.first.path ?? '').path);
+
+                handleCutiSubmission(
+                    ref,
+                    CutiRequest(
+                      from: convertToIso8601(
+                          formData['CutiDate'].start.toString()),
+                      leaveReason: formData['Alasan'],
+                      leave_file:
+                          File(filePickerResult!.files.first.path ?? ''),
+                      leaveType: formData['Jenis_Cuti'],
+                      to: convertToIso8601(formData['CutiDate'].end.toString()),
+                    )).then((cutiSubmission) {
+                  return showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertSuccessSubmission(
+                      message: cutiSubmission.message,
+                    ),
+                  );
+                });
+              }
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)))),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                'Kirim Pengajuan',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
           ),
         ),
       ),

@@ -4,15 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:intl/intl.dart';
+import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:signature/signature.dart';
-import 'dart:io';
 import 'package:meraih_mobile/features/submission/domain/change_shift.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/change_shift.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/shift_company_provider.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/alert_success_submission.dart';
 
 class SubmissionShift extends ConsumerStatefulWidget {
   const SubmissionShift({super.key});
@@ -248,50 +249,56 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              const Spacer(),
-              Align(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.saveAndValidate()) {
-                        Map<String, dynamic> formData =
-                            _formKey.currentState!.value;
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState!.saveAndValidate()) {
+                Map<String, dynamic> formData = _formKey.currentState!.value;
 
-                        // print(formData['izinDate']);
-                        // print(selectedShiftBaru);
-                        // print(homeHistoryData.asData!.value!.shiftId);
+                // print(formData['izinDate']);
+                // print(selectedShiftBaru);
+                // print(homeHistoryData.asData!.value!.shiftId);
 
-                        handleChangeShift(ChangeShiftRequest(
+                handleChangeShift(
+                        ref,
+                        ChangeShiftRequest(
                             targetDate: convertToIso8601(
                                 formData['izinDate'].start.toString()),
                             currentShift: int.parse(homeHistoryData
                                 .asData!.value!.shiftId
                                 .toString()),
                             targetShift: selectedShiftBaru!,
-                            reason: formData['keterangan']));
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text(
-                        'Kirim Pengajuan',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
+                            reason: formData['keterangan']))
+                    .then((changeShiftSubmission) {
+                  return showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertSuccessSubmission(
+                      message: changeShiftSubmission.message,
                     ),
-                  ),
-                ),
+                  );
+                });
+              }
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)))),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                'Kirim Pengajuan',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
-            ],
+            ),
           ),
         ),
       ),

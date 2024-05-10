@@ -9,6 +9,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:meraih_mobile/features/submission/domain/sakit.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/sakit_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/alert_success_submission.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:signature/signature.dart';
 import 'package:go_router/go_router.dart';
@@ -236,17 +237,26 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                         print(File(filePickerResult!.files.first.path ?? "")
                             .path);
 
-                        handleSakitSubmission(SakitRequest(
-                            from: convertToIso8601(
-                                formData['sakitDate'].start.toString()),
-                            permissionReason: formData['keterangan'],
-                            to: convertToIso8601(
-                                formData['sakitDate'].end.toString()),
-                            sickFile: File(
-                                filePickerResult!.files.first.path ?? '')));
-
-                        // Access the signature image using _signatureController.toPngBytes()
-                        // Uint8List? signatureImage = await _signatureController.toPngBytes();
+                        handleSakitSubmission(
+                                ref,
+                                SakitRequest(
+                                    from: convertToIso8601(
+                                        formData['sakitDate'].start.toString()),
+                                    permissionReason: formData['keterangan'],
+                                    to: convertToIso8601(
+                                        formData['sakitDate'].end.toString()),
+                                    sickFile: File(
+                                        filePickerResult!.files.first.path ??
+                                            '')))
+                            .then((sakitSubmission) {
+                          return showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                AlertSuccessSubmission(
+                              message: sakitSubmission.message,
+                            ),
+                          );
+                        });
                       }
                     },
                     style: ElevatedButton.styleFrom(
