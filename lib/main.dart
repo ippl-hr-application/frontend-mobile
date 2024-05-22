@@ -11,7 +11,7 @@ void main() async {
 
   runApp(const ProviderScope(child: MyApp()));
   FilePicker.platform = FilePicker.platform;
-  }
+}
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});

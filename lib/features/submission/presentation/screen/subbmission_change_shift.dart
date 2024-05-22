@@ -92,6 +92,11 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                       child: FormBuilderDateRangePicker(
                         name: 'izinDate',
                         format: DateFormat('yyyy-MM-dd'),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Pilih Tanggal!';
+                          }
+                        },
                         decoration: InputDecoration(
                           labelText: 'Pilih Tanggal Izin',
                           contentPadding: const EdgeInsets.symmetric(
@@ -135,6 +140,11 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                             initialValue: data!.shiftName.toString(),
                             readOnly: true,
                             name: "shift",
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Pilih Shift!';
+                              }
+                            },
                             decoration: InputDecoration(
                               labelText: 'Pilih Shift',
                               contentPadding: const EdgeInsets.symmetric(
@@ -181,6 +191,11 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                             child: FormBuilderDropdown(
                           borderRadius: BorderRadius.circular(8.0),
                           name: 'shift-baru',
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Pilih Shift Baru!';
+                            }
+                          },
                           decoration: InputDecoration(
                             labelText: 'Pilih Shift Baru',
                             contentPadding: const EdgeInsets.symmetric(
@@ -236,6 +251,11 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                     Expanded(
                       child: FormBuilderTextField(
                         name: 'keterangan',
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Alasan ganti shift harus diisi!';
+                          }
+                        },
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 16.0, horizontal: 10.0),
