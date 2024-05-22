@@ -25,7 +25,7 @@ part 'app_router.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: "/checkin-prove",
+    initialLocation: "/test-camera",
     routes: [
       GoRoute(
         path: "/login",
@@ -77,6 +77,7 @@ GoRouter goRouter(GoRouterRef ref) {
           return const NoTransitionPage(child: OffenceScreen());
         },
       ),
+
       // GoRoute(
       //   path: '/submission',
       //   pageBuilder: (context, state) {
