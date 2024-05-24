@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/delete_submission_provider.dart';
 
-class AlertDeleteSubmission extends StatelessWidget {
+class AlertDeleteSubmission extends ConsumerWidget {
   final String? type;
   final int? submissionId;
 
@@ -9,7 +10,7 @@ class AlertDeleteSubmission extends StatelessWidget {
       {required this.type, required this.submissionId, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return CupertinoAlertDialog(
       title: const Text("Delete Submission"),
       content: Text("Apakah Anda ingin  menghapus ${type.toString()}"),
@@ -24,7 +25,7 @@ class AlertDeleteSubmission extends StatelessWidget {
         CupertinoDialogAction(
           isDestructiveAction: true,
           onPressed: () {
-            handleDeleteSubmission(submissionId);
+            handleDeleteSubmission(ref, submissionId!);
             print(submissionId);
             Navigator.pop(context);
           },

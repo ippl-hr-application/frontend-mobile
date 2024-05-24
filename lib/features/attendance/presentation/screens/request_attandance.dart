@@ -38,7 +38,7 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
               color: Colors.white,
             ),
             onPressed: () {
-              context.go('/work-assignment');
+              context.go('/attendance');
             },
           ),
           flexibleSpace: const Stack(

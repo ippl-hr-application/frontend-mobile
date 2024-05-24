@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart' as cdp;
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/attancande_recap_provider.dart';
 
-class AttendanceList extends StatefulWidget {
-  const AttendanceList({Key? key}) : super(key: key);
+class AttendanceList extends ConsumerStatefulWidget {
+  const AttendanceList({super.key});
 
   @override
-  _CheckinMapState createState() => _CheckinMapState();
+  ConsumerState<AttendanceList> createState() => _AttendanceListState();
 }
 
-class _CheckinMapState extends State<AttendanceList> {
+class _AttendanceListState extends ConsumerState<AttendanceList> {
   late DateTime _selectedDay;
   Map<DateTime, bool> statusMap = {};
 
@@ -95,6 +97,7 @@ class _CheckinMapState extends State<AttendanceList> {
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
                 _selectedDay = selectedDay;
+                print(_selectedDay);
               });
             },
           ),

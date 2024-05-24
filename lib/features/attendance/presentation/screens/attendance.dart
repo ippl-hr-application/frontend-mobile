@@ -4,6 +4,8 @@ import 'package:meraih_mobile/features/attendance/presentation/widget/request_at
 import 'package:meraih_mobile/features/attendance/presentation/widget/card_attandance_today.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/attancande_recap_provider.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_today_provider.dart';
 
 class Attendance extends ConsumerStatefulWidget {
   const Attendance({super.key});
@@ -17,6 +19,8 @@ class _AttendanceState extends ConsumerState<Attendance> {
 
   @override
   Widget build(BuildContext context) {
+    final attandanceToday = ref.watch(attandanceTodayProvider);
+    final attandanceRecap = ref.watch(attandanceRecapProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -67,12 +71,20 @@ class _AttendanceState extends ConsumerState<Attendance> {
                           selectAttandance = "Hari ini";
                         });
                       },
-                      child: const Text(
+                      style: TextButton.styleFrom(
+                        backgroundColor: selectAttandance == "Hari ini"
+                            ? const Color.fromRGBO(32, 81, 229, 1)
+                            : Colors.transparent,
+                      ),
+                      child: Text(
                         "Hari ini",
                         style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                          color: selectAttandance == "Hari ini"
+                              ? Colors.white // Warna putih jika dipilih
+                              : Colors.black,
+                        ),
                       )),
                   TextButton(
                       onPressed: () {
@@ -80,12 +92,20 @@ class _AttendanceState extends ConsumerState<Attendance> {
                           selectAttandance = "Kehadiran";
                         });
                       },
-                      child: const Text(
+                      style: TextButton.styleFrom(
+                        backgroundColor: selectAttandance == "Kehadiran"
+                            ? const Color.fromRGBO(32, 81, 229, 1)
+                            : Colors.transparent,
+                      ),
+                      child: Text(
                         "Kehadiran",
                         style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                          color: selectAttandance == "Kehadiran"
+                              ? Colors.white // Warna putih jika dipilih
+                              : Colors.black,
+                        ),
                       )),
                   TextButton(
                       onPressed: () {
@@ -93,21 +113,37 @@ class _AttendanceState extends ConsumerState<Attendance> {
                           selectAttandance = "Request";
                         });
                       },
-                      child: const Text(
+                      style: TextButton.styleFrom(
+                        backgroundColor: selectAttandance == "Request"
+                            ? const Color.fromRGBO(32, 81, 229, 1)
+                            : Colors.transparent,
+                      ),
+                      child: Text(
                         "Request",
                         style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                          color: selectAttandance == "Request"
+                              ? Colors.white // Warna putih jika dipilih
+                              : Colors.black,
+                        ),
                       )),
                 ],
               ),
             ),
             selectAttandance == "Hari ini"
-                ? Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 30.0, horizontal: 16.0),
-                    child: const CardAttandanceToday())
+                ? attandanceToday.when(
+                    data: (attandanceToday) => Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30.0, horizontal: 16.0),
+                      child:
+                          CardAttandanceToday(attandanceToday: attandanceToday),
+                    ),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (error, stack) =>
+                        Center(child: Text('Error: $error')),
+                  )
                 : selectAttandance == "Kehadiran"
                     ? Container(
                         padding: const EdgeInsets.symmetric(

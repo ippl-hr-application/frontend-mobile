@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'submission_repository.dart';
+part of 'attandance_submission_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'submission_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _SubmissionRepository implements SubmissionRepository {
-  _SubmissionRepository(
+class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
+  _AttandanceHistoryRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,29 +21,41 @@ class _SubmissionRepository implements SubmissionRepository {
   String? baseUrl;
 
   @override
-  Future<SubmissionHistory> getSubmissionHistory(
-    String? year,
-    String? month,
-    String? status,
+  Future<AttandanceHistoryData> postAttandanceHistory(
+    String attendanceId,
+    String reason,
+    File attendanceSubmissionFile,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'year': year,
-      r'month': month,
-      r'status': status,
-    };
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<SubmissionHistory>(Options(
-      method: 'GET',
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'attendance_id',
+      attendanceId,
+    ));
+    _data.fields.add(MapEntry(
+      'reason',
+      reason,
+    ));
+    _data.files.add(MapEntry(
+      ' attendance_submission_file',
+      MultipartFile.fromFileSync(
+        attendanceSubmissionFile.path,
+        filename:
+            attendanceSubmissionFile.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AttandanceHistoryData>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
-              '/submission',
+              '/submission/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -52,7 +64,7 @@ class _SubmissionRepository implements SubmissionRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = SubmissionHistory.fromJson(_result.data!);
+    final value = AttandanceHistoryData.fromJson(_result.data!);
     return value;
   }
 

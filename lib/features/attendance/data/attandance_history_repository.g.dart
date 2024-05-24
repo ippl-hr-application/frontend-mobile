@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'submission_repository.dart';
+part of 'attandance_history_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'submission_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _SubmissionRepository implements SubmissionRepository {
-  _SubmissionRepository(
+class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
+  _AttandanceHistoryRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,29 +21,20 @@ class _SubmissionRepository implements SubmissionRepository {
   String? baseUrl;
 
   @override
-  Future<SubmissionHistory> getSubmissionHistory(
-    String? year,
-    String? month,
-    String? status,
-  ) async {
+  Future<AttandanceHistoryDate> getAttandanceHistory() async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'year': year,
-      r'month': month,
-      r'status': status,
-    };
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<SubmissionHistory>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AttandanceHistoryDate>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/submission',
+              'attendance/history',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -52,7 +43,7 @@ class _SubmissionRepository implements SubmissionRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = SubmissionHistory.fromJson(_result.data!);
+    final value = AttandanceHistoryDate.fromJson(_result.data!);
     return value;
   }
 

@@ -204,10 +204,16 @@ DataResponse _$DataResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DataResponse {
+  @JsonKey(name: 'attendance_id')
+  int? get attendanceId => throw _privateConstructorUsedError;
   @JsonKey(name: 'date')
   String? get date => throw _privateConstructorUsedError;
-  @JsonKey(name: 'check_in')
-  String? get checkIn => throw _privateConstructorUsedError;
+  @JsonKey(name: 'from')
+  String? get from => throw _privateConstructorUsedError;
+  @JsonKey(name: 'to')
+  String? get to => throw _privateConstructorUsedError;
+  @JsonKey(name: 'checks')
+  List<ChecksData>? get checks => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -222,8 +228,11 @@ abstract class $DataResponseCopyWith<$Res> {
       _$DataResponseCopyWithImpl<$Res, DataResponse>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'date') String? date,
-      @JsonKey(name: 'check_in') String? checkIn});
+      {@JsonKey(name: 'attendance_id') int? attendanceId,
+      @JsonKey(name: 'date') String? date,
+      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'to') String? to,
+      @JsonKey(name: 'checks') List<ChecksData>? checks});
 }
 
 /// @nodoc
@@ -239,18 +248,33 @@ class _$DataResponseCopyWithImpl<$Res, $Val extends DataResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? attendanceId = freezed,
     Object? date = freezed,
-    Object? checkIn = freezed,
+    Object? from = freezed,
+    Object? to = freezed,
+    Object? checks = freezed,
   }) {
     return _then(_value.copyWith(
+      attendanceId: freezed == attendanceId
+          ? _value.attendanceId
+          : attendanceId // ignore: cast_nullable_to_non_nullable
+              as int?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String?,
-      checkIn: freezed == checkIn
-          ? _value.checkIn
-          : checkIn // ignore: cast_nullable_to_non_nullable
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
               as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+      checks: freezed == checks
+          ? _value.checks
+          : checks // ignore: cast_nullable_to_non_nullable
+              as List<ChecksData>?,
     ) as $Val);
   }
 }
@@ -264,8 +288,11 @@ abstract class _$$DataResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'date') String? date,
-      @JsonKey(name: 'check_in') String? checkIn});
+      {@JsonKey(name: 'attendance_id') int? attendanceId,
+      @JsonKey(name: 'date') String? date,
+      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'to') String? to,
+      @JsonKey(name: 'checks') List<ChecksData>? checks});
 }
 
 /// @nodoc
@@ -279,18 +306,33 @@ class __$$DataResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? attendanceId = freezed,
     Object? date = freezed,
-    Object? checkIn = freezed,
+    Object? from = freezed,
+    Object? to = freezed,
+    Object? checks = freezed,
   }) {
     return _then(_$DataResponseImpl(
+      attendanceId: freezed == attendanceId
+          ? _value.attendanceId
+          : attendanceId // ignore: cast_nullable_to_non_nullable
+              as int?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String?,
-      checkIn: freezed == checkIn
-          ? _value.checkIn
-          : checkIn // ignore: cast_nullable_to_non_nullable
+      from: freezed == from
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
               as String?,
+      to: freezed == to
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
+              as String?,
+      checks: freezed == checks
+          ? _value._checks
+          : checks // ignore: cast_nullable_to_non_nullable
+              as List<ChecksData>?,
     ));
   }
 }
@@ -299,22 +341,42 @@ class __$$DataResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DataResponseImpl implements _DataResponse {
   _$DataResponseImpl(
-      {@JsonKey(name: 'date') this.date,
-      @JsonKey(name: 'check_in') this.checkIn});
+      {@JsonKey(name: 'attendance_id') this.attendanceId,
+      @JsonKey(name: 'date') this.date,
+      @JsonKey(name: 'from') this.from,
+      @JsonKey(name: 'to') this.to,
+      @JsonKey(name: 'checks') final List<ChecksData>? checks})
+      : _checks = checks;
 
   factory _$DataResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$DataResponseImplFromJson(json);
 
   @override
+  @JsonKey(name: 'attendance_id')
+  final int? attendanceId;
+  @override
   @JsonKey(name: 'date')
   final String? date;
   @override
-  @JsonKey(name: 'check_in')
-  final String? checkIn;
+  @JsonKey(name: 'from')
+  final String? from;
+  @override
+  @JsonKey(name: 'to')
+  final String? to;
+  final List<ChecksData>? _checks;
+  @override
+  @JsonKey(name: 'checks')
+  List<ChecksData>? get checks {
+    final value = _checks;
+    if (value == null) return null;
+    if (_checks is EqualUnmodifiableListView) return _checks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'DataResponse(date: $date, checkIn: $checkIn)';
+    return 'DataResponse(attendanceId: $attendanceId, date: $date, from: $from, to: $to, checks: $checks)';
   }
 
   @override
@@ -322,13 +384,18 @@ class _$DataResponseImpl implements _DataResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DataResponseImpl &&
+            (identical(other.attendanceId, attendanceId) ||
+                other.attendanceId == attendanceId) &&
             (identical(other.date, date) || other.date == date) &&
-            (identical(other.checkIn, checkIn) || other.checkIn == checkIn));
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.to, to) || other.to == to) &&
+            const DeepCollectionEquality().equals(other._checks, _checks));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, date, checkIn);
+  int get hashCode => Object.hash(runtimeType, attendanceId, date, from, to,
+      const DeepCollectionEquality().hash(_checks));
 
   @JsonKey(ignore: true)
   @override
@@ -346,20 +413,222 @@ class _$DataResponseImpl implements _DataResponse {
 
 abstract class _DataResponse implements DataResponse {
   factory _DataResponse(
-      {@JsonKey(name: 'date') final String? date,
-      @JsonKey(name: 'check_in') final String? checkIn}) = _$DataResponseImpl;
+          {@JsonKey(name: 'attendance_id') final int? attendanceId,
+          @JsonKey(name: 'date') final String? date,
+          @JsonKey(name: 'from') final String? from,
+          @JsonKey(name: 'to') final String? to,
+          @JsonKey(name: 'checks') final List<ChecksData>? checks}) =
+      _$DataResponseImpl;
 
   factory _DataResponse.fromJson(Map<String, dynamic> json) =
       _$DataResponseImpl.fromJson;
 
   @override
+  @JsonKey(name: 'attendance_id')
+  int? get attendanceId;
+  @override
   @JsonKey(name: 'date')
   String? get date;
   @override
-  @JsonKey(name: 'check_in')
-  String? get checkIn;
+  @JsonKey(name: 'from')
+  String? get from;
+  @override
+  @JsonKey(name: 'to')
+  String? get to;
+  @override
+  @JsonKey(name: 'checks')
+  List<ChecksData>? get checks;
   @override
   @JsonKey(ignore: true)
   _$$DataResponseImplCopyWith<_$DataResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ChecksData _$ChecksDataFromJson(Map<String, dynamic> json) {
+  return _ChecksData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ChecksData {
+  @JsonKey(name: 'time')
+  String? get time => throw _privateConstructorUsedError;
+  @JsonKey(name: 'type')
+  String? get type => throw _privateConstructorUsedError;
+  @JsonKey(name: 'status')
+  String? get status => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ChecksDataCopyWith<ChecksData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChecksDataCopyWith<$Res> {
+  factory $ChecksDataCopyWith(
+          ChecksData value, $Res Function(ChecksData) then) =
+      _$ChecksDataCopyWithImpl<$Res, ChecksData>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'time') String? time,
+      @JsonKey(name: 'type') String? type,
+      @JsonKey(name: 'status') String? status});
+}
+
+/// @nodoc
+class _$ChecksDataCopyWithImpl<$Res, $Val extends ChecksData>
+    implements $ChecksDataCopyWith<$Res> {
+  _$ChecksDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? time = freezed,
+    Object? type = freezed,
+    Object? status = freezed,
+  }) {
+    return _then(_value.copyWith(
+      time: freezed == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ChecksDataImplCopyWith<$Res>
+    implements $ChecksDataCopyWith<$Res> {
+  factory _$$ChecksDataImplCopyWith(
+          _$ChecksDataImpl value, $Res Function(_$ChecksDataImpl) then) =
+      __$$ChecksDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'time') String? time,
+      @JsonKey(name: 'type') String? type,
+      @JsonKey(name: 'status') String? status});
+}
+
+/// @nodoc
+class __$$ChecksDataImplCopyWithImpl<$Res>
+    extends _$ChecksDataCopyWithImpl<$Res, _$ChecksDataImpl>
+    implements _$$ChecksDataImplCopyWith<$Res> {
+  __$$ChecksDataImplCopyWithImpl(
+      _$ChecksDataImpl _value, $Res Function(_$ChecksDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? time = freezed,
+    Object? type = freezed,
+    Object? status = freezed,
+  }) {
+    return _then(_$ChecksDataImpl(
+      time: freezed == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ChecksDataImpl implements _ChecksData {
+  _$ChecksDataImpl(
+      {@JsonKey(name: 'time') this.time,
+      @JsonKey(name: 'type') this.type,
+      @JsonKey(name: 'status') this.status});
+
+  factory _$ChecksDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ChecksDataImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'time')
+  final String? time;
+  @override
+  @JsonKey(name: 'type')
+  final String? type;
+  @override
+  @JsonKey(name: 'status')
+  final String? status;
+
+  @override
+  String toString() {
+    return 'ChecksData(time: $time, type: $type, status: $status)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChecksDataImpl &&
+            (identical(other.time, time) || other.time == time) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.status, status) || other.status == status));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, time, type, status);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChecksDataImplCopyWith<_$ChecksDataImpl> get copyWith =>
+      __$$ChecksDataImplCopyWithImpl<_$ChecksDataImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ChecksDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ChecksData implements ChecksData {
+  factory _ChecksData(
+      {@JsonKey(name: 'time') final String? time,
+      @JsonKey(name: 'type') final String? type,
+      @JsonKey(name: 'status') final String? status}) = _$ChecksDataImpl;
+
+  factory _ChecksData.fromJson(Map<String, dynamic> json) =
+      _$ChecksDataImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'time')
+  String? get time;
+  @override
+  @JsonKey(name: 'type')
+  String? get type;
+  @override
+  @JsonKey(name: 'status')
+  String? get status;
+  @override
+  @JsonKey(ignore: true)
+  _$$ChecksDataImplCopyWith<_$ChecksDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -9,7 +9,6 @@ import 'package:meraih_mobile/models/buttom_app_model.dart';
 import 'package:meraih_mobile/models/pengajuan.dart';
 import 'package:meraih_mobile/widgets/daftarPengajuan/custom_icon_button.dart';
 import 'package:meraih_mobile/widgets/daftarPengajuan/popUpFilterPengajuan.dart';
-// import 'package:meraih_mobile/screens/pelanggaran/widget/calender_years.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/submission_provider.dart';
 import 'package:meraih_mobile/features/submission/presentation/widgets/submission_item.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
@@ -28,9 +27,27 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
   DateTime _selectedYear = DateTime.now();
   bool _isPlusIcon = true;
 
+  late String year;
+  late String month;
+  late String status;
+
+  @override
+  void initState() {
+    super.initState();
+    final currentDate = DateTime.now();
+    year = currentDate.year.toString();
+    month = currentDate.month.toString();
+    status = '';
+  }
+
   @override
   Widget build(BuildContext context) {
-    final submissionHistoryData = ref.watch(submissionProvider);
+    final submissionHistoryData = ref.read(submissionProvider({
+      'year': year,
+      'month': month,
+      'status': status,
+    }));
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
