@@ -48,6 +48,8 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
       'status': status,
     }));
 
+    print(year);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
