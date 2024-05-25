@@ -196,8 +196,6 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
               if (_formKey.currentState!.saveAndValidate()) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
-                print("test");
-
                 setState(() {
                   isSubmitting = true;
                   print(isSubmitting);

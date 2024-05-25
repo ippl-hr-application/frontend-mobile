@@ -11,12 +11,23 @@ final submissionProvider = FutureProvider.autoDispose
 
   final submissionRepository = SubmissionRepository(dio);
   try {
+    final year = params['year'] ?? '';
+    final month = params['month'] ?? '';
+    final status = params['status'] ?? '';
+
+    print('Success');
+
+    print('Year: $year, Month: $month, Status: $status');
     final submissionHistory = await submissionRepository.getSubmissionHistory(
-      params['year'].toString(),
-      params['month'].toString(),
-      params['status'].toString(),
+      year,
+      month,
+      status,
     );
-    return submissionHistory.data;
+
+    if (submissionHistory.success == true) {
+      print('Sucesss');
+      return submissionHistory.data;
+    }
   } on DioException {
     rethrow;
   }

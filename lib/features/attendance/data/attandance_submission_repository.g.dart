@@ -55,7 +55,7 @@ class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
     )
             .compose(
               _dio.options,
-              '/submission/',
+              '/submission',
               queryParameters: queryParameters,
               data: _data,
             )

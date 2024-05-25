@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'attandance_history_repository.dart';
+part of 'payroll_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'attandance_history_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
-  _AttandanceHistoryRepository(
+class _PayrollRepository implements PayrollRepository {
+  _PayrollRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,20 +21,23 @@ class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
   String? baseUrl;
 
   @override
-  Future<AttandanceHistoryDate> getAttandanceHistory(String date) async {
+  Future<PayroleHistory> getPayrollHistory(
+    String companyId,
+    String year,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'date': date};
+    final queryParameters = <String, dynamic>{r'year': year};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AttandanceHistoryDate>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<PayroleHistory>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/attendance/history',
+              '/payroll/${companyId}/employee',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,7 +46,7 @@ class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = AttandanceHistoryDate.fromJson(_result.data!);
+    final value = PayroleHistory.fromJson(_result.data!);
     return value;
   }
 

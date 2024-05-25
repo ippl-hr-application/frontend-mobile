@@ -21,7 +21,7 @@ class _TasksRepository implements TasksRepository {
   String? baseUrl;
 
   @override
-  Future<TasksHistory> getTasksHistory() async {
+  Future<TasksHistory> getTasksHistory(String companyId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +34,7 @@ class _TasksRepository implements TasksRepository {
     )
             .compose(
               _dio.options,
-              '/task-management',
+              '/task-management/${companyId}/employee',
               queryParameters: queryParameters,
               data: _data,
             )

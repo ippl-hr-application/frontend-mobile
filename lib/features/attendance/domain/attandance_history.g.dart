@@ -26,7 +26,7 @@ Map<String, dynamic> _$$AttandanceHistoryDateImplToJson(
 
 _$DataHistoryImpl _$$DataHistoryImplFromJson(Map<String, dynamic> json) =>
     _$DataHistoryImpl(
-      attendanceId: json['attendance_id'] as String?,
+      attendanceId: (json['attendance_id'] as num?)?.toInt(),
       date: json['date'] as String?,
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,

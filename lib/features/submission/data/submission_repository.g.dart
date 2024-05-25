@@ -22,9 +22,9 @@ class _SubmissionRepository implements SubmissionRepository {
 
   @override
   Future<SubmissionHistory> getSubmissionHistory(
-    String? year,
-    String? month,
-    String? status,
+    String year,
+    String month,
+    String status,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -32,7 +32,6 @@ class _SubmissionRepository implements SubmissionRepository {
       r'month': month,
       r'status': status,
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio

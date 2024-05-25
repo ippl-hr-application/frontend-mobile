@@ -233,7 +233,7 @@ DataHistory _$DataHistoryFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$DataHistory {
   @JsonKey(name: 'attendance_id')
-  String? get attendanceId => throw _privateConstructorUsedError;
+  int? get attendanceId => throw _privateConstructorUsedError;
   @JsonKey(name: 'date')
   String? get date => throw _privateConstructorUsedError;
   @JsonKey(name: 'start_time')
@@ -256,7 +256,7 @@ abstract class $DataHistoryCopyWith<$Res> {
       _$DataHistoryCopyWithImpl<$Res, DataHistory>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'attendance_id') String? attendanceId,
+      {@JsonKey(name: 'attendance_id') int? attendanceId,
       @JsonKey(name: 'date') String? date,
       @JsonKey(name: 'start_time') String? startTime,
       @JsonKey(name: 'end_time') String? endTime,
@@ -286,7 +286,7 @@ class _$DataHistoryCopyWithImpl<$Res, $Val extends DataHistory>
       attendanceId: freezed == attendanceId
           ? _value.attendanceId
           : attendanceId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -316,7 +316,7 @@ abstract class _$$DataHistoryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'attendance_id') String? attendanceId,
+      {@JsonKey(name: 'attendance_id') int? attendanceId,
       @JsonKey(name: 'date') String? date,
       @JsonKey(name: 'start_time') String? startTime,
       @JsonKey(name: 'end_time') String? endTime,
@@ -344,7 +344,7 @@ class __$$DataHistoryImplCopyWithImpl<$Res>
       attendanceId: freezed == attendanceId
           ? _value.attendanceId
           : attendanceId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -380,7 +380,7 @@ class _$DataHistoryImpl implements _DataHistory {
 
   @override
   @JsonKey(name: 'attendance_id')
-  final String? attendanceId;
+  final int? attendanceId;
   @override
   @JsonKey(name: 'date')
   final String? date;
@@ -435,7 +435,7 @@ class _$DataHistoryImpl implements _DataHistory {
 
 abstract class _DataHistory implements DataHistory {
   factory _DataHistory(
-          {@JsonKey(name: 'attendance_id') final String? attendanceId,
+          {@JsonKey(name: 'attendance_id') final int? attendanceId,
           @JsonKey(name: 'date') final String? date,
           @JsonKey(name: 'start_time') final String? startTime,
           @JsonKey(name: 'end_time') final String? endTime,
@@ -447,7 +447,7 @@ abstract class _DataHistory implements DataHistory {
 
   @override
   @JsonKey(name: 'attendance_id')
-  String? get attendanceId;
+  int? get attendanceId;
   @override
   @JsonKey(name: 'date')
   String? get date;

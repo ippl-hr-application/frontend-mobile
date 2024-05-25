@@ -1,25 +1,28 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meraih_mobile/features/workassignments/data/tasks_repository.dart';
+import 'package:meraih_mobile/features/payroll/data/payroll_repository.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 
-final tasksProvider = FutureProvider((ref) async {
+final payrollProvider = FutureProvider.autoDispose
+    .family<dynamic, Map<String, dynamic>>((ref, params) async {
   final dio = Dio();
+
   final token = ref.watch(authTokenProvider);
   final home = ref.watch(homeProvider);
 
   final companyId = home.value!.companyBranchId.toString();
+  final year = params['year'];
 
   dio.options.headers['Authorization'] = 'Bearer $token';
-
-  final tasksRepository = TasksRepository(dio);
+  final payrollRepository = PayrollRepository(dio);
 
   try {
-    final tasksHistory = await tasksRepository.getTasksHistory(companyId);
+    final payrollHistory =
+        await payrollRepository.getPayrollHistory(companyId, year);
 
-    if (tasksHistory.success == true) {
-      return tasksHistory.data;
+    if (payrollHistory.success == true) {
+      return payrollHistory.data;
     }
   } on DioException {
     rethrow;

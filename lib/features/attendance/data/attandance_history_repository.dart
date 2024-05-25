@@ -9,6 +9,7 @@ part 'attandance_history_repository.g.dart';
 abstract class AttandanceHistoryRepository {
   factory AttandanceHistoryRepository(Dio dio, {String baseUrl}) =
       _AttandanceHistoryRepository;
-  @GET('attendance/history')
-  Future<AttandanceHistoryDate> getAttandanceHistory();
+  @GET('/attendance/history')
+  Future<AttandanceHistoryDate> getAttandanceHistory(
+      @Query('date') String date);
 }

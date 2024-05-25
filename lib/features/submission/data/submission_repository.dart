@@ -11,8 +11,8 @@ abstract class SubmissionRepository {
       _SubmissionRepository;
   @GET('/submission')
   Future<SubmissionHistory> getSubmissionHistory(
-    @Query('year') String? year,
-    @Query('month') String? month,
-    @Query('status') String? status,
+    @Query('year') String year,
+    @Query('month') String month,
+    @Query('status') String status,
   );
 }

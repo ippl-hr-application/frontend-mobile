@@ -10,7 +10,7 @@ part 'attandance_submission_repository.g.dart';
 abstract class AttandanceHistoryRepository {
   factory AttandanceHistoryRepository(Dio dio, {String baseUrl}) =
       _AttandanceHistoryRepository;
-  @POST('/submission/')
+  @POST('/submission')
   @MultiPart()
   Future<AttandanceHistoryData> postAttandanceHistory(
       @Part(name: 'attendance_id') String attendanceId,

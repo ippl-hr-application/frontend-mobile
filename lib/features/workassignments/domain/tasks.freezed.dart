@@ -385,8 +385,8 @@ mixin _$TasksData {
   String? get startdate => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_date')
   String? get endDate => throw _privateConstructorUsedError;
-  @JsonKey(name: 'given_by_id')
-  String? get givenbyId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'given_by')
+  GivenData? get givenbyId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -407,7 +407,9 @@ abstract class $TasksDataCopyWith<$Res> {
       @JsonKey(name: 'description') String? description,
       @JsonKey(name: 'start_date') String? startdate,
       @JsonKey(name: 'end_date') String? endDate,
-      @JsonKey(name: 'given_by_id') String? givenbyId});
+      @JsonKey(name: 'given_by') GivenData? givenbyId});
+
+  $GivenDataCopyWith<$Res>? get givenbyId;
 }
 
 /// @nodoc
@@ -464,8 +466,20 @@ class _$TasksDataCopyWithImpl<$Res, $Val extends TasksData>
       givenbyId: freezed == givenbyId
           ? _value.givenbyId
           : givenbyId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as GivenData?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GivenDataCopyWith<$Res>? get givenbyId {
+    if (_value.givenbyId == null) {
+      return null;
+    }
+
+    return $GivenDataCopyWith<$Res>(_value.givenbyId!, (value) {
+      return _then(_value.copyWith(givenbyId: value) as $Val);
+    });
   }
 }
 
@@ -485,7 +499,10 @@ abstract class _$$TasksDataImplCopyWith<$Res>
       @JsonKey(name: 'description') String? description,
       @JsonKey(name: 'start_date') String? startdate,
       @JsonKey(name: 'end_date') String? endDate,
-      @JsonKey(name: 'given_by_id') String? givenbyId});
+      @JsonKey(name: 'given_by') GivenData? givenbyId});
+
+  @override
+  $GivenDataCopyWith<$Res>? get givenbyId;
 }
 
 /// @nodoc
@@ -540,7 +557,7 @@ class __$$TasksDataImplCopyWithImpl<$Res>
       givenbyId: freezed == givenbyId
           ? _value.givenbyId
           : givenbyId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as GivenData?,
     ));
   }
 }
@@ -556,7 +573,7 @@ class _$TasksDataImpl implements _TasksData {
       @JsonKey(name: 'description') this.description,
       @JsonKey(name: 'start_date') this.startdate,
       @JsonKey(name: 'end_date') this.endDate,
-      @JsonKey(name: 'given_by_id') this.givenbyId});
+      @JsonKey(name: 'given_by') this.givenbyId});
 
   factory _$TasksDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$TasksDataImplFromJson(json);
@@ -583,8 +600,8 @@ class _$TasksDataImpl implements _TasksData {
   @JsonKey(name: 'end_date')
   final String? endDate;
   @override
-  @JsonKey(name: 'given_by_id')
-  final String? givenbyId;
+  @JsonKey(name: 'given_by')
+  final GivenData? givenbyId;
 
   @override
   String toString() {
@@ -639,7 +656,7 @@ abstract class _TasksData implements TasksData {
       @JsonKey(name: 'description') final String? description,
       @JsonKey(name: 'start_date') final String? startdate,
       @JsonKey(name: 'end_date') final String? endDate,
-      @JsonKey(name: 'given_by_id') final String? givenbyId}) = _$TasksDataImpl;
+      @JsonKey(name: 'given_by') final GivenData? givenbyId}) = _$TasksDataImpl;
 
   factory _TasksData.fromJson(Map<String, dynamic> json) =
       _$TasksDataImpl.fromJson;
@@ -666,10 +683,384 @@ abstract class _TasksData implements TasksData {
   @JsonKey(name: 'end_date')
   String? get endDate;
   @override
-  @JsonKey(name: 'given_by_id')
-  String? get givenbyId;
+  @JsonKey(name: 'given_by')
+  GivenData? get givenbyId;
   @override
   @JsonKey(ignore: true)
   _$$TasksDataImplCopyWith<_$TasksDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+GivenData _$GivenDataFromJson(Map<String, dynamic> json) {
+  return _GivenData.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GivenData {
+  @JsonKey(name: 'employee_id')
+  String? get employee_id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'first_name')
+  String? get first_name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_name')
+  String? get last_name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'job_position')
+  JobPosition? get job_position => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GivenDataCopyWith<GivenData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GivenDataCopyWith<$Res> {
+  factory $GivenDataCopyWith(GivenData value, $Res Function(GivenData) then) =
+      _$GivenDataCopyWithImpl<$Res, GivenData>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'employee_id') String? employee_id,
+      @JsonKey(name: 'first_name') String? first_name,
+      @JsonKey(name: 'last_name') String? last_name,
+      @JsonKey(name: 'job_position') JobPosition? job_position});
+
+  $JobPositionCopyWith<$Res>? get job_position;
+}
+
+/// @nodoc
+class _$GivenDataCopyWithImpl<$Res, $Val extends GivenData>
+    implements $GivenDataCopyWith<$Res> {
+  _$GivenDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? employee_id = freezed,
+    Object? first_name = freezed,
+    Object? last_name = freezed,
+    Object? job_position = freezed,
+  }) {
+    return _then(_value.copyWith(
+      employee_id: freezed == employee_id
+          ? _value.employee_id
+          : employee_id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      first_name: freezed == first_name
+          ? _value.first_name
+          : first_name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      last_name: freezed == last_name
+          ? _value.last_name
+          : last_name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      job_position: freezed == job_position
+          ? _value.job_position
+          : job_position // ignore: cast_nullable_to_non_nullable
+              as JobPosition?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $JobPositionCopyWith<$Res>? get job_position {
+    if (_value.job_position == null) {
+      return null;
+    }
+
+    return $JobPositionCopyWith<$Res>(_value.job_position!, (value) {
+      return _then(_value.copyWith(job_position: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$GivenDataImplCopyWith<$Res>
+    implements $GivenDataCopyWith<$Res> {
+  factory _$$GivenDataImplCopyWith(
+          _$GivenDataImpl value, $Res Function(_$GivenDataImpl) then) =
+      __$$GivenDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'employee_id') String? employee_id,
+      @JsonKey(name: 'first_name') String? first_name,
+      @JsonKey(name: 'last_name') String? last_name,
+      @JsonKey(name: 'job_position') JobPosition? job_position});
+
+  @override
+  $JobPositionCopyWith<$Res>? get job_position;
+}
+
+/// @nodoc
+class __$$GivenDataImplCopyWithImpl<$Res>
+    extends _$GivenDataCopyWithImpl<$Res, _$GivenDataImpl>
+    implements _$$GivenDataImplCopyWith<$Res> {
+  __$$GivenDataImplCopyWithImpl(
+      _$GivenDataImpl _value, $Res Function(_$GivenDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? employee_id = freezed,
+    Object? first_name = freezed,
+    Object? last_name = freezed,
+    Object? job_position = freezed,
+  }) {
+    return _then(_$GivenDataImpl(
+      employee_id: freezed == employee_id
+          ? _value.employee_id
+          : employee_id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      first_name: freezed == first_name
+          ? _value.first_name
+          : first_name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      last_name: freezed == last_name
+          ? _value.last_name
+          : last_name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      job_position: freezed == job_position
+          ? _value.job_position
+          : job_position // ignore: cast_nullable_to_non_nullable
+              as JobPosition?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GivenDataImpl implements _GivenData {
+  _$GivenDataImpl(
+      {@JsonKey(name: 'employee_id') this.employee_id,
+      @JsonKey(name: 'first_name') this.first_name,
+      @JsonKey(name: 'last_name') this.last_name,
+      @JsonKey(name: 'job_position') this.job_position});
+
+  factory _$GivenDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GivenDataImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'employee_id')
+  final String? employee_id;
+  @override
+  @JsonKey(name: 'first_name')
+  final String? first_name;
+  @override
+  @JsonKey(name: 'last_name')
+  final String? last_name;
+  @override
+  @JsonKey(name: 'job_position')
+  final JobPosition? job_position;
+
+  @override
+  String toString() {
+    return 'GivenData(employee_id: $employee_id, first_name: $first_name, last_name: $last_name, job_position: $job_position)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GivenDataImpl &&
+            (identical(other.employee_id, employee_id) ||
+                other.employee_id == employee_id) &&
+            (identical(other.first_name, first_name) ||
+                other.first_name == first_name) &&
+            (identical(other.last_name, last_name) ||
+                other.last_name == last_name) &&
+            (identical(other.job_position, job_position) ||
+                other.job_position == job_position));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, employee_id, first_name, last_name, job_position);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GivenDataImplCopyWith<_$GivenDataImpl> get copyWith =>
+      __$$GivenDataImplCopyWithImpl<_$GivenDataImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GivenDataImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GivenData implements GivenData {
+  factory _GivenData(
+          {@JsonKey(name: 'employee_id') final String? employee_id,
+          @JsonKey(name: 'first_name') final String? first_name,
+          @JsonKey(name: 'last_name') final String? last_name,
+          @JsonKey(name: 'job_position') final JobPosition? job_position}) =
+      _$GivenDataImpl;
+
+  factory _GivenData.fromJson(Map<String, dynamic> json) =
+      _$GivenDataImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'employee_id')
+  String? get employee_id;
+  @override
+  @JsonKey(name: 'first_name')
+  String? get first_name;
+  @override
+  @JsonKey(name: 'last_name')
+  String? get last_name;
+  @override
+  @JsonKey(name: 'job_position')
+  JobPosition? get job_position;
+  @override
+  @JsonKey(ignore: true)
+  _$$GivenDataImplCopyWith<_$GivenDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+JobPosition _$JobPositionFromJson(Map<String, dynamic> json) {
+  return _JobPosition.fromJson(json);
+}
+
+/// @nodoc
+mixin _$JobPosition {
+  @JsonKey(name: 'name')
+  String? get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $JobPositionCopyWith<JobPosition> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $JobPositionCopyWith<$Res> {
+  factory $JobPositionCopyWith(
+          JobPosition value, $Res Function(JobPosition) then) =
+      _$JobPositionCopyWithImpl<$Res, JobPosition>;
+  @useResult
+  $Res call({@JsonKey(name: 'name') String? name});
+}
+
+/// @nodoc
+class _$JobPositionCopyWithImpl<$Res, $Val extends JobPosition>
+    implements $JobPositionCopyWith<$Res> {
+  _$JobPositionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$JobPositionImplCopyWith<$Res>
+    implements $JobPositionCopyWith<$Res> {
+  factory _$$JobPositionImplCopyWith(
+          _$JobPositionImpl value, $Res Function(_$JobPositionImpl) then) =
+      __$$JobPositionImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'name') String? name});
+}
+
+/// @nodoc
+class __$$JobPositionImplCopyWithImpl<$Res>
+    extends _$JobPositionCopyWithImpl<$Res, _$JobPositionImpl>
+    implements _$$JobPositionImplCopyWith<$Res> {
+  __$$JobPositionImplCopyWithImpl(
+      _$JobPositionImpl _value, $Res Function(_$JobPositionImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = freezed,
+  }) {
+    return _then(_$JobPositionImpl(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$JobPositionImpl implements _JobPosition {
+  _$JobPositionImpl({@JsonKey(name: 'name') this.name});
+
+  factory _$JobPositionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JobPositionImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'name')
+  final String? name;
+
+  @override
+  String toString() {
+    return 'JobPosition(name: $name)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$JobPositionImpl &&
+            (identical(other.name, name) || other.name == name));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$JobPositionImplCopyWith<_$JobPositionImpl> get copyWith =>
+      __$$JobPositionImplCopyWithImpl<_$JobPositionImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$JobPositionImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _JobPosition implements JobPosition {
+  factory _JobPosition({@JsonKey(name: 'name') final String? name}) =
+      _$JobPositionImpl;
+
+  factory _JobPosition.fromJson(Map<String, dynamic> json) =
+      _$JobPositionImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'name')
+  String? get name;
+  @override
+  @JsonKey(ignore: true)
+  _$$JobPositionImplCopyWith<_$JobPositionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

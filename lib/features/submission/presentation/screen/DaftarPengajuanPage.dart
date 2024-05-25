@@ -36,19 +36,19 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
     super.initState();
     final currentDate = DateTime.now();
     year = currentDate.year.toString();
-    month = currentDate.month.toString();
-    status = '';
+    month = currentDate.month.toString().padLeft(2, '0');
+    status = 'PENDING';
   }
 
   @override
   Widget build(BuildContext context) {
+    print(month);
+    
     final submissionHistoryData = ref.read(submissionProvider({
       'year': year,
       'month': month,
       'status': status,
     }));
-
-    print(year);
 
     return Scaffold(
       appBar: AppBar(

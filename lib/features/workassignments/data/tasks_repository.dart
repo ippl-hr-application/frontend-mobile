@@ -9,6 +9,6 @@ part 'tasks_repository.g.dart';
 @RestApi(baseUrl: AppConfigs.baseUrl)
 abstract class TasksRepository {
   factory TasksRepository(Dio dio, {String baseUrl}) = _TasksRepository;
-  @GET('/task-management')
-  Future<TasksHistory> getTasksHistory();
+  @GET('/task-management/{companyId}/employee')
+  Future<TasksHistory> getTasksHistory(@Path() String companyId);
 }

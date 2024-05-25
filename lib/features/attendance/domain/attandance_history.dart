@@ -19,7 +19,7 @@ class AttandanceHistoryDate with _$AttandanceHistoryDate {
 @freezed
 class DataHistory with _$DataHistory {
   factory DataHistory({
-    @JsonKey(name: 'attendance_id') String? attendanceId,
+    @JsonKey(name: 'attendance_id') int? attendanceId,
     @JsonKey(name: 'date') String? date,
     @JsonKey(name: 'start_time') String? startTime,
     @JsonKey(name: 'end_time') String? endTime,

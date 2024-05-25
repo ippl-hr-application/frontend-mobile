@@ -12,6 +12,7 @@ class WorkTask extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tasksHistoryData = ref.watch(tasksProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -64,7 +65,12 @@ class WorkTask extends ConsumerWidget {
                           return ItemTasks(
                               title: data?.tasks?[index].title,
                               description: data?.tasks?[index].description,
-                              endDate: data?.tasks?[index].endDate);
+                              endDate: data?.tasks?[index].endDate,
+                              firstName:
+                                  data?.tasks?[index].givenbyId?.first_name,
+                                  
+                              jobPosition: data?.tasks?[index].givenbyId?.job_position?.name
+                              );
                         }
                       },
                     );

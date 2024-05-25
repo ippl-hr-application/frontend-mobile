@@ -15,7 +15,7 @@ class TasksHistory with _$TasksHistory {
 
   factory TasksHistory.fromJson(Map<String, dynamic> json) =>
       _$TasksHistoryFromJson(json);
-} 
+}
 
 @freezed
 class Tasks with _$Tasks {
@@ -36,9 +36,31 @@ class TasksData with _$TasksData {
     @JsonKey(name: 'description') String? description,
     @JsonKey(name: 'start_date') String? startdate,
     @JsonKey(name: 'end_date') String? endDate,
-    @JsonKey(name: 'given_by_id') String? givenbyId,
+    @JsonKey(name: 'given_by') GivenData? givenbyId,
   }) = _TasksData;
 
   factory TasksData.fromJson(Map<String, dynamic> json) =>
       _$TasksDataFromJson(json);
+}
+
+@freezed
+class GivenData with _$GivenData {
+  factory GivenData({
+    @JsonKey(name: 'employee_id') String? employee_id,
+    @JsonKey(name: 'first_name') String? first_name,
+    @JsonKey(name: 'last_name') String? last_name,
+    @JsonKey(name: 'job_position') JobPosition? job_position,
+  }) = _GivenData;
+  factory GivenData.fromJson(Map<String, dynamic> json) =>
+      _$GivenDataFromJson(json);
+}
+
+@freezed
+class JobPosition with _$JobPosition {
+  factory JobPosition({
+    @JsonKey(name: 'name') String? name,
+  }) = _JobPosition;
+
+  factory JobPosition.fromJson(Map<String, dynamic> json) =>
+      _$JobPositionFromJson(json);
 }

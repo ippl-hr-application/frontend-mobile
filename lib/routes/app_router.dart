@@ -4,7 +4,7 @@ import 'package:meraih_mobile/features/attendance/presentation/screens/request_a
 import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/request_attandance.dart';
 import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
-import 'package:meraih_mobile/features/payroll/screens/payroll_page.dart';
+import 'package:meraih_mobile/features/payroll/presentation/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/DaftarPengajuanPage.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';

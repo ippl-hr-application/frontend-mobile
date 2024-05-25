@@ -7,11 +7,15 @@ class ItemTasks extends StatelessWidget {
   final String? title;
   final String? description;
   final String? endDate;
+  final String? firstName;
+  final String? jobPosition;
 
   const ItemTasks(
       {required this.title,
+      required this.firstName,
       required this.description,
       required this.endDate,
+      required this.jobPosition,
       super.key});
 
   @override
@@ -30,27 +34,27 @@ class ItemTasks extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
                   Text(
-                    "Arwin",
-                    style: TextStyle(
+                    firstName.toString(),
+                    style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(width: 4.0),
-                  Text(
+                  const SizedBox(width: 4.0),
+                  const Text(
                     "||",
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(width: 4.0),
+                  const SizedBox(width: 4.0),
                   Text(
-                    "Owner",
-                    style: TextStyle(
+                    jobPosition.toString(),
+                    style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
