@@ -1,9 +1,11 @@
 import 'dart:io';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'camera_state.dart';
+import 'review_picture_screen.dart';
+import 'package:intl/intl.dart'; // Import intl package for date formatting
 
 class CheckinProve extends StatelessWidget {
   const CheckinProve({super.key});
@@ -18,14 +20,16 @@ class CheckinProve extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
-                context.go("/");
+                context.go('/');
               },
             ),
-            const Center(
-              child: Text(
-                'Check In - Bukti Kehadiran',
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
+            const Expanded(
+              child: Center(
+                child: Text(
+                  'Check In - Bukti Kehadiran',
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],
@@ -36,26 +40,35 @@ class CheckinProve extends StatelessWidget {
   }
 }
 
-class CameraView extends StatefulWidget {
+class CameraView extends ConsumerStatefulWidget {
   const CameraView({super.key});
 
   @override
   _CameraViewState createState() => _CameraViewState();
 }
 
-class _CameraViewState extends State<CameraView> {
+class _CameraViewState extends ConsumerState<CameraView> {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
   bool _isFlashOn = false;
   List<CameraDescription>? _cameras;
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _ipController = TextEditingController();
+  String _currentDateTime = '';
+  late TextEditingController _locationController;
+  late TextEditingController _descriptionController;
 
   @override
   void initState() {
     super.initState();
     _initializeCamera();
+    _updateDateTime();
+    _locationController = TextEditingController();
+    _descriptionController = TextEditingController();
+  }
+
+  void _updateDateTime() {
+    setState(() {
+      _currentDateTime = DateFormat('EEEE, d MMMM yyyy, HH:mm:ss').format(DateTime.now());
+    });
   }
 
   Future<void> _initializeCamera() async {
@@ -68,7 +81,7 @@ class _CameraViewState extends State<CameraView> {
         );
         _initializeControllerFuture = _controller!.initialize().then((_) {
           if (mounted) {
-            setState(() {}); // Refresh UI after camera initialization
+            setState(() {});
           }
         }).catchError((e) {
           print("Error initializing camera: $e");
@@ -86,15 +99,13 @@ class _CameraViewState extends State<CameraView> {
     _controller?.dispose();
     _locationController.dispose();
     _descriptionController.dispose();
-    _ipController.dispose();
     super.dispose();
   }
 
   Future<void> _toggleFlash() async {
     if (_controller != null) {
       _isFlashOn = !_isFlashOn;
-      await _controller!
-          .setFlashMode(_isFlashOn ? FlashMode.torch : FlashMode.off);
+      await _controller!.setFlashMode(_isFlashOn ? FlashMode.torch : FlashMode.off);
       setState(() {});
     }
   }
@@ -103,26 +114,16 @@ class _CameraViewState extends State<CameraView> {
     if (_controller != null && _controller!.value.isInitialized) {
       try {
         await _initializeControllerFuture;
-        final directory = await getTemporaryDirectory();
-        final filePath = '${directory.path}/${DateTime.now().millisecondsSinceEpoch}.png';
         final XFile imageFile = await _controller!.takePicture();
-        await imageFile.saveTo(filePath);
+        final imagePath = imageFile.path;
 
-        print("Picture taken: $filePath");
+        ref.read(cameraStateProvider.notifier).setImagePath(imagePath);
+        ref.read(cameraStateProvider.notifier).setTimestamp(DateTime.now());
 
-        // Check if the widget is still mounted before navigating
-        if (mounted) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ReviewPictureScreen(
-                imagePath: filePath,
-                locationController: _locationController,
-                descriptionController: _descriptionController,
-                ipController: _ipController,
-              ),
-            ),
-          );
+        if (mounted && _validateInputs()) {
+          context.go('/review');
+        } else {
+          _showValidationError(context);
         }
       } catch (e) {
         print("Error taking picture: $e");
@@ -132,18 +133,68 @@ class _CameraViewState extends State<CameraView> {
     }
   }
 
+  bool _validateInputs() {
+    final location = _locationController.text;
+    return location == 'Terjangkau' || location == 'Tidak Terjangkau';
+  }
+
+  void _showValidationError(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text('Lokasi harus diisi dengan nilai "Terjangkau" atau "Tidak Terjangkau" dari data Checkin Map.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showEditingAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Peringatan'),
+        content: const Text('Buka halaman peta terlebih dahulu untuk mengisi lokasi.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final cameraState = ref.watch(cameraStateProvider);
+
+    if (_locationController.text != cameraState.location) {
+      _locationController.text = cameraState.location;
+    }
+
+    if (_descriptionController.text != cameraState.description) {
+      _descriptionController.text = cameraState.description;
+    }
+
     return Stack(
       children: [
         FutureBuilder<void>(
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done &&
-                _controller != null) {
+            if (snapshot.connectionState == ConnectionState.done && _controller != null) {
               return CameraPreview(_controller!);
             } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
+              return Center(child: Text('Error: ${snapshot.error}'));
             } else {
               return const Center(child: CircularProgressIndicator());
             }
@@ -155,34 +206,44 @@ class _CameraViewState extends State<CameraView> {
           right: 16,
           child: Column(
             children: [
-              TextField(
-                controller: _locationController,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Lokasi',
-                  labelStyle: TextStyle(color: Colors.white),
+              GestureDetector(
+                onTap: () {
+                  _showEditingAlert(context);
+                },
+                child: AbsorbPointer(
+                  child: TextField(
+                    controller: _locationController,
+                    readOnly: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Lokasi',
+                      labelStyle: TextStyle(color: Colors.white),
+                      filled: true,
+                      fillColor: Color.fromRGBO(32, 81, 229, 0.5),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
               TextField(
                 controller: _descriptionController,
+                onChanged: (value) {
+                  ref.read(cameraStateProvider.notifier).setDescription(value);
+                },
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Keterangan Tambahan',
                   labelStyle: TextStyle(color: Colors.white),
+                  filled: true,
+                  fillColor: Color.fromRGBO(32, 81, 229, 0.5),
                 ),
               ),
               const SizedBox(height: 8),
-              TextField(
-                controller: _ipController,
+              Text(
+                'Waktu: $_currentDateTime',
                 style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'IP Address',
-                  labelStyle: TextStyle(color: Colors.white),
-                ),
               ),
             ],
           ),
@@ -194,25 +255,38 @@ class _CameraViewState extends State<CameraView> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              FloatingActionButton(
-                heroTag: 'flashButton',
+              ElevatedButton(
                 onPressed: _toggleFlash,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor: _isFlashOn ? Colors.yellow : const Color.fromARGB(255, 175, 219, 255),
+                  padding: const EdgeInsets.all(20),
+                ),
                 child: Icon(_isFlashOn ? Icons.flash_on : Icons.flash_off),
               ),
-              FloatingActionButton(
-                heroTag: 'takePictureButton',
-                onPressed: () {
-                  print("Take picture button pressed");
-                  _takePicture();
-                },
-                child: const Icon(Icons.camera),
+              ElevatedButton(
+                onPressed: _takePicture,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor: const Color.fromARGB(255, 175, 219, 255),
+                  padding: const EdgeInsets.all(20),
+                ),
+                child: const Icon(Icons.camera, size: 30),
               ),
-              FloatingActionButton(
-                heroTag: 'mapButton',
-                child: const Icon(Icons.map),
-                onPressed: () {
-                  context.go('/checkin-map');
+              ElevatedButton(
+                onPressed: () async {
+                  final status = await context.push('/checkin-map');
+                  if (status != null && status is String) {
+                    ref.read(cameraStateProvider.notifier).setLocation(status);
+                    _locationController.text = status;
+                  }
                 },
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor: const Color.fromARGB(255, 175, 219, 255),
+                  padding: const EdgeInsets.all(20),
+                ),
+                child: const Icon(Icons.map, size: 30),
               ),
             ],
           ),

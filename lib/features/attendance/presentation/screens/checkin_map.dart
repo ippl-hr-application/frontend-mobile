@@ -3,6 +3,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:go_router/go_router.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'camera_state.dart';
 
 class CheckinMap extends StatefulWidget {
   const CheckinMap({super.key});
@@ -85,7 +87,8 @@ class _CheckinMapState extends State<CheckinMap> {
             color: Colors.white,
           ),
           onPressed: () {
-            context.go('/checkin-prove');
+            // Pass the status back when navigating back
+            context.pop(_status);
           },
         ),
         flexibleSpace: const Stack(

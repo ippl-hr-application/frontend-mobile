@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/attendance_list.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
 import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
 import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
@@ -25,7 +26,7 @@ part 'app_router.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: "/test-camera",
+    initialLocation: "/checkin-map",
     routes: [
       GoRoute(
         path: "/login",
@@ -76,6 +77,10 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: OffenceScreen());
         },
+      ),
+      GoRoute(
+        path: '/review',
+        builder: (context, state) => const ReviewPictureScreen(),
       ),
 
       // GoRoute(
