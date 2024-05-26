@@ -13,7 +13,7 @@ class _PayrollRepository implements PayrollRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://27.112.79.44';
+    baseUrl ??= 'https://77fd-114-10-138-231.ngrok-free.app/';
   }
 
   final Dio _dio;

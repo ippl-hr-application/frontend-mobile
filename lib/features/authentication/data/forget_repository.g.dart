@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'attandance_today_repository.dart';
+part of 'forget_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'attandance_today_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AttandanceTodayRepository implements AttandanceTodayRepository {
-  _AttandanceTodayRepository(
+class _ForgetRepository implements ForgetRepository {
+  _ForgetRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,20 +21,20 @@ class _AttandanceTodayRepository implements AttandanceTodayRepository {
   String? baseUrl;
 
   @override
-  Future<AttandanceToday> getAttandanceToday() async {
+  Future<ForgetResponse> forget(ForgetRequest data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = data;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<AttandanceToday>(Options(
-      method: 'GET',
+        .fetch<Map<String, dynamic>>(_setStreamType<ForgetResponse>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/attendance/today',
+              '/auth/employee-forget/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,7 +43,7 @@ class _AttandanceTodayRepository implements AttandanceTodayRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = AttandanceToday.fromJson(_result.data!);
+    final value = ForgetResponse.fromJson(_result.data!);
     return value;
   }
 

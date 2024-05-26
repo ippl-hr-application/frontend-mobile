@@ -16,8 +16,8 @@ class CheckinMap extends StatefulWidget {
 class _CheckinMapState extends State<CheckinMap> {
   LatLng? _userLocation;
   final LatLng _customMarkerLocation = const LatLng(-1.2279, 116.8157); // Default position for the custom marker
-  String _status = 'Tidak Terjangkau'; // Initial status
-  double? _distance; // Distance between the two markers
+  String _status = 'Tidak Terjangkau'; 
+  double? _distance; 
 
   @override
   void initState() {
