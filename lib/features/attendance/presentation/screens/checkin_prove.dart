@@ -1,147 +1,297 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'camera_state.dart';
+import 'review_picture_screen.dart';
+import 'package:intl/intl.dart'; // Import intl package for date formatting
 
 class CheckinProve extends StatelessWidget {
-    const CheckinProve({super.key});
-
-
-  @override
-  Widget build(BuildContext context) {
-    return _CheckinProve();
-  }
-}
-
-class _CheckinProve extends StatefulWidget {
-  @override
-  _CheckinProveState createState() => _CheckinProveState();
-}
-
-class _CheckinProveState extends State<_CheckinProve> {
-  String ipAddress = 'Loading...';
-
-  @override
-  void initState() {
-    super.initState();
-    _getIPAddress();
-  }
-
-  Future<void> _getIPAddress() async {
-    try {
-      final String result = await _getDeviceIP();
-      setState(() {
-        ipAddress = result;
-      });
-    } catch (e) {
-      setState(() {
-        ipAddress = 'Failed to get IP address';
-      });
-    }
-  }
-
-  Future<String> _getDeviceIP() async {
-    for (var interface in await NetworkInterface.list()) {
-      for (var addr in interface.addresses) {
-        if (!addr.isLoopback) {
-          if (addr.type.name.toLowerCase() == 'ipv4') {
-            return addr.address;
-          }
-        }
-      }
-    }
-    throw Exception('No IP address found');
-  }
+  const CheckinProve({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
         title: Row(
           children: [
             IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
-                context.go("/");
+                context.go('/');
               },
             ),
-            Center(
-              child: Text(
-                'Check In',
-                style: TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
+            const Expanded(
+              child: Center(
+                child: Text(
+                  'Check In - Bukti Kehadiran',
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Tanggal: 06 Maret 2024\nJam: 09.00 - 17.00',
-              style: TextStyle(fontSize: 18),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            InkWell(
-              onTap: () {
-                _captureImage(context);
-              },
-              child: Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(Icons.camera_alt, size: 50, color: Colors.blue),
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Lokasi',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'IP Address',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-              ),
-              controller: TextEditingController(text: ipAddress),
-            ),
-            SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  context.go('/checkin-success');
-                },
-                child: Text('Check In'),
-              ),
-            ),
-          ],
-        ),
+      body: const CameraView(),
+    );
+  }
+}
+
+class CameraView extends ConsumerStatefulWidget {
+  const CameraView({super.key});
+
+  @override
+  _CameraViewState createState() => _CameraViewState();
+}
+
+class _CameraViewState extends ConsumerState<CameraView> {
+  CameraController? _controller;
+  Future<void>? _initializeControllerFuture;
+  bool _isFlashOn = false;
+  List<CameraDescription>? _cameras;
+  String _currentDateTime = '';
+  late TextEditingController _locationController;
+  late TextEditingController _descriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCamera();
+    _updateDateTime();
+    _locationController = TextEditingController();
+    _descriptionController = TextEditingController();
+  }
+
+  void _updateDateTime() {
+    setState(() {
+      _currentDateTime = DateFormat('EEEE, d MMMM yyyy, HH:mm:ss').format(DateTime.now());
+    });
+  }
+
+  Future<void> _initializeCamera() async {
+    try {
+      _cameras = await availableCameras();
+      if (_cameras!.isNotEmpty) {
+        _controller = CameraController(
+          _cameras![0],
+          ResolutionPreset.high,
+        );
+        _initializeControllerFuture = _controller!.initialize().then((_) {
+          if (mounted) {
+            setState(() {});
+          }
+        }).catchError((e) {
+          print("Error initializing camera: $e");
+        });
+      } else {
+        print("No cameras available");
+      }
+    } catch (e) {
+      print("Error initializing camera: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _locationController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _toggleFlash() async {
+    if (_controller != null) {
+      _isFlashOn = !_isFlashOn;
+      await _controller!.setFlashMode(_isFlashOn ? FlashMode.torch : FlashMode.off);
+      setState(() {});
+    }
+  }
+
+  Future<void> _takePicture() async {
+    if (_controller != null && _controller!.value.isInitialized) {
+      try {
+        await _initializeControllerFuture;
+        final XFile imageFile = await _controller!.takePicture();
+        final imagePath = imageFile.path;
+
+        ref.read(cameraStateProvider.notifier).setImagePath(imagePath);
+        ref.read(cameraStateProvider.notifier).setTimestamp(DateTime.now());
+
+        if (mounted && _validateInputs()) {
+          context.go('/review');
+        } else {
+          _showValidationError(context);
+        }
+      } catch (e) {
+        print("Error taking picture: $e");
+      }
+    } else {
+      print("Camera not initialized");
+    }
+  }
+
+  bool _validateInputs() {
+    final location = _locationController.text;
+    return location == 'Terjangkau' || location == 'Tidak Terjangkau';
+  }
+
+  void _showValidationError(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text('Lokasi harus diisi dengan nilai "Terjangkau" atau "Tidak Terjangkau" dari data Checkin Map.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }
 
-  Future<void> _captureImage(BuildContext context) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+  void _showEditingAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Peringatan'),
+        content: const Text('Buka halaman peta terlebih dahulu untuk mengisi lokasi.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 
-    if (pickedFile != null) {
+  @override
+  Widget build(BuildContext context) {
+    final cameraState = ref.watch(cameraStateProvider);
 
+    if (_locationController.text != cameraState.location) {
+      _locationController.text = cameraState.location;
     }
+
+    if (_descriptionController.text != cameraState.description) {
+      _descriptionController.text = cameraState.description;
+    }
+
+    return Stack(
+      children: [
+        FutureBuilder<void>(
+          future: _initializeControllerFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done && _controller != null) {
+              return CameraPreview(_controller!);
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+        Positioned(
+          top: 16,
+          left: 16,
+          right: 16,
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _showEditingAlert(context);
+                },
+                child: AbsorbPointer(
+                  child: TextField(
+                    controller: _locationController,
+                    readOnly: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Lokasi',
+                      labelStyle: TextStyle(color: Colors.white),
+                      filled: true,
+                      fillColor: Color.fromRGBO(32, 81, 229, 0.5),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _descriptionController,
+                onChanged: (value) {
+                  ref.read(cameraStateProvider.notifier).setDescription(value);
+                },
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Keterangan Tambahan',
+                  labelStyle: TextStyle(color: Colors.white),
+                  filled: true,
+                  fillColor: Color.fromRGBO(32, 81, 229, 0.5),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Waktu: $_currentDateTime',
+                style: const TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 20,
+          left: 0,
+          right: 0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: _toggleFlash,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor: _isFlashOn ? Colors.yellow : const Color.fromARGB(255, 175, 219, 255),
+                  padding: const EdgeInsets.all(20),
+                ),
+                child: Icon(_isFlashOn ? Icons.flash_on : Icons.flash_off),
+              ),
+              ElevatedButton(
+                onPressed: _takePicture,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor: const Color.fromARGB(255, 175, 219, 255),
+                  padding: const EdgeInsets.all(20),
+                ),
+                child: const Icon(Icons.camera, size: 30),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final status = await context.push('/checkin-map');
+                  if (status != null && status is String) {
+                    ref.read(cameraStateProvider.notifier).setLocation(status);
+                    _locationController.text = status;
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor: const Color.fromARGB(255, 175, 219, 255),
+                  padding: const EdgeInsets.all(20),
+                ),
+                child: const Icon(Icons.map, size: 30),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
