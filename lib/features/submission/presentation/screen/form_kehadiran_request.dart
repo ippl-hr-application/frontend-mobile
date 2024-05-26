@@ -72,7 +72,7 @@ class _FormReAbsenState extends State<FormReAbsen> {
                   labelText: '  Tanggal Mulai - Akhir Sakit',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                  ), 
+                  ),
                 ),
                 firstDate: DateTime.now(),
                 lastDate: DateTime.now().add(Duration(days: 365)),
@@ -112,13 +112,10 @@ class _FormReAbsenState extends State<FormReAbsen> {
                       Map<String, dynamic> formData =
                           _formKey.currentState!.value;
                       String keterangan = formData['keterangan'];
-                      String? buktiReabsen =
-                          filePickerResult?.files.first.path;
+                      String? buktiReabsen = filePickerResult?.files.first.path;
                       DateTimeRange izinDate = formData['izinDate'];
                       DateTime startDate = izinDate.start;
                       DateTime endDate = izinDate.end;
-
-                     
                     }
                   },
                   child: Text('Kirim Pengajuan'),

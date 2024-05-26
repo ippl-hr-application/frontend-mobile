@@ -10,5 +10,9 @@ abstract class SubmissionRepository {
   factory SubmissionRepository(Dio dio, {String baseUrl}) =
       _SubmissionRepository;
   @GET('/submission')
-  Future<SubmissionHistory> getSubmissionHistory();
+  Future<SubmissionHistory> getSubmissionHistory(
+    @Query('year') String year,
+    @Query('month') String month,
+    @Query('status') String status,
+  );
 }

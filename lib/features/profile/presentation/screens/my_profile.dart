@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/profile/presentation/provider/profile_provider.dart';
@@ -12,14 +13,33 @@ class MyProfile extends ConsumerWidget {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
             onPressed: () {
               context.go('/profile');
             },
+          ),
+          flexibleSpace: const Stack(
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 40,
+                child: Center(
+                  child: Text(
+                    "Data Diri",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         body: profileData.when(
@@ -29,15 +49,15 @@ class MyProfile extends ConsumerWidget {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: const Text(
-                        "Informasi Pribadi",
-                        style: TextStyle(
-                            fontSize: 24.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //   child: const Text(
+                    //     "Informasi Pribadi",
+                    //     style: TextStyle(
+                    //         fontSize: 24.0, fontWeight: FontWeight.bold),
+                    //   ),
+                    // ),
+                    const SizedBox(height: 30.0),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Row(
@@ -52,36 +72,42 @@ class MyProfile extends ConsumerWidget {
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "Email",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "Alamat",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "Tanggal Masuk",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "jabatan",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "Type Karyawan",
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500),
                               ),
+                              SizedBox(height: 8.0),
                               Text(
                                 "No Telpon",
                                 style: TextStyle(
@@ -90,51 +116,62 @@ class MyProfile extends ConsumerWidget {
                               ),
                             ],
                           ),
-                          Column(
-                            children: [
-                              Text(
-                                '${data?.firstName.toString()} ${data?.lastName.toString()}',
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                data!.email.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                data.residentialAddress.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                '${data?.firstName.toString()} ${data?.lastName.toString()}',
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                data.jobPosition!.name.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                data.employmentStatus!.name.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                data.phoneNumber.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
+                          const SizedBox(width: 30.0),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${data?.firstName.toString()} ${data?.lastName.toString()}',
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data!.email.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.residentialAddress.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  '${data.firstName.toString()} ${data.lastName.toString()}',
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.jobPosition!.name.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.employmentStatus!.name.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  data.phoneNumber.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),

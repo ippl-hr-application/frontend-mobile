@@ -24,7 +24,7 @@ class Notif_Page extends StatelessWidget {
             Positioned(
               left: 0,
               right: 0,
-              top: 18,
+              top: 40,
               child: Center(
                 child: Text(
                   "Notifikasi",
@@ -55,19 +55,17 @@ class Notif_Page extends StatelessWidget {
                     ),
                   ],
                 ),
-                trailing: Text(notifList[index].timestamp), // Trailing untuk timestamp
+                trailing: Text(
+                    notifList[index].timestamp), // Trailing untuk timestamp
               ),
             ),
           );
-          
         },
-        
       ),
       bottomNavigationBar: Container(
         child: const ButtomBar(),
       ),
     );
-    
   }
 }
 

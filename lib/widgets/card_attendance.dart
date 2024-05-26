@@ -11,12 +11,14 @@ class CardAttendance extends StatelessWidget {
   final String? date;
   final String? from;
   final String? to;
+  final String? jobPosition;
 
   const CardAttendance(
       {required this.companyName,
       required this.date,
       required this.from,
       required this.to,
+      required this.jobPosition,
       super.key});
   @override
   Widget build(BuildContext context) {
@@ -36,8 +38,7 @@ class CardAttendance extends StatelessWidget {
                 blurRadius: 10,
                 offset: const Offset(0, 3),
               )
-            ]
-            ),
+            ]),
         // padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -62,7 +63,7 @@ class CardAttendance extends StatelessWidget {
                   ),
                   const SizedBox(height: 6.0),
                   Text(
-                    date.toString(),
+                    jobPosition.toString(),
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w500,

@@ -29,6 +29,11 @@ _$HomeDataImpl _$$HomeDataImplFromJson(Map<String, dynamic> json) =>
       date: json['date'] as String?,
       from: json['from'] as String?,
       to: json['to'] as String?,
+      shiftId: (json['shift_id'] as num?)?.toInt(),
+      shiftName: json['shift_name'] as String?,
+      jobPosition: json['job_position'] as String?,
+      companyBranchId: json['company_branch_id'] as String?,
+      city: json['city'] as String?,
     );
 
 Map<String, dynamic> _$$HomeDataImplToJson(_$HomeDataImpl instance) =>
@@ -38,4 +43,9 @@ Map<String, dynamic> _$$HomeDataImplToJson(_$HomeDataImpl instance) =>
       'date': instance.date,
       'from': instance.from,
       'to': instance.to,
+      'shift_id': instance.shiftId,
+      'shift_name': instance.shiftName,
+      'job_position': instance.jobPosition,
+      'company_branch_id': instance.companyBranchId,
+      'city': instance.city,
     };

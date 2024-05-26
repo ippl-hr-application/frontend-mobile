@@ -1,32 +1,23 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
-import 'package:meraih_mobile/features/attendance/presentation/screens/attendance_list.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/request_attandance.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
-import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
-import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
+import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
+import 'package:meraih_mobile/features/attendance/presentation/widget/request_attandance.dart';
+import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
+import 'package:meraih_mobile/features/payroll/presentation/screens/payroll_page.dart';
+import 'package:meraih_mobile/features/submission/presentation/screen/DaftarPengajuanPage.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:meraih_mobile/features/payroll/screens/payroll_page.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/form_izin.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/form_sakit.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/form_kehadiran_request.dart';
-import 'package:meraih_mobile/features/attendance/presentation/screens/checkin_map.dart';
-import 'package:meraih_mobile/features/attendance/presentation/screens/attendance_list.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/submission.dart';
-import 'package:meraih_mobile/features/submission/presentation/screen/form_izin.dart';
-import 'package:meraih_mobile/features/attendance/presentation/screens/checkin_map.dart';
-import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
-
 
 part 'app_router.g.dart';
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: "/change-password",
+    initialLocation: "/",
     routes: [
       GoRoute(
         path: "/login",
@@ -79,18 +70,13 @@ GoRouter goRouter(GoRouterRef ref) {
         },
       ),
       GoRoute(
-        path: '/review',
-        builder: (context, state) => const ReviewPictureScreen(),
+        path: '/submission',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: DaftarPengajuanScreen(),
+          );
+        },
       ),
-
-      // GoRoute(
-      //   path: '/submission',
-      //   pageBuilder: (context, state) {
-      //     return NoTransitionPage(
-      //       child: Submission(),
-      //     );
-      //   },
-      // ),
       GoRoute(
         path: '/checkin-map',
         pageBuilder: (context, state) {
@@ -104,6 +90,14 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: CheckinProve(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/review',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ReviewPictureScreen(),
           );
         },
       ),
@@ -127,7 +121,7 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/my-profile',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
-            child: MyProfile(), 
+            child: MyProfile(),
           );
         },
       ),
@@ -140,7 +134,55 @@ GoRouter goRouter(GoRouterRef ref) {
         },
       ),
       GoRoute(
-        path: '/payroll-page',
+        path: '/izin',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: SubmissionIzin(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/cuti',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: SubmissionCuti(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/sick',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: FormSakit(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/resign',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: PengajuanResign(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/change-shift',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: SubmissionShift(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/mutasi',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: SubmissionMutasi(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/payroll',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: PayrollPage(),
@@ -148,30 +190,21 @@ GoRouter goRouter(GoRouterRef ref) {
         },
       ),
       GoRoute(
-        path: '/notif-page',
+        path: '/notifications',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: Notif_Page(),
           );
         },
       ),
-
       GoRoute(
-        path: '/sakit',
+        path: '/attandance-request',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
-            child: FormSakit(),
+            child: RequestAttandance(),
           );
         },
       ),
     ],
-    // redirect: (context, state) async {
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   String? token = prefs.getString('token');
-    //   if (token != null) {
-    //     return '/';
-    //   }
-    //   return '/login';
-    // }
   );
 }

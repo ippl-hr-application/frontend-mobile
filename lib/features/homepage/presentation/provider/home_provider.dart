@@ -1,14 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 import 'package:meraih_mobile/features/homepage/data/home_service.dart';
+import 'package:meraih_mobile/features/homepage/domain/home.dart';
+import 'package:meraih_mobile/utils/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-final homeProvider = FutureProvider((ref) async {
+final homeProvider = FutureProvider<HomeData?>((ref) async {
   final dio = Dio();
-  dio.options.headers['Authorization'] =
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6ImFoai1hZGJhZHV5MyIsImNvbXBhbnlfYnJhbmNoX2lkIjoxLCJpYXQiOjE3MTExOTcwNTgsImV4cCI6MTcxMTgwMTg1OH0.Xc1B13g134tdCUB_3M9cexwjf2SB0n6GMiT_sBFQbuM';
+  final token = ref.watch(authTokenProvider);
+  dio.options.headers['Authorization'] = 'Bearer $token';
   final homeRepository = HomeRepository(dio);
-  final homeHistory = await homeRepository.getHomeData();
-  if (homeHistory.success == true) {
+  try {
+    final homeHistory = await homeRepository.getHomeData();
     return homeHistory.data;
+  } on DioException {
+    rethrow;
   }
 });

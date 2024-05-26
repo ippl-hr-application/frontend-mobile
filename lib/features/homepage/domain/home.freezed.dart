@@ -236,6 +236,16 @@ mixin _$HomeData {
   String? get from => throw _privateConstructorUsedError;
   @JsonKey(name: 'to')
   String? get to => throw _privateConstructorUsedError;
+  @JsonKey(name: 'shift_id')
+  int? get shiftId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'shift_name')
+  String? get shiftName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'job_position')
+  String? get jobPosition => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_branch_id')
+  String? get companyBranchId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'city')
+  String? get city => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -253,7 +263,12 @@ abstract class $HomeDataCopyWith<$Res> {
       @JsonKey(name: 'employee_name') String? employeeName,
       @JsonKey(name: 'date') String? date,
       @JsonKey(name: 'from') String? from,
-      @JsonKey(name: 'to') String? to});
+      @JsonKey(name: 'to') String? to,
+      @JsonKey(name: 'shift_id') int? shiftId,
+      @JsonKey(name: 'shift_name') String? shiftName,
+      @JsonKey(name: 'job_position') String? jobPosition,
+      @JsonKey(name: 'company_branch_id') String? companyBranchId,
+      @JsonKey(name: 'city') String? city});
 }
 
 /// @nodoc
@@ -274,6 +289,11 @@ class _$HomeDataCopyWithImpl<$Res, $Val extends HomeData>
     Object? date = freezed,
     Object? from = freezed,
     Object? to = freezed,
+    Object? shiftId = freezed,
+    Object? shiftName = freezed,
+    Object? jobPosition = freezed,
+    Object? companyBranchId = freezed,
+    Object? city = freezed,
   }) {
     return _then(_value.copyWith(
       companyName: freezed == companyName
@@ -296,6 +316,26 @@ class _$HomeDataCopyWithImpl<$Res, $Val extends HomeData>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as String?,
+      shiftId: freezed == shiftId
+          ? _value.shiftId
+          : shiftId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shiftName: freezed == shiftName
+          ? _value.shiftName
+          : shiftName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      jobPosition: freezed == jobPosition
+          ? _value.jobPosition
+          : jobPosition // ignore: cast_nullable_to_non_nullable
+              as String?,
+      companyBranchId: freezed == companyBranchId
+          ? _value.companyBranchId
+          : companyBranchId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -313,7 +353,12 @@ abstract class _$$HomeDataImplCopyWith<$Res>
       @JsonKey(name: 'employee_name') String? employeeName,
       @JsonKey(name: 'date') String? date,
       @JsonKey(name: 'from') String? from,
-      @JsonKey(name: 'to') String? to});
+      @JsonKey(name: 'to') String? to,
+      @JsonKey(name: 'shift_id') int? shiftId,
+      @JsonKey(name: 'shift_name') String? shiftName,
+      @JsonKey(name: 'job_position') String? jobPosition,
+      @JsonKey(name: 'company_branch_id') String? companyBranchId,
+      @JsonKey(name: 'city') String? city});
 }
 
 /// @nodoc
@@ -332,6 +377,11 @@ class __$$HomeDataImplCopyWithImpl<$Res>
     Object? date = freezed,
     Object? from = freezed,
     Object? to = freezed,
+    Object? shiftId = freezed,
+    Object? shiftName = freezed,
+    Object? jobPosition = freezed,
+    Object? companyBranchId = freezed,
+    Object? city = freezed,
   }) {
     return _then(_$HomeDataImpl(
       companyName: freezed == companyName
@@ -354,6 +404,26 @@ class __$$HomeDataImplCopyWithImpl<$Res>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as String?,
+      shiftId: freezed == shiftId
+          ? _value.shiftId
+          : shiftId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      shiftName: freezed == shiftName
+          ? _value.shiftName
+          : shiftName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      jobPosition: freezed == jobPosition
+          ? _value.jobPosition
+          : jobPosition // ignore: cast_nullable_to_non_nullable
+              as String?,
+      companyBranchId: freezed == companyBranchId
+          ? _value.companyBranchId
+          : companyBranchId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      city: freezed == city
+          ? _value.city
+          : city // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -366,7 +436,12 @@ class _$HomeDataImpl implements _HomeData {
       @JsonKey(name: 'employee_name') this.employeeName,
       @JsonKey(name: 'date') this.date,
       @JsonKey(name: 'from') this.from,
-      @JsonKey(name: 'to') this.to});
+      @JsonKey(name: 'to') this.to,
+      @JsonKey(name: 'shift_id') this.shiftId,
+      @JsonKey(name: 'shift_name') this.shiftName,
+      @JsonKey(name: 'job_position') this.jobPosition,
+      @JsonKey(name: 'company_branch_id') this.companyBranchId,
+      @JsonKey(name: 'city') this.city});
 
   factory _$HomeDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeDataImplFromJson(json);
@@ -386,10 +461,25 @@ class _$HomeDataImpl implements _HomeData {
   @override
   @JsonKey(name: 'to')
   final String? to;
+  @override
+  @JsonKey(name: 'shift_id')
+  final int? shiftId;
+  @override
+  @JsonKey(name: 'shift_name')
+  final String? shiftName;
+  @override
+  @JsonKey(name: 'job_position')
+  final String? jobPosition;
+  @override
+  @JsonKey(name: 'company_branch_id')
+  final String? companyBranchId;
+  @override
+  @JsonKey(name: 'city')
+  final String? city;
 
   @override
   String toString() {
-    return 'HomeData(companyName: $companyName, employeeName: $employeeName, date: $date, from: $from, to: $to)';
+    return 'HomeData(companyName: $companyName, employeeName: $employeeName, date: $date, from: $from, to: $to, shiftId: $shiftId, shiftName: $shiftName, jobPosition: $jobPosition, companyBranchId: $companyBranchId, city: $city)';
   }
 
   @override
@@ -403,13 +493,21 @@ class _$HomeDataImpl implements _HomeData {
                 other.employeeName == employeeName) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.from, from) || other.from == from) &&
-            (identical(other.to, to) || other.to == to));
+            (identical(other.to, to) || other.to == to) &&
+            (identical(other.shiftId, shiftId) || other.shiftId == shiftId) &&
+            (identical(other.shiftName, shiftName) ||
+                other.shiftName == shiftName) &&
+            (identical(other.jobPosition, jobPosition) ||
+                other.jobPosition == jobPosition) &&
+            (identical(other.companyBranchId, companyBranchId) ||
+                other.companyBranchId == companyBranchId) &&
+            (identical(other.city, city) || other.city == city));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, companyName, employeeName, date, from, to);
+  int get hashCode => Object.hash(runtimeType, companyName, employeeName, date,
+      from, to, shiftId, shiftName, jobPosition, companyBranchId, city);
 
   @JsonKey(ignore: true)
   @override
@@ -431,7 +529,12 @@ abstract class _HomeData implements HomeData {
       @JsonKey(name: 'employee_name') final String? employeeName,
       @JsonKey(name: 'date') final String? date,
       @JsonKey(name: 'from') final String? from,
-      @JsonKey(name: 'to') final String? to}) = _$HomeDataImpl;
+      @JsonKey(name: 'to') final String? to,
+      @JsonKey(name: 'shift_id') final int? shiftId,
+      @JsonKey(name: 'shift_name') final String? shiftName,
+      @JsonKey(name: 'job_position') final String? jobPosition,
+      @JsonKey(name: 'company_branch_id') final String? companyBranchId,
+      @JsonKey(name: 'city') final String? city}) = _$HomeDataImpl;
 
   factory _HomeData.fromJson(Map<String, dynamic> json) =
       _$HomeDataImpl.fromJson;
@@ -451,6 +554,21 @@ abstract class _HomeData implements HomeData {
   @override
   @JsonKey(name: 'to')
   String? get to;
+  @override
+  @JsonKey(name: 'shift_id')
+  int? get shiftId;
+  @override
+  @JsonKey(name: 'shift_name')
+  String? get shiftName;
+  @override
+  @JsonKey(name: 'job_position')
+  String? get jobPosition;
+  @override
+  @JsonKey(name: 'company_branch_id')
+  String? get companyBranchId;
+  @override
+  @JsonKey(name: 'city')
+  String? get city;
   @override
   @JsonKey(ignore: true)
   _$$HomeDataImplCopyWith<_$HomeDataImpl> get copyWith =>
