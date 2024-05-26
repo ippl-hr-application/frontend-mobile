@@ -87,7 +87,7 @@ class _CheckinMapState extends State<CheckinMap> {
             color: Colors.white,
           ),
           onPressed: () {
-            // Pass the status back when navigating back
+            
             context.pop(_status);
           },
         ),
