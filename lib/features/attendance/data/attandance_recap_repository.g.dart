@@ -13,7 +13,7 @@ class _AttandanceRecapRepository implements AttandanceRecapRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://77fd-114-10-138-231.ngrok-free.app/';
+    baseUrl ??= 'http://27.112.79.44/';
   }
 
   final Dio _dio;

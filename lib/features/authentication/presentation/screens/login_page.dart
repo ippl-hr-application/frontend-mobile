@@ -16,10 +16,10 @@ class LoginPage extends ConsumerWidget {
       await handleLogin(ref, auth);
       final token = ref.read(authTokenProvider);
       if (token != null) {
-        print('Token after login: $token'); // Logging the token after login
+        print('Token after login: $token'); 
         context.pushReplacement('/');
       } else {
-        print('No token after login'); // Logging in case no token after login
+        print('No token after login');
       }
     } on Exception {
       showDialog(
