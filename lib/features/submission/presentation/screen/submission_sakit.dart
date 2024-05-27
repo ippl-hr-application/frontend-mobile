@@ -15,7 +15,6 @@ import 'package:signature/signature.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io';
 
-
 class FormSakit extends ConsumerStatefulWidget {
   const FormSakit({super.key});
 
@@ -31,6 +30,8 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
   );
 
   String? showFileName = "";
+  String errorMessage = '';
+  int maxSizeInBytes = 1 * 1024 * 1024;
   FilePickerResult? filePickerResult;
 
   @override
@@ -94,6 +95,11 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                     Expanded(
                       child: FormBuilderTextField(
                         name: 'keterangan',
+                        validator: (value) {
+                          if (value == null || value.isEmpty || value == '') {
+                            return 'Keterangan sakit harus diisi!';
+                          }
+                        },
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 16.0, horizontal: 10.0),
@@ -132,6 +138,11 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                     Expanded(
                       child: FormBuilderDateRangePicker(
                         name: 'sakitDate',
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Pilih Tanggal!';
+                          }
+                        },
                         format: DateFormat('yyyy-MM-dd'),
                         decoration: InputDecoration(
                             labelText: 'Mulai dan Akhir Sakit Tanggal',
@@ -150,12 +161,12 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
               const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   border: Border(
+                //     bottom: BorderSide(
+                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                //   ),
+                // ),
                 child: Row(
                   children: [
                     Container(
@@ -164,7 +175,7 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                             color: Color.fromRGBO(32, 81, 229, 1),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: const Icon(
-                          Icons.drive_file_move,
+                          Icons.upload_file_sharp,
                           color: Colors.white,
                           size: 30,
                         )),
@@ -172,55 +183,94 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8.0)),
-                            border:
-                                Border.all(color: Colors.black, width: 0.5)),
-                        child: Row(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          border: Border.all(color: Colors.black, width: 0.5),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ElevatedButton(
-                              onPressed: () async {
-                                filePickerResult =
-                                    await FilePicker.platform.pickFiles(
-                                  type: FileType.custom,
-                                  allowedExtensions: ['pdf', 'jpg', 'png'],
-                                );
-                                if (filePickerResult != null) {
-                                  setState(() {
-                                    showFileName =
-                                        filePickerResult!.files.first.name;
-                                  });
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 13.0, horizontal: 8.0),
-                                  backgroundColor:
-                                      const Color.fromRGBO(243, 243, 243, 1),
-                                  shape: const RoundedRectangleBorder(
+                            Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    filePickerResult =
+                                        await FilePicker.platform.pickFiles(
+                                      type: FileType.custom,
+                                      allowedExtensions: ['pdf', 'jpg', 'png'],
+                                    );
+
+                                    if (filePickerResult != null) {
+                                      // Mendapatkan file yang dipilih
+                                      var file = filePickerResult!.files.first;
+
+                                      // Ukuran maksimum dalam byte (1 MB = 1 * 1024 * 1024 bytes)
+
+                                      if (file.size > maxSizeInBytes) {
+                                        // Jika ukuran file lebih dari 1 MB, perbarui state dengan pesan kesalahan
+                                        setState(() {
+                                          errorMessage =
+                                              'Ukuran file tidak boleh lebih dari 1 MB';
+                                          showFileName = '';
+                                        });
+                                      } else {
+                                        // Jika ukuran file sesuai, perbarui state dengan nama file
+                                        setState(() {
+                                          showFileName = file.name;
+                                          errorMessage =
+                                              ''; // Clear any previous error message
+                                        });
+                                      }
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 13.0, horizontal: 8.0),
+                                    backgroundColor:
+                                        Color.fromRGBO(243, 243, 243, 1),
+                                    shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0)))),
-                              child: const Text(
-                                'Pilih File',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500),
-                              ),
+                                          Radius.circular(8.0)),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Pilih File',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      showFileName!,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8.0),
-                            Expanded(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                showFileName.toString(),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
                           ],
                         ),
                       ),
                     ),
                   ],
+                ),
+              ),
+              if (errorMessage.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(left: 75.0),
+                  child: Text(
+                    errorMessage,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -230,7 +280,8 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.saveAndValidate()) {
+                      if (_formKey.currentState!.saveAndValidate() &&
+                          filePickerResult!.files.first.size < maxSizeInBytes) {
                         Map<String, dynamic> formData =
                             _formKey.currentState!.value;
                         print(formData['keterangan']);
