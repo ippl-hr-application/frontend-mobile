@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/attendance/presentation/provider/attancande_recap_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:month_year_picker/month_year_picker.dart';
-import 'package:dio/dio.dart';
 
 class AttendanceList extends ConsumerStatefulWidget {
   const AttendanceList({super.key});
@@ -22,19 +21,24 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
     super.initState();
     _selectedDay = DateTime.now();
     _selectedMonth = DateTime.now();
-    _initializeStatusMap();
     fetchAttendanceData();
   }
 
-  void _initializeStatusMap() {
-    // Initially empty, will be filled with data from the API
-    statusMap = {};
-  }
+  Future<void> fetchAttendanceData() async {
+    final month = _selectedMonth?.month ?? DateTime.now().month;
+    final year = _selectedMonth?.year ?? DateTime.now().year;
+    final response = await ref.read(attandanceRecapProvider({'month': month.toString().padLeft(2, '0'), 'year': year.toString()}).future);
 
-  void updateStatusMap(Map<DateTime, bool> newStatusMap) {
-    setState(() {
-      statusMap = newStatusMap;
-    });
+    if (response != null && response.detail != null) {
+      final newStatusMap = <DateTime, bool>{};
+      for (final detail in response.detail!) {
+        final date = DateTime.parse(detail.date!);
+        newStatusMap[date] = detail.isPresent ?? false;
+      }
+      setState(() {
+        statusMap = newStatusMap;
+      });
+    }
   }
 
   Future<void> _selectMonth(BuildContext context) async {
@@ -47,25 +51,9 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
     if (picked != null && picked != _selectedMonth) {
       setState(() {
         _selectedMonth = picked;
-        // Update the focused day of the calendar to the first day of the selected month
         _selectedDay = DateTime(picked.year, picked.month, 1);
       });
       fetchAttendanceData();
-    }
-  }
-
-  Future<void> fetchAttendanceData() async {
-    final month = _selectedMonth?.month ?? DateTime.now().month;
-    final year = _selectedMonth?.year ?? DateTime.now().year;
-
-    final attendanceRecap = await ref.read(attandanceRecapProvider({'month': month.toString().padLeft(2, '0'), 'year': year.toString()}).future);
-    if (attendanceRecap != null && attendanceRecap.detail != null) {
-      final newStatusMap = <DateTime, bool>{};
-      for (final detail in attendanceRecap.detail!) {
-        final date = DateTime.parse(detail.date!);
-        newStatusMap[date] = detail.isPresent ?? false;
-      }
-      updateStatusMap(newStatusMap);
     }
   }
 
@@ -142,7 +130,7 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
             ),
             const SizedBox(height: 10),
             TextFormField(
-              readOnly: true,
+              readOnly: false,
               onTap: () => _selectMonth(context),
               decoration: InputDecoration(
                 labelText: 'Selected Month',

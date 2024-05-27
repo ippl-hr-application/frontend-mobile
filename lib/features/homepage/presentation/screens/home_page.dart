@@ -170,8 +170,7 @@ class HomeScreen extends ConsumerWidget {
           );
         }),
         error: (Object error, StackTrace stackTrace) {
-          const DialogRedirect();
-          // return null;
+          return const DialogRedirect();
         },
       ),
       bottomNavigationBar: const ButtomBar(),
