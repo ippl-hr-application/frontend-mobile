@@ -21,9 +21,15 @@ class _AttandanceRecapRepository implements AttandanceRecapRepository {
   String? baseUrl;
 
   @override
-  Future<AttandanceRecap> getAttandanceRecap() async {
+  Future<AttandanceRecap> getAttandanceRecap(
+    String month,
+    String year,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'month': month,
+      r'year': year,
+    };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio

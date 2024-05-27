@@ -20,7 +20,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
   @override
   Widget build(BuildContext context) {
     final attandanceToday = ref.watch(attandanceTodayProvider);
-    final attandanceRecap = ref.watch(attandanceRecapProvider);
+    final attandanceRecap = ref.watch(attandanceRecapProvider as ProviderListenable);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -145,7 +145,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                         Center(child: Text('Error: $error')),
                   )
                 : selectAttandance == "Kehadiran"
-                    ? Container(
+                    ? Container(  
                         padding: const EdgeInsets.symmetric(
                             vertical: 0.0, horizontal: 16.0),
                         child: const AttendanceList())
