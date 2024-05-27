@@ -274,29 +274,38 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
+              if (filePickerResult == null) {
+                setState(() {
+                  errorMessage = 'Pilih file terlebih dahulu!';
+                  showFileName = '';
+                });
+              }
               if (_formKey.currentState!.saveAndValidate() &&
                   filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
                 print(formData['Alasan']);
                 print(File(filePickerResult!.files.first.path ?? '').path);
-                handleIzinSubmission(
-                    ref,
-                    IzinRequest(
-                      from: convertToIso8601(
-                          formData['izinDate'].start.toString()),
-                      permission_reason: formData['Alasan'],
-                      permission_file:
-                          File(filePickerResult!.files.first.path ?? ''),
-                      to: convertToIso8601(formData['izinDate'].end.toString()),
-                    )).then((izinSubmission) {
-                  return showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertSuccessSubmission(
-                      message: izinSubmission.message,
-                    ),
-                  );
-                });
+                if (filePickerResult != null) {
+                  handleIzinSubmission(
+                      ref,
+                      IzinRequest(
+                        from: convertToIso8601(
+                            formData['izinDate'].start.toString()),
+                        permission_reason: formData['Alasan'],
+                        permission_file:
+                            File(filePickerResult!.files.first.path ?? ''),
+                        to: convertToIso8601(
+                            formData['izinDate'].end.toString()),
+                      )).then((izinSubmission) {
+                    return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertSuccessSubmission(
+                        message: izinSubmission.message,
+                      ),
+                    );
+                  });
+                }
               } else {}
             },
             style: ElevatedButton.styleFrom(

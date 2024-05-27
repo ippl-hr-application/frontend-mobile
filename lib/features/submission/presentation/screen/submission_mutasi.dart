@@ -391,6 +391,12 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
           ),
           child: ElevatedButton(
             onPressed: () {
+              if (filePickerResult == null) {
+                setState(() {
+                  errorMessage = 'Pilih file terlebih dahulu!';
+                  showFileName = '';
+                });
+              }
               if (_formKey.currentState!.saveAndValidate() &&
                   filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
@@ -401,17 +407,19 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                 // Memeriksa apakah nilai 'keterangan' tidak kosong
 
                 try {
-                  handleMutation(
-                      ref,
-                      MutasiRequest(
-                        mutationReason: formData['keterangan'],
-                        currenCompanyBranchId: homeHistoryData
-                            .asData!.value!.companyBranchId
-                            .toString(),
-                        targetCompanyBranchId: selectTargetBranch.toString(),
-                        mutationFile:
-                            File(filePickerResult!.files.first.path ?? ''),
-                      ));
+                  if (filePickerResult != null) {
+                    handleMutation(
+                        ref,
+                        MutasiRequest(
+                          mutationReason: formData['keterangan'],
+                          currenCompanyBranchId: homeHistoryData
+                              .asData!.value!.companyBranchId
+                              .toString(),
+                          targetCompanyBranchId: selectTargetBranch.toString(),
+                          mutationFile:
+                              File(filePickerResult!.files.first.path ?? ''),
+                        ));
+                  }
                 } catch (e) {
                   print("Error: $e");
                 }

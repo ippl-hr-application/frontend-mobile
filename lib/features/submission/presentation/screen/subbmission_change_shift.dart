@@ -28,7 +28,7 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
     penStrokeWidth: 5,
     penColor: Colors.black,
   );
-
+  String errorMessage = '';
   int? selectedShiftBaru;
 
   @override
@@ -165,12 +165,12 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   border: Border(
+                //     bottom: BorderSide(
+                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                //   ),
+                // ),
                 child: Row(
                   children: [
                     Container(
@@ -227,6 +227,22 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                   ],
                 ),
               ),
+              if (errorMessage.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0),
+                  child: Text(
+                    errorMessage,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 decoration: const BoxDecoration(
@@ -278,31 +294,40 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
+              print(selectedShiftBaru);
+              print(homeHistoryData.asData!.value!.shiftId);
+              if (homeHistoryData.asData!.value!.shiftId == selectedShiftBaru) {
+                setState(() {
+                  errorMessage = 'Pilih Shift Baru yang berbeda!';
+                });
+              }
               if (_formKey.currentState!.saveAndValidate()) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
                 // print(formData['izinDate']);
                 // print(selectedShiftBaru);
                 // print(homeHistoryData.asData!.value!.shiftId);
-
-                handleChangeShift(
-                        ref,
-                        ChangeShiftRequest(
-                            targetDate: convertToIso8601(
-                                formData['izinDate'].start.toString()),
-                            currentShift: int.parse(homeHistoryData
-                                .asData!.value!.shiftId
-                                .toString()),
-                            targetShift: selectedShiftBaru!,
-                            reason: formData['keterangan']))
-                    .then((changeShiftSubmission) {
-                  return showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertSuccessSubmission(
-                      message: changeShiftSubmission.message,
-                    ),
-                  );
-                });
+                if (homeHistoryData.asData!.value!.shiftId !=
+                    selectedShiftBaru) {
+                  handleChangeShift(
+                          ref,
+                          ChangeShiftRequest(
+                              targetDate: convertToIso8601(
+                                  formData['izinDate'].start.toString()),
+                              currentShift: int.parse(homeHistoryData
+                                  .asData!.value!.shiftId
+                                  .toString()),
+                              targetShift: selectedShiftBaru!,
+                              reason: formData['keterangan']))
+                      .then((changeShiftSubmission) {
+                    return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertSuccessSubmission(
+                        message: changeShiftSubmission.message,
+                      ),
+                    );
+                  });
+                }
               }
             },
             style: ElevatedButton.styleFrom(

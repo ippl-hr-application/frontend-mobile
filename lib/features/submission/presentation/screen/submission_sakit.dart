@@ -280,6 +280,12 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
+                      if (filePickerResult == null) {
+                        setState(() {
+                          errorMessage = 'Pilih file terlebih dahulu!';
+                          showFileName = '';
+                        });
+                      }
                       if (_formKey.currentState!.saveAndValidate() &&
                           filePickerResult!.files.first.size < maxSizeInBytes) {
                         Map<String, dynamic> formData =
@@ -287,27 +293,30 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                         print(formData['keterangan']);
                         print(File(filePickerResult!.files.first.path ?? "")
                             .path);
-
-                        handleSakitSubmission(
-                                ref,
-                                SakitRequest(
-                                    from: convertToIso8601(
-                                        formData['sakitDate'].start.toString()),
-                                    permissionReason: formData['keterangan'],
-                                    to: convertToIso8601(
-                                        formData['sakitDate'].end.toString()),
-                                    sickFile: File(
-                                        filePickerResult!.files.first.path ??
-                                            '')))
-                            .then((sakitSubmission) {
-                          return showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                AlertSuccessSubmission(
-                              message: sakitSubmission.message,
-                            ),
-                          );
-                        });
+                        if (filePickerResult != null) {
+                          handleSakitSubmission(
+                                  ref,
+                                  SakitRequest(
+                                      from: convertToIso8601(
+                                          formData['sakitDate']
+                                              .start
+                                              .toString()),
+                                      permissionReason: formData['keterangan'],
+                                      to: convertToIso8601(
+                                          formData['sakitDate'].end.toString()),
+                                      sickFile: File(
+                                          filePickerResult!.files.first.path ??
+                                              '')))
+                              .then((sakitSubmission) {
+                            return showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  AlertSuccessSubmission(
+                                message: sakitSubmission.message,
+                              ),
+                            );
+                          });
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(

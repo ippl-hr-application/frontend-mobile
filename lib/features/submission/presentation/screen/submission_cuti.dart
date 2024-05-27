@@ -336,31 +336,39 @@ class SubmissionCutiState extends ConsumerState<SubmissionCuti> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
+              if (filePickerResult == null) {
+                setState(() {
+                  errorMessage = 'Pilih file terlebih dahulu!';
+                  showFileName = '';
+                });
+              }
               if (_formKey.currentState!.saveAndValidate() &&
                   filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
                 print(formData['Alasan']);
                 print(File(filePickerResult!.files.first.path ?? '').path);
-
-                handleCutiSubmission(
-                    ref,
-                    CutiRequest(
-                      from: convertToIso8601(
-                          formData['CutiDate'].start.toString()),
-                      leaveReason: formData['Alasan'],
-                      leave_file:
-                          File(filePickerResult!.files.first.path ?? ''),
-                      leaveType: formData['Jenis_Cuti'],
-                      to: convertToIso8601(formData['CutiDate'].end.toString()),
-                    )).then((cutiSubmission) {
-                  return showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertSuccessSubmission(
-                      message: cutiSubmission.message,
-                    ),
-                  );
-                });
+                if (filePickerResult != null) {
+                  handleCutiSubmission(
+                      ref,
+                      CutiRequest(
+                        from: convertToIso8601(
+                            formData['CutiDate'].start.toString()),
+                        leaveReason: formData['Alasan'],
+                        leave_file:
+                            File(filePickerResult!.files.first.path ?? ''),
+                        leaveType: formData['Jenis_Cuti'],
+                        to: convertToIso8601(
+                            formData['CutiDate'].end.toString()),
+                      )).then((cutiSubmission) {
+                    return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertSuccessSubmission(
+                        message: cutiSubmission.message,
+                      ),
+                    );
+                  });
+                }
               }
             },
             style: ElevatedButton.styleFrom(

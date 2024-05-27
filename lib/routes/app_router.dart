@@ -46,7 +46,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: "/reset-password",
         pageBuilder: (context, state) {
-          return const NoTransitionPage(child: ForgetPassword());
+          return NoTransitionPage(child: ForgetPassword());
         },
       ),
       GoRoute(
