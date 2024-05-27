@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ForgetPassword extends StatelessWidget {
-  ForgetPassword({super.key});
+class ForgetPassword extends ConsumerStatefulWidget {
+  const ForgetPassword({super.key});
+
+  @override
+  ForgetPasswordState createState() => ForgetPasswordState();
+}
+
+class ForgetPasswordState extends ConsumerState<ForgetPassword> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  bool isHidePassword = true;
+  bool isHidePassword2 = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +34,7 @@ class ForgetPassword extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 FormBuilderTextField(
-                  obscureText: true,
+                  obscureText: isHidePassword,
                   name: 'kata_sandi_baru',
                   validator: (value) {
                     if (value == null || value.isEmpty || value == '') {
@@ -41,13 +50,17 @@ class ForgetPassword extends StatelessWidget {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.visibility),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          isHidePassword = !isHidePassword;
+                        });
+                      },
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 FormBuilderTextField(
-                  obscureText: true,
+                  obscureText: isHidePassword2,
                   name: 'konfirmasi_kata_sandi',
                   validator: (value) {
                     if (value == null || value.isEmpty || value == '') {
@@ -63,7 +76,11 @@ class ForgetPassword extends StatelessWidget {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.visibility),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          isHidePassword2 = !isHidePassword2;
+                        });
+                      },
                     ),
                   ),
                 ),

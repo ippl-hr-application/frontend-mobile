@@ -6,9 +6,16 @@ import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 
-class LoginPage extends ConsumerWidget {
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  LoginPageState createState() => LoginPageState();
+}
+
+class LoginPageState extends ConsumerState<LoginPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-  LoginPage({super.key});
+  bool isHidePassword = true;
   void onPressedLogin(
       BuildContext context, WidgetRef ref, LoginRequest auth) async {
     try {
@@ -31,7 +38,7 @@ class LoginPage extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -73,7 +80,7 @@ class LoginPage extends ConsumerWidget {
                 // ),
                 const SizedBox(height: 10.0),
                 FormBuilderTextField(
-                  obscureText: true,
+                  obscureText: isHidePassword,
                   name: 'password',
                   validator: (value) {
                     if (value == null || value.isEmpty || value == '') {
@@ -89,7 +96,11 @@ class LoginPage extends ConsumerWidget {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.visibility),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          isHidePassword = !isHidePassword;
+                        });
+                      },
                     ),
                   ),
                 ),
