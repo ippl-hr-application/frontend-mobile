@@ -12,21 +12,21 @@ class AttendanceList extends ConsumerStatefulWidget {
 }
 
 class _AttendanceListState extends ConsumerState<AttendanceList> {
-  late DateTime _selectedDay;
+  late DateTime _focusedDay;
   DateTime? _selectedMonth;
   Map<DateTime, bool> statusMap = {};
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = DateTime.now();
+    _focusedDay = DateTime.now();
     _selectedMonth = DateTime.now();
-    fetchAttendanceData();
+    fetchAttendanceData(_selectedMonth!);
   }
 
-  Future<void> fetchAttendanceData() async {
-    final month = _selectedMonth?.month ?? DateTime.now().month;
-    final year = _selectedMonth?.year ?? DateTime.now().year;
+  Future<void> fetchAttendanceData(DateTime selectedMonth) async {
+    final month = selectedMonth.month;
+    final year = selectedMonth.year;
     final response = await ref.read(attandanceRecapProvider({'month': month.toString().padLeft(2, '0'), 'year': year.toString()}).future);
 
     if (response != null && response.detail != null) {
@@ -51,14 +51,21 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
     if (picked != null && picked != _selectedMonth) {
       setState(() {
         _selectedMonth = picked;
-        _selectedDay = DateTime(picked.year, picked.month, 1);
+        _focusedDay = DateTime(picked.year, picked.month, 1);
       });
-      fetchAttendanceData();
+      fetchAttendanceData(_selectedMonth!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final filteredStatusMap = statusMap.entries.where((entry) {
+      return entry.key.year == _selectedMonth?.year && entry.key.month == _selectedMonth?.month;
+    }).map((entry) => entry.value).toList();
+
+    int presentCount = filteredStatusMap.where((status) => status == true).length;
+    int absentCount = filteredStatusMap.where((status) => status == false).length;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Attendance List'),
@@ -69,11 +76,52 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'Kehadiran',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          presentCount.toString(),
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Text(
+                          'Absen',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          absentCount.toString(),
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             TableCalendar(
               calendarFormat: CalendarFormat.month,
               daysOfWeekStyle: const DaysOfWeekStyle(
                 weekdayStyle: TextStyle(color: Colors.blue),
-                weekendStyle: TextStyle(color: Colors.red),
+                weekendStyle: TextStyle(color: Colors.blue),
               ),
               calendarStyle: const CalendarStyle(
                 todayTextStyle: TextStyle(color: Colors.white),
@@ -82,7 +130,7 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
                   shape: BoxShape.circle,
                 ),
                 selectedTextStyle: TextStyle(color: Colors.white),
-                weekendTextStyle: TextStyle(color: Colors.red),
+                
                 outsideDaysVisible: true,
                 outsideTextStyle: TextStyle(color: Colors.grey),
                 cellMargin: EdgeInsets.all(2),
@@ -94,8 +142,6 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
               calendarBuilders: CalendarBuilders(
                 defaultBuilder: (context, date, _) {
                   bool? status = statusMap[date];
-                  bool isWeekend = date.weekday == DateTime.saturday ||
-                      date.weekday == DateTime.sunday;
                   return Container(
                     width: 40,
                     height: 40,
@@ -109,28 +155,32 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
                       child: Text(
                         date.day.toString(),
                         style: TextStyle(
-                          color: isWeekend
-                              ? Colors.red
-                              : (status != null ? Colors.white : Colors.black),
+                          color: (status != null ? Colors.white : Colors.black),
                         ),
                       ),
                     ),
                   );
                 },
               ),
-              focusedDay: _selectedDay,
-              firstDay: DateTime(_selectedMonth?.year ?? 2024, 1, 1),
-              lastDay: DateTime((_selectedMonth?.year ?? 2024) + 1, 12, 31),
+              focusedDay: _focusedDay,
+              firstDay: DateTime(2020, 1, 1),
+              lastDay: DateTime(2030, 12, 31),
               onDaySelected: (selectedDay, focusedDay) {
                 setState(() {
-                  _selectedDay = selectedDay;
-                  print(_selectedDay);
+                  _focusedDay = focusedDay;
                 });
+              },
+              onPageChanged: (focusedDay) {
+                setState(() {
+                  _selectedMonth = focusedDay;
+                  _focusedDay = focusedDay;
+                });
+                fetchAttendanceData(focusedDay);
               },
             ),
             const SizedBox(height: 10),
             TextFormField(
-              readOnly: false,
+              readOnly: true,
               onTap: () => _selectMonth(context),
               decoration: InputDecoration(
                 labelText: 'Selected Month',
