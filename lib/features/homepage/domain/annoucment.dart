@@ -24,6 +24,7 @@ class AnnoucmentData with _$AnnoucmentData {
     @JsonKey(name: 'company_id') required String? companyId,
     @JsonKey(name: 'title') required String? title,
     @JsonKey(name: 'description') required String? description,
+    @JsonKey(name: 'date') required String? date,
   }) = _AnnoucmentData;
 
   factory AnnoucmentData.fromJson(Map<String, dynamic> json) =>

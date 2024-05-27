@@ -28,6 +28,7 @@ _$AnnoucmentDataImpl _$$AnnoucmentDataImplFromJson(Map<String, dynamic> json) =>
       companyId: json['company_id'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,
+      date: json['date'] as String?,
     );
 
 Map<String, dynamic> _$$AnnoucmentDataImplToJson(
@@ -37,4 +38,5 @@ Map<String, dynamic> _$$AnnoucmentDataImplToJson(
       'company_id': instance.companyId,
       'title': instance.title,
       'description': instance.description,
+      'date': instance.date,
     };

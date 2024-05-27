@@ -194,9 +194,9 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                               selectedShiftBaru = value;
                             });
                           },
-                          items: (data!.shifts!
+                          items: (data!
                               .map(
-                                (e) => DropdownMenuItem(
+                                (e) => DropdownMenuItem<int>(
                                   child: Text(e.name.toString()),
                                   value: e.shift_id,
                                 ),

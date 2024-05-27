@@ -13,7 +13,7 @@ class _ShiftCompanyRepository implements ShiftCompanyRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://77fd-114-10-138-231.ngrok-free.app/';
+    baseUrl ??= 'http://27.112.79.44';
   }
 
   final Dio _dio;
@@ -21,7 +21,7 @@ class _ShiftCompanyRepository implements ShiftCompanyRepository {
   String? baseUrl;
 
   @override
-  Future<ShiftCompanyResponse> getShiftCompany() async {
+  Future<ShiftCompanyResponse> getShiftCompany(String companyId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +34,7 @@ class _ShiftCompanyRepository implements ShiftCompanyRepository {
     )
             .compose(
               _dio.options,
-              '/shift',
+              '/shift/${companyId}',
               queryParameters: queryParameters,
               data: _data,
             )

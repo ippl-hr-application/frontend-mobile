@@ -11,9 +11,9 @@ _$ShiftCompanyResponseImpl _$$ShiftCompanyResponseImplFromJson(
     _$ShiftCompanyResponseImpl(
       success: json['success'] as bool?,
       message: json['message'] as String?,
-      data: json['data'] == null
-          ? null
-          : Shift.fromJson(json['data'] as Map<String, dynamic>),
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => DataShift.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$ShiftCompanyResponseImplToJson(
@@ -22,17 +22,6 @@ Map<String, dynamic> _$$ShiftCompanyResponseImplToJson(
       'success': instance.success,
       'message': instance.message,
       'data': instance.data,
-    };
-
-_$ShiftImpl _$$ShiftImplFromJson(Map<String, dynamic> json) => _$ShiftImpl(
-      shifts: (json['shifts'] as List<dynamic>?)
-          ?.map((e) => DataShift.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$$ShiftImplToJson(_$ShiftImpl instance) =>
-    <String, dynamic>{
-      'shifts': instance.shifts,
     };
 
 _$DataShiftImpl _$$DataShiftImplFromJson(Map<String, dynamic> json) =>

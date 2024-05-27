@@ -7,6 +7,7 @@ import 'package:meraih_mobile/data/image_home.dart';
 import 'package:meraih_mobile/models/image_model.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meraih_mobile/utils/format_date.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 import 'package:meraih_mobile/widgets/dialog_redirect.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/announcment_provider.dart';
@@ -114,12 +115,12 @@ class HomeScreen extends ConsumerWidget {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
-                                  'Lihat Semua',
-                                  // style: TextStyle(
-                                  //   color: Color.fromARGB(31, 12, 113, 235),
-                                  // ),
-                                )
+                                // Text(
+                                //   'Lihat Semua',
+                                //   // style: TextStyle(
+                                //   //   color: Color.fromARGB(31, 12, 113, 235),
+                                //   // ),
+                                // )
                               ],
                             ),
                             const SizedBox(height: 8.0),
@@ -128,15 +129,41 @@ class HomeScreen extends ConsumerWidget {
                                 data: (data) {
                                   return Column(
                                     children: data!
-                                        .map((e) => Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(e.title.toString()),
-                                                Text(e.companyAnnouncementId
-                                                    .toString()),
-                                              ],
+                                        .map((e) => Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                    child: Wrap(
+                                                      children: [
+                                                        Text(
+                                                          e.title ?? "-",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      16.0),
+                                                          overflow: TextOverflow
+                                                              .visible, // Pastikan teks terpotong jika terlalu panjang
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                      width:
+                                                          10.0), // Memberikan jarak antara title dan date
+                                                  Text(
+                                                    formatDate(e.date ?? "-"),
+                                                    style: const TextStyle(
+                                                        fontSize: 16.0),
+                                                  ),
+                                                ],
+                                              ),
                                             ))
                                         .toList(),
                                   );

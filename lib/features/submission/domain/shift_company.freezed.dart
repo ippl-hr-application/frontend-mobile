@@ -25,7 +25,7 @@ mixin _$ShiftCompanyResponse {
   @JsonKey(name: 'message')
   String? get message => throw _privateConstructorUsedError;
   @JsonKey(name: 'data')
-  Shift? get data => throw _privateConstructorUsedError;
+  List<DataShift>? get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,9 +42,7 @@ abstract class $ShiftCompanyResponseCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'success') bool? success,
       @JsonKey(name: 'message') String? message,
-      @JsonKey(name: 'data') Shift? data});
-
-  $ShiftCopyWith<$Res>? get data;
+      @JsonKey(name: 'data') List<DataShift>? data});
 }
 
 /// @nodoc
@@ -77,20 +75,8 @@ class _$ShiftCompanyResponseCopyWithImpl<$Res,
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as Shift?,
+              as List<DataShift>?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ShiftCopyWith<$Res>? get data {
-    if (_value.data == null) {
-      return null;
-    }
-
-    return $ShiftCopyWith<$Res>(_value.data!, (value) {
-      return _then(_value.copyWith(data: value) as $Val);
-    });
   }
 }
 
@@ -105,10 +91,7 @@ abstract class _$$ShiftCompanyResponseImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'success') bool? success,
       @JsonKey(name: 'message') String? message,
-      @JsonKey(name: 'data') Shift? data});
-
-  @override
-  $ShiftCopyWith<$Res>? get data;
+      @JsonKey(name: 'data') List<DataShift>? data});
 }
 
 /// @nodoc
@@ -136,9 +119,9 @@ class __$$ShiftCompanyResponseImplCopyWithImpl<$Res>
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
       data: freezed == data
-          ? _value.data
+          ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as Shift?,
+              as List<DataShift>?,
     ));
   }
 }
@@ -149,7 +132,8 @@ class _$ShiftCompanyResponseImpl implements _ShiftCompanyResponse {
   _$ShiftCompanyResponseImpl(
       {@JsonKey(name: 'success') this.success,
       @JsonKey(name: 'message') this.message,
-      @JsonKey(name: 'data') this.data});
+      @JsonKey(name: 'data') final List<DataShift>? data})
+      : _data = data;
 
   factory _$ShiftCompanyResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ShiftCompanyResponseImplFromJson(json);
@@ -160,9 +144,16 @@ class _$ShiftCompanyResponseImpl implements _ShiftCompanyResponse {
   @override
   @JsonKey(name: 'message')
   final String? message;
+  final List<DataShift>? _data;
   @override
   @JsonKey(name: 'data')
-  final Shift? data;
+  List<DataShift>? get data {
+    final value = _data;
+    if (value == null) return null;
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -176,12 +167,13 @@ class _$ShiftCompanyResponseImpl implements _ShiftCompanyResponse {
             other is _$ShiftCompanyResponseImpl &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data));
+            const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, success, message, data);
+  int get hashCode => Object.hash(runtimeType, success, message,
+      const DeepCollectionEquality().hash(_data));
 
   @JsonKey(ignore: true)
   @override
@@ -201,9 +193,10 @@ class _$ShiftCompanyResponseImpl implements _ShiftCompanyResponse {
 
 abstract class _ShiftCompanyResponse implements ShiftCompanyResponse {
   factory _ShiftCompanyResponse(
-      {@JsonKey(name: 'success') final bool? success,
-      @JsonKey(name: 'message') final String? message,
-      @JsonKey(name: 'data') final Shift? data}) = _$ShiftCompanyResponseImpl;
+          {@JsonKey(name: 'success') final bool? success,
+          @JsonKey(name: 'message') final String? message,
+          @JsonKey(name: 'data') final List<DataShift>? data}) =
+      _$ShiftCompanyResponseImpl;
 
   factory _ShiftCompanyResponse.fromJson(Map<String, dynamic> json) =
       _$ShiftCompanyResponseImpl.fromJson;
@@ -216,156 +209,11 @@ abstract class _ShiftCompanyResponse implements ShiftCompanyResponse {
   String? get message;
   @override
   @JsonKey(name: 'data')
-  Shift? get data;
+  List<DataShift>? get data;
   @override
   @JsonKey(ignore: true)
   _$$ShiftCompanyResponseImplCopyWith<_$ShiftCompanyResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
-}
-
-Shift _$ShiftFromJson(Map<String, dynamic> json) {
-  return _Shift.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Shift {
-  @JsonKey(name: 'shifts')
-  List<DataShift>? get shifts => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ShiftCopyWith<Shift> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ShiftCopyWith<$Res> {
-  factory $ShiftCopyWith(Shift value, $Res Function(Shift) then) =
-      _$ShiftCopyWithImpl<$Res, Shift>;
-  @useResult
-  $Res call({@JsonKey(name: 'shifts') List<DataShift>? shifts});
-}
-
-/// @nodoc
-class _$ShiftCopyWithImpl<$Res, $Val extends Shift>
-    implements $ShiftCopyWith<$Res> {
-  _$ShiftCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? shifts = freezed,
-  }) {
-    return _then(_value.copyWith(
-      shifts: freezed == shifts
-          ? _value.shifts
-          : shifts // ignore: cast_nullable_to_non_nullable
-              as List<DataShift>?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$ShiftImplCopyWith<$Res> implements $ShiftCopyWith<$Res> {
-  factory _$$ShiftImplCopyWith(
-          _$ShiftImpl value, $Res Function(_$ShiftImpl) then) =
-      __$$ShiftImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'shifts') List<DataShift>? shifts});
-}
-
-/// @nodoc
-class __$$ShiftImplCopyWithImpl<$Res>
-    extends _$ShiftCopyWithImpl<$Res, _$ShiftImpl>
-    implements _$$ShiftImplCopyWith<$Res> {
-  __$$ShiftImplCopyWithImpl(
-      _$ShiftImpl _value, $Res Function(_$ShiftImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? shifts = freezed,
-  }) {
-    return _then(_$ShiftImpl(
-      shifts: freezed == shifts
-          ? _value._shifts
-          : shifts // ignore: cast_nullable_to_non_nullable
-              as List<DataShift>?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ShiftImpl implements _Shift {
-  _$ShiftImpl({@JsonKey(name: 'shifts') final List<DataShift>? shifts})
-      : _shifts = shifts;
-
-  factory _$ShiftImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ShiftImplFromJson(json);
-
-  final List<DataShift>? _shifts;
-  @override
-  @JsonKey(name: 'shifts')
-  List<DataShift>? get shifts {
-    final value = _shifts;
-    if (value == null) return null;
-    if (_shifts is EqualUnmodifiableListView) return _shifts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  String toString() {
-    return 'Shift(shifts: $shifts)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ShiftImpl &&
-            const DeepCollectionEquality().equals(other._shifts, _shifts));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_shifts));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ShiftImplCopyWith<_$ShiftImpl> get copyWith =>
-      __$$ShiftImplCopyWithImpl<_$ShiftImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ShiftImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _Shift implements Shift {
-  factory _Shift({@JsonKey(name: 'shifts') final List<DataShift>? shifts}) =
-      _$ShiftImpl;
-
-  factory _Shift.fromJson(Map<String, dynamic> json) = _$ShiftImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'shifts')
-  List<DataShift>? get shifts;
-  @override
-  @JsonKey(ignore: true)
-  _$$ShiftImplCopyWith<_$ShiftImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 DataShift _$DataShiftFromJson(Map<String, dynamic> json) {
