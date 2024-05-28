@@ -217,7 +217,8 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                                 ),
                               )
                               .toList()),
-                        ));
+                        )
+                        );
                       },
                       error: (error, stackTrace) =>
                           Center(child: Text('Error: $error')),

@@ -15,6 +15,7 @@ import 'package:meraih_mobile/features/submission/presentation/providers/mutasi_
 import 'package:meraih_mobile/utils/format_date.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/providers/company_branch_provider.dart';
 
 class SubmissionMutasi extends ConsumerStatefulWidget {
   const SubmissionMutasi({super.key});
@@ -42,6 +43,7 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
   @override
   Widget build(BuildContext context) {
     final homeHistoryData = ref.watch(homeProvider);
+    final companyBranchData = ref.watch(companyBranchProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -189,36 +191,51 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                         )),
                     const SizedBox(width: 16.0),
                     Expanded(
-                        child: FormBuilderDropdown(
-                      name: 'cabang',
-                      validator: (value) {
-                        if (value == null) {
-                          return "Cabang tidak boleh kosong";
-                        }
+                        child: companyBranchData.when(
+                      data: (data) {
+                        // if (data!.branches == null || data.branches!.isEmpty) {
+                        //   return const Center(
+                        //       child: Text('No branches available'));
+                        // }
+                        // print(data.branches!.first.company_branch_id);
+
+                        return FormBuilder(
+                          child: FormBuilderDropdown(
+                            name: 'cabang',
+                            validator: (value) {
+                              if (value == null) {
+                                return "Cabang tidak boleh kosong";
+                              }
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 6.0),
+                              labelText: 'Cabang',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                selectTargetBranch = value;
+                              });
+                            },
+                            items: data!.branches!
+                                .map((e) => DropdownMenuItem(
+                                      child: Text(
+                                        e.hq_initial.toString().toUpperCase(),
+                                        softWrap: true,
+                                      ),
+                                      value: e.company_branch_id,
+                                    ))
+                                .toList(),
+                          ),
+                        );
                       },
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 6.0),
-                        labelText: 'Cabang',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          selectTargetBranch = value;
-                        });
-                      },
-                      items: const [
-                        DropdownMenuItem(
-                          child: Text('Balikpapan'),
-                          value: '48931c6d-451e-4183-a9ff-30b3686a7f32',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('Samarinda'),
-                          value: 'c2f985e5-c77b-4620-8367-ce410d20a9d1',
-                        ),
-                      ],
+                      error: (error, stackTrace) =>
+                          Center(child: Text('Error: $error')),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
                     ))
                   ],
                 ),

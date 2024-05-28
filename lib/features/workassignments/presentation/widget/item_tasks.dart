@@ -78,7 +78,7 @@ class ItemTasks extends StatelessWidget {
                   Text(formatDate(endDate.toString()))
                 ],
               ),
-              const Text("Done")
+              // const Text("Done")
             ],
           )
         ],

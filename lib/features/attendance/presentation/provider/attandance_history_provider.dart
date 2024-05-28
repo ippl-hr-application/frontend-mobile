@@ -4,20 +4,22 @@ import 'package:meraih_mobile/features/authentication/presentation/providers/aut
 import 'package:meraih_mobile/features/attendance/data/attandance_history_repository.dart';
 
 final attandanceHistoryProvider =
-    FutureProvider.autoDispose.family((ref, String date) async {
+    FutureProvider.family<dynamic, Map<String, dynamic>>((ref, params) async {
   final dio = Dio();
-
-  print(date);
 
   final token = ref.watch(authTokenProvider);
   dio.options.headers['Authorization'] = 'Bearer $token';
 
   final attandanceHistoryRepository = AttandanceHistoryRepository(dio);
   try {
+    final date = params['date'] ?? '';
     final attandanceHistory =
         await attandanceHistoryRepository.getAttandanceHistory(date);
 
-    return attandanceHistory.data;
+    if (attandanceHistory.success == true) {
+      print(attandanceHistory.data);
+      return attandanceHistory.data;
+    }
   } on DioException {
     rethrow;
   }

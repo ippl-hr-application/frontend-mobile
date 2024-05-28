@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:meraih_mobile/utils/date.dart';
+import 'package:meraih_mobile/utils/format_date_to_day.dart';
 import 'package:signature/signature.dart';
 import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_history_provider.dart';
 import 'package:meraih_mobile/utils/format_date.dart';
@@ -30,15 +31,25 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
 
   String? showFileName = "";
   FilePickerResult? filePickerResult;
+
+  late Future<dynamic> submissionHistoryDate;
   final currentDate = DateTime.now();
   final currentEnd = DateTime.now().add(const Duration(days: 1));
   String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
   // AttandanceHistory? _attandanceHistory;
 
+  void initState() {
+    super.initState();
+    String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    submissionHistoryDate =
+        ref.read(attandanceHistoryProvider({'date': date}).future);
+  }
+
   @override
   Widget build(BuildContext context) {
     // print(date);
-    final submissionHistoryDate = ref.read(attandanceHistoryProvider(date));
+    // final submissionHistoryDate =
+    //     ref.read(attandanceHistoryProvider({'date': date}).future);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -128,7 +139,6 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   decoration: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
@@ -148,10 +158,24 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                               color: Colors.white, size: 30)),
                       const SizedBox(width: 16.0),
                       Expanded(
-                          child: submissionHistoryDate.when(
-                              data: (data) {
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          child: FutureBuilder(
+                            future: submissionHistoryDate,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              } else {
+                                final data = snapshot.data;
+                                print(snapshot.data.date);
                                 return Column(
-                                  // mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
@@ -159,72 +183,73 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                                       decoration: const BoxDecoration(
                                         border: Border(
                                           bottom: BorderSide(
-                                              width: 1.0,
-                                              color: Color.fromARGB(
-                                                  255, 186, 186, 186)),
+                                            width: 1.0,
+                                            color: Color.fromARGB(
+                                                255, 186, 186, 186),
+                                          ),
                                         ),
                                       ),
                                       child: Text(
-                                        formatDate(data!.startTime.toString()),
-                                        style: TextStyle(
+                                        formatDateToDay(data.date.toString()),
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Text(
-                                                "Check in",
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color.fromRGBO(
-                                                        171, 171, 171, 1.0)),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            const Text(
+                                              "Check in",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w300,
+                                                color: Color.fromRGBO(
+                                                    171, 171, 171, 1.0),
                                               ),
-                                              Text(
-                                                data.checkInTime.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                            ),
+                                            Text(
+                                              data.check_in_time ?? "-",
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                            ],
-                                          ),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                "Check in",
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Color.fromRGBO(
-                                                        171, 171, 171, 1.0)),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            const Text(
+                                              "Check out",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w300,
+                                                color: Color.fromRGBO(
+                                                    171, 171, 171, 1.0),
                                               ),
-                                              Text(
-                                                "-",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                            ),
+                                            Text(
+                                              data.check_out_time ?? "-",
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
                                     )
                                   ],
                                 );
-                              },
-                              error: (error, stack) =>
-                                  Center(child: Text('Error: $error')),
-                              loading: () =>
-                                  Center(child: CircularProgressIndicator())))
+                              }
+                            },
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

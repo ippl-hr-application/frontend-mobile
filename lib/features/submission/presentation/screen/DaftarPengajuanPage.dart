@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -30,6 +31,7 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
   late String year;
   late String month;
   late String status;
+  late Future<dynamic> submissionHistoryData;
 
   @override
   void initState() {
@@ -38,18 +40,15 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
     year = currentDate.year.toString();
     month = currentDate.month.toString().padLeft(2, '0');
     status = 'PENDING';
+    submissionHistoryData = ref.read(submissionProvider({
+      'year': year,
+      'month': month,
+      'status': status,
+    }).future);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(month);
-    
-    final submissionHistoryData = ref.read(submissionProvider({
-      'year': year,
-      'month': month,
-      'status': status,
-    }));
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -119,34 +118,32 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
             child: Container(
                 // color: Colors.white,
                 padding: const EdgeInsets.all(16.0),
-                child: submissionHistoryData.when(
-                  data: (data) {
-                    if (data == null || data.isEmpty) {
+                child: FutureBuilder(
+                  future: submissionHistoryData,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
-                        child: Text(
-                          "Anda belum Melakukan pengajuan",
-                        ),
+                        child: CircularProgressIndicator(),
                       );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
                     } else {
                       return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: data.length,
-                        itemBuilder: (context, int index) {
-                          return SubmissionItem(
-                            submissionId: data[index].submission_id,
-                            submissionDate: data[index].submission_date,
-                            status: data[index].status,
-                            type: data[index].type,
-                          );
-                        },
-                      );
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, int index) {
+                            return SubmissionItem(
+                              
+                              submissionId: snapshot.data[index].submission_id,
+                              submissionDate:
+                                  snapshot.data[index].submission_date,
+                              status: snapshot.data[index].status,
+                              type: snapshot.data[index].type,
+                            );
+                          });
                     }
                   },
-                  error: (error, stackTrace) =>
-                      Center(child: Text('Error: $error')),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
                 )),
           ),
         ],
