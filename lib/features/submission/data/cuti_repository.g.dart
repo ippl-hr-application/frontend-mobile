@@ -13,7 +13,7 @@ class _CutiRepository implements CutiRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://27.112.79.44/';
+    baseUrl ??= 'http://27.112.79.44';
   }
 
   final Dio _dio;

@@ -4,11 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_windows
-<<<<<<< HEAD
-  flutter_secure_storage_windows
-=======
   geolocator_windows
->>>>>>> 83bcb65c6e7c85b38f5b0968a642228081052c33
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
