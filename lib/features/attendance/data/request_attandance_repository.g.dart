@@ -21,8 +21,8 @@ class _RequestAttandanceRepository implements RequestAttandanceRepository {
   String? baseUrl;
 
   @override
-  Future<RequestAttandance> postRequestAttandance(
-    int attendance_id,
+  Future<AttandanceRequest> postRequestAttandance(
+    int attendanceId,
     String reason,
     File attendance_submission_file,
   ) async {
@@ -32,7 +32,7 @@ class _RequestAttandanceRepository implements RequestAttandanceRepository {
     final _data = FormData();
     _data.fields.add(MapEntry(
       'attendance_id',
-      attendance_id.toString(),
+      attendanceId.toString(),
     ));
     _data.fields.add(MapEntry(
       'reason',
@@ -47,7 +47,7 @@ class _RequestAttandanceRepository implements RequestAttandanceRepository {
       ),
     ));
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<RequestAttandance>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<AttandanceRequest>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -64,7 +64,7 @@ class _RequestAttandanceRepository implements RequestAttandanceRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = RequestAttandance.fromJson(_result.data!);
+    final value = AttandanceRequest.fromJson(_result.data!);
     return value;
   }
 
