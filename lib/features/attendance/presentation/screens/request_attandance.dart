@@ -29,11 +29,7 @@ class RequestAttandance extends ConsumerStatefulWidget {
 class RequestAttandanceState extends ConsumerState<RequestAttandance> {
   late int attendanceId;
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-  final SignatureController _signatureController = SignatureController(
-    penStrokeWidth: 5,
-    penColor: Colors.black,
-  );
-
+  bool isSingleDate = true;
   String? showFileName = "";
   FilePickerResult? filePickerResult;
 

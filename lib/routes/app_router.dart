@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
 
 import 'package:meraih_mobile/features/attendance/presentation/screens/request_attandance.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/request_attandance.dart';
 import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
@@ -21,7 +22,7 @@ part 'app_router.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: "/",
+    initialLocation: "/login",
     routes: [
       GoRoute(
         path: "/login",
@@ -41,12 +42,6 @@ GoRouter goRouter(GoRouterRef ref) {
         path: "/izin-test",
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: SubmissionIzin());
-        },
-      ),
-      GoRoute(
-        path: "/reset-password",
-        pageBuilder: (context, state) {
-          return const NoTransitionPage(child: ForgetPassword());
         },
       ),
       GoRoute(
@@ -102,6 +97,14 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: CheckinProve(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/review',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ReviewPictureScreen(),
           );
         },
       ),
@@ -185,6 +188,7 @@ GoRouter goRouter(GoRouterRef ref) {
           );
         },
       ),
+      
       GoRoute(
         path: '/payroll',
         pageBuilder: (context, state) {

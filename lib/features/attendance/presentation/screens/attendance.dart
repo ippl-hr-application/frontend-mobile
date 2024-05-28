@@ -22,7 +22,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
   @override
   Widget build(BuildContext context) {
     final attandanceToday = ref.watch(attandanceTodayProvider);
-    final attandanceRecap = ref.watch(attandanceRecapProvider);
+    final attandanceRecap = ref.watch(attandanceRecapProvider as ProviderListenable);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -78,66 +78,13 @@ class _AttendanceState extends ConsumerState<Attendance> {
                           ? const Color.fromRGBO(32, 81, 229, 1)
                           : Colors.transparent,
                     ),
-                    child: Text(
-                      "Hari ini",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                        color: selectAttandance == "Hari ini"
-                            ? Colors.white // Warna putih jika dipilih
-                            : Colors.black,
-                      ),
-                    )),
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        selectAttandance = "Kehadiran";
-                      });
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: selectAttandance == "Kehadiran"
-                          ? const Color.fromRGBO(32, 81, 229, 1)
-                          : Colors.transparent,
-                    ),
-                    child: Text(
-                      "Kehadiran",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                        color: selectAttandance == "Kehadiran"
-                            ? Colors.white // Warna putih jika dipilih
-                            : Colors.black,
-                      ),
-                    )),
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        selectAttandance = "Request";
-                      });
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: selectAttandance == "Request"
-                          ? const Color.fromRGBO(32, 81, 229, 1)
-                          : Colors.transparent,
-                    ),
-                    child: Text(
-                      "Request",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                        color: selectAttandance == "Request"
-                            ? Colors.white // Warna putih jika dipilih
-                            : Colors.black,
-                      ),
-                    )),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            child: Container(
-              child: selectAttandance == "Hari ini"
-                  ? attandanceToday.when(
-                      data: (attandanceToday) => Container(
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (error, stack) =>
+                        Center(child: Text('Error: $error')),
+                  )
+                : selectAttandance == "Kehadiran"
+                    ? Container(  
                         padding: const EdgeInsets.symmetric(
                             vertical: 30.0, horizontal: 16.0),
                         child: CardAttandanceToday(

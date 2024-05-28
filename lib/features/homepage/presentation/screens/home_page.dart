@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_today_provider.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 import 'package:meraih_mobile/utils/auth.dart';
 import 'package:meraih_mobile/widgets/card_attendance.dart';
@@ -11,6 +12,7 @@ import 'package:meraih_mobile/utils/format_date.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 import 'package:meraih_mobile/widgets/dialog_redirect.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/announcment_provider.dart';
+  
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -21,6 +23,8 @@ class HomeScreen extends ConsumerWidget {
     final homeHistoryData = ref.watch(homeProvider);
     final announcmentData = ref.watch(announcmentProvider);
     final authProvider = ref.watch(authTokenProvider);
+    final attendanceToday = ref.watch(attandanceTodayProvider);
+
     if (authProvider == null || AuthUtils.isTokenExpired(authProvider)) {
       return const DialogRedirect();
     }
@@ -71,8 +75,6 @@ class HomeScreen extends ConsumerWidget {
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w500),
                             ),
-
-                            // const SizedBox(height: 20.0),
                           ],
                         ),
                       ),
@@ -179,32 +181,36 @@ class HomeScreen extends ConsumerWidget {
                       )
                     ],
                   ),
-
-                  // Komponen bagian absen
-                  Container(
-                      margin: const EdgeInsets.only(
-                          top: 90.0, left: 16.0, right: 16.0),
-                      child: CardAttendance(
-                        companyName: data?.companyName,
-                        date: data?.date,
-                        from: data?.from,
-                        to: data?.to,
-                        jobPosition: data?.jobPosition,
-                      )),
+                  // Attendance section
+                  attendanceToday.when(
+                    data: (attendanceData) {
+                      final isCheckedIn = attendanceData?.checks?.any((check) => check.status == 'true') ?? false;
+                      return Container(
+                        margin: const EdgeInsets.only(
+                            top: 90.0, left: 16.0, right: 16.0),
+                        child: CardAttendance(
+                          companyName: data?.companyName,
+                          date: data?.date,
+                          from: data?.from,
+                          to: data?.to,
+                          jobPosition: data?.jobPosition,
+                          isCheckedIn: isCheckedIn,
+                        ),
+                      );
+                    },
+                    loading: () => const Center(child: CircularProgressIndicator()),
+                    error: (error, stackTrace) => Center(child: Text('Error: $error')),
+                  ),
                 ],
               ),
             ),
           );
         }),
         error: (Object error, StackTrace stackTrace) {
-          const DialogRedirect();
-          // return null;
+          return const DialogRedirect();
         },
       ),
       bottomNavigationBar: const ButtomBar(),
-      // bottomNavigationBar: Container(
-      //   child: const ButtomBar(),
-      // ),
     );
   }
 }

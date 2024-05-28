@@ -9,12 +9,13 @@ final authTokenProvider = StateProvider<String?>((ref) => null);
 Future<dynamic> handleLogin(WidgetRef ref, LoginRequest auth) async {
   try {
     await AuthService.login(auth);
-    final authToken = ref.watch(authTokenProvider);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final retrievedToken = prefs.getString('token');
-
-    if (retrievedToken != null && retrievedToken != authToken) {
+    if (retrievedToken != null) {
       ref.read(authTokenProvider.notifier).state = retrievedToken;
+      print('Token retrieved: $retrievedToken'); // Logging the retrieved token
+    } else {
+      print('No token retrieved'); // Logging in case no token is retrieved
     }
   } on DioException catch (e) {
     if (e.response?.statusCode == 400) {

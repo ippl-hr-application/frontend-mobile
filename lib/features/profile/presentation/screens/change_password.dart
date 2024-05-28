@@ -1,31 +1,34 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meraih_mobile/features/authentication/changepassword/domain/changepassword.dart';
+import 'package:meraih_mobile/features/authentication/changepassword/provider/changepassword_provider.dart';
 
-class ChangePassword extends StatefulWidget {
+
+class ChangePassword extends ConsumerStatefulWidget {
   const ChangePassword({super.key});
 
   @override
   _ChangePasswordState createState() => _ChangePasswordState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ChangePasswordState extends ConsumerState<ChangePassword> {
   bool _isObscured = true;
   final TextEditingController _oldPasswordController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
-  void _showPasswordMismatchAlert() {
+  void _showAlert(String title, String message, VoidCallback onPressed) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Kata sandi baru harus sama dengan konfirmasi kata sandi.'),
+          title: Text(title),
+          content: Text(message),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: onPressed,
               child: const Text('OK'),
             ),
           ],
@@ -34,12 +37,69 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
-  void _handleSubmit() {
+  Future<void> _handleSubmit() async {
     if (_newPasswordController.text != _confirmPasswordController.text) {
-      _showPasswordMismatchAlert();
+      _showAlert(
+        'Error',
+        'Kata sandi baru harus sama dengan konfirmasi kata sandi.',
+        () {
+          Navigator.of(context).pop();
+        },
+      );
     } else {
       // Proceed with the password change
-      // Implement your password change logic here
+      final request = ChangepasswordRequest(
+        old_password: _oldPasswordController.text,
+        password: _newPasswordController.text,
+        confirm_password: _confirmPasswordController.text,
+      );
+
+      final provider = handleChangePasswordProvider(request);
+
+      ref.read(provider).when(
+        data: (response) {
+          if (response.success == true) {
+            _showAlert(
+              'Success',
+              response.message ?? 'Password changed successfully',
+              () {
+                Navigator.of(context).pop();
+                context.go('/profile');
+              },
+            );
+          } else {
+            _showAlert(
+              'Error',
+              response.message ?? 'Failed to change password',
+              () {
+                Navigator.of(context).pop();
+              },
+            );
+          }
+        },
+        loading: () {
+          // Show a loading indicator if needed
+        },
+        error: (error, stackTrace) {
+          if (error is DioException && error.response?.statusCode == 400) {
+            _showAlert(
+              'Error',
+              'Password lama anda tidak sama dengan password sebelumnya !',
+              () {
+                Navigator.of(context).pop();
+              },
+            );
+          } else {
+            _showAlert(
+              'Error',
+              error.toString(),
+              () {
+                Navigator.of(context).pop();
+              },
+            );
+          }
+        },
+      );
     }
   }
 
@@ -54,7 +114,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             color: Colors.white,
           ),
           onPressed: () {
-            context.go("/");
+            context.go("/profile");
           },
         ),
         flexibleSpace: const Stack(

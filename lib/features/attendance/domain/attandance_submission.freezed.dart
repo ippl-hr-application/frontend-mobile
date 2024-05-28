@@ -23,10 +23,10 @@ AttandanceHistoryRequest _$AttandanceHistoryRequestFromJson(
 mixin _$AttandanceHistoryRequest {
   @JsonKey(name: 'attendance_id')
   String get attendanceId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'attendance_submission_file')
-  String get attendanceSubmissionFile => throw _privateConstructorUsedError;
   @JsonKey(name: 'reason')
   String get reason => throw _privateConstructorUsedError;
+  @JsonKey(name: 'attendance_submission_file')
+  String get attendanceSubmissionFile => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,9 +42,9 @@ abstract class $AttandanceHistoryRequestCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'attendance_id') String attendanceId,
+      @JsonKey(name: 'reason') String reason,
       @JsonKey(name: 'attendance_submission_file')
-      String attendanceSubmissionFile,
-      @JsonKey(name: 'reason') String reason});
+      String attendanceSubmissionFile});
 }
 
 /// @nodoc
@@ -62,21 +62,21 @@ class _$AttandanceHistoryRequestCopyWithImpl<$Res,
   @override
   $Res call({
     Object? attendanceId = null,
-    Object? attendanceSubmissionFile = null,
     Object? reason = null,
+    Object? attendanceSubmissionFile = null,
   }) {
     return _then(_value.copyWith(
       attendanceId: null == attendanceId
           ? _value.attendanceId
           : attendanceId // ignore: cast_nullable_to_non_nullable
               as String,
-      attendanceSubmissionFile: null == attendanceSubmissionFile
-          ? _value.attendanceSubmissionFile
-          : attendanceSubmissionFile // ignore: cast_nullable_to_non_nullable
-              as String,
       reason: null == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
+              as String,
+      attendanceSubmissionFile: null == attendanceSubmissionFile
+          ? _value.attendanceSubmissionFile
+          : attendanceSubmissionFile // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -93,9 +93,9 @@ abstract class _$$AttandanceHistoryRequestImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'attendance_id') String attendanceId,
+      @JsonKey(name: 'reason') String reason,
       @JsonKey(name: 'attendance_submission_file')
-      String attendanceSubmissionFile,
-      @JsonKey(name: 'reason') String reason});
+      String attendanceSubmissionFile});
 }
 
 /// @nodoc
@@ -112,21 +112,21 @@ class __$$AttandanceHistoryRequestImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? attendanceId = null,
-    Object? attendanceSubmissionFile = null,
     Object? reason = null,
+    Object? attendanceSubmissionFile = null,
   }) {
     return _then(_$AttandanceHistoryRequestImpl(
       attendanceId: null == attendanceId
           ? _value.attendanceId
           : attendanceId // ignore: cast_nullable_to_non_nullable
               as String,
-      attendanceSubmissionFile: null == attendanceSubmissionFile
-          ? _value.attendanceSubmissionFile
-          : attendanceSubmissionFile // ignore: cast_nullable_to_non_nullable
-              as String,
       reason: null == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
+              as String,
+      attendanceSubmissionFile: null == attendanceSubmissionFile
+          ? _value.attendanceSubmissionFile
+          : attendanceSubmissionFile // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -137,9 +137,9 @@ class __$$AttandanceHistoryRequestImplCopyWithImpl<$Res>
 class _$AttandanceHistoryRequestImpl implements _AttandanceHistoryRequest {
   _$AttandanceHistoryRequestImpl(
       {@JsonKey(name: 'attendance_id') required this.attendanceId,
+      @JsonKey(name: 'reason') required this.reason,
       @JsonKey(name: 'attendance_submission_file')
-      required this.attendanceSubmissionFile,
-      @JsonKey(name: 'reason') required this.reason});
+      required this.attendanceSubmissionFile});
 
   factory _$AttandanceHistoryRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$AttandanceHistoryRequestImplFromJson(json);
@@ -148,15 +148,15 @@ class _$AttandanceHistoryRequestImpl implements _AttandanceHistoryRequest {
   @JsonKey(name: 'attendance_id')
   final String attendanceId;
   @override
-  @JsonKey(name: 'attendance_submission_file')
-  final String attendanceSubmissionFile;
-  @override
   @JsonKey(name: 'reason')
   final String reason;
+  @override
+  @JsonKey(name: 'attendance_submission_file')
+  final String attendanceSubmissionFile;
 
   @override
   String toString() {
-    return 'AttandanceHistoryRequest(attendanceId: $attendanceId, attendanceSubmissionFile: $attendanceSubmissionFile, reason: $reason)';
+    return 'AttandanceHistoryRequest(attendanceId: $attendanceId, reason: $reason, attendanceSubmissionFile: $attendanceSubmissionFile)';
   }
 
   @override
@@ -166,16 +166,16 @@ class _$AttandanceHistoryRequestImpl implements _AttandanceHistoryRequest {
             other is _$AttandanceHistoryRequestImpl &&
             (identical(other.attendanceId, attendanceId) ||
                 other.attendanceId == attendanceId) &&
+            (identical(other.reason, reason) || other.reason == reason) &&
             (identical(
                     other.attendanceSubmissionFile, attendanceSubmissionFile) ||
-                other.attendanceSubmissionFile == attendanceSubmissionFile) &&
-            (identical(other.reason, reason) || other.reason == reason));
+                other.attendanceSubmissionFile == attendanceSubmissionFile));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, attendanceId, attendanceSubmissionFile, reason);
+      Object.hash(runtimeType, attendanceId, reason, attendanceSubmissionFile);
 
   @JsonKey(ignore: true)
   @override
@@ -195,9 +195,9 @@ class _$AttandanceHistoryRequestImpl implements _AttandanceHistoryRequest {
 abstract class _AttandanceHistoryRequest implements AttandanceHistoryRequest {
   factory _AttandanceHistoryRequest(
           {@JsonKey(name: 'attendance_id') required final String attendanceId,
+          @JsonKey(name: 'reason') required final String reason,
           @JsonKey(name: 'attendance_submission_file')
-          required final String attendanceSubmissionFile,
-          @JsonKey(name: 'reason') required final String reason}) =
+          required final String attendanceSubmissionFile}) =
       _$AttandanceHistoryRequestImpl;
 
   factory _AttandanceHistoryRequest.fromJson(Map<String, dynamic> json) =
@@ -207,11 +207,11 @@ abstract class _AttandanceHistoryRequest implements AttandanceHistoryRequest {
   @JsonKey(name: 'attendance_id')
   String get attendanceId;
   @override
-  @JsonKey(name: 'attendance_submission_file')
-  String get attendanceSubmissionFile;
-  @override
   @JsonKey(name: 'reason')
   String get reason;
+  @override
+  @JsonKey(name: 'attendance_submission_file')
+  String get attendanceSubmissionFile;
   @override
   @JsonKey(ignore: true)
   _$$AttandanceHistoryRequestImplCopyWith<_$AttandanceHistoryRequestImpl>

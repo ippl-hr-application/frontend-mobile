@@ -1,21 +1,28 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
+import 'package:meraih_mobile/features/authentication/forgetpassword/domain/forgetpassword.dart';
+import 'package:meraih_mobile/features/authentication/forgetpassword/provider/forgetpassword_provider.dart';
 
 class LoginPage extends ConsumerWidget {
-  final TextEditingController _companyId = TextEditingController();
   final TextEditingController _employeeId = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
   LoginPage({super.key});
+
   void onPressedLogin(
       BuildContext context, WidgetRef ref, LoginRequest auth) async {
     try {
       await handleLogin(ref, auth);
-      context.pushReplacement('/');
+      final token = ref.read(authTokenProvider);
+      if (token != null) {
+        print('Token after login: $token'); 
+        context.pushReplacement('/');
+      } else {
+        print('No token after login');
+      }
     } on Exception {
       showDialog(
           context: context,
@@ -32,6 +39,129 @@ class LoginPage extends ConsumerWidget {
     }
   }
 
+  void _showForgotPasswordSheet(BuildContext context, WidgetRef ref) {
+    final TextEditingController _forgotEmployeeIdController =
+        TextEditingController();
+
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+        ),
+        builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 20),
+                    Image.asset(
+                      'assets/popforgetpassword.png',
+                      width: 350.0,
+                      height: 350.0,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Lupa Kata Sandi',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Masukkan Employee ID Untuk Ubah Kata Sandi',
+                      style: TextStyle(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    TextField(
+                      controller: _forgotEmployeeIdController,
+                      decoration: InputDecoration(
+                        labelText: "Employee ID",
+                        hintText: "Contoh: c5555555-3e33-44a4-a888-77df77df7bc7",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0)),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final employeeId = _forgotEmployeeIdController.text;
+                          final request = ForgetpasswordRequest(employeeId: employeeId);
+
+                          try {
+                            final response = await ref.read(handleForgetPasswordProvider(request).future);
+
+                            Navigator.pop(context);
+
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(response.success == true ? "Success" : "Error"),
+                                content: Text(
+                                  response.success == true
+                                      ? "Data berhasil dikirim. Tunggu sebentar, Akun anda segera dipulihkan !"
+                                      : response.message ?? "Unknown error",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("OK"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } catch (e) {
+                            Navigator.pop(context);
+
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text("Error"),
+                                content: Text(e.toString()),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("OK"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(32, 81, 229, 1)),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 14.0),
+                          child: Text(
+                            "Kirim",
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -45,15 +175,6 @@ class LoginPage extends ConsumerWidget {
                 'assets/logo.png',
                 width: 100.0,
                 height: 100.0,
-              ),
-              const SizedBox(height: 30.0),
-              TextField(
-                controller: _companyId,
-                decoration: InputDecoration(
-                  labelText: "Company ID",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
-                ),
               ),
               const SizedBox(height: 10.0),
               TextField(
@@ -84,7 +205,7 @@ class LoginPage extends ConsumerWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      context.go('/resset-password');
+                      _showForgotPasswordSheet(context, ref);
                     },
                     child: const Text("Lupa Password?"),
                   ),
@@ -95,13 +216,11 @@ class LoginPage extends ConsumerWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    print("sdnmnds");
                     onPressedLogin(
                         context,
                         ref,
                         LoginRequest(
                             employee_id: _employeeId.text,
-                            company_id: _companyId.text,
                             password: _password.text));
                   },
                   style: ElevatedButton.styleFrom(
