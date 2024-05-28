@@ -21,9 +21,12 @@ class _AnnouncmentRepository implements AnnouncmentRepository {
   String? baseUrl;
 
   @override
-  Future<AnnoucmentResponse> getAnnouncment() async {
+  Future<AnnoucmentResponse> getAnnouncment(
+    String companyId,
+    int page,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
@@ -34,7 +37,7 @@ class _AnnouncmentRepository implements AnnouncmentRepository {
     )
             .compose(
               _dio.options,
-              '/announcement/branch',
+              '/announcement/${companyId}/branch',
               queryParameters: queryParameters,
               data: _data,
             )

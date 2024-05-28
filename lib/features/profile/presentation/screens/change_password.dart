@@ -12,7 +12,8 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool _isObscured = true;
   final TextEditingController _oldPasswordController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   void _showPasswordMismatchAlert() {
     showDialog(
@@ -20,7 +21,8 @@ class _ChangePasswordState extends State<ChangePassword> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Error'),
-          content: const Text('Kata sandi baru harus sama dengan konfirmasi kata sandi.'),
+          content: const Text(
+              'Kata sandi baru harus sama dengan konfirmasi kata sandi.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -47,32 +49,61 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            context.go("/");
-          },
-        ),
-        flexibleSpace: const Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 18,
-              child: Center(
-                child: Text(
-                  "Ganti Password",
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-              ),
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-          ],
-        ),
-      ),
+            onPressed: () {
+              context.go("/profile");
+            },
+          ),
+          elevation: 0,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
+              Text(
+                "Ganti Password",
+                style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          )),
+      // appBar: AppBar(
+      //   backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+      //   leading: IconButton(
+      //     icon: const Icon(
+      //       Icons.arrow_back,
+      //       color: Colors.white,
+      //     ),
+      //     onPressed: () {
+      //       context.go("/");
+      //     },
+      //   ),
+      //   flexibleSpace: const Stack(
+      //     children: [
+      //       Positioned(
+      //         left: 0,
+      //         right: 0,
+      //         top: 18,
+      //         child: Center(
+      //           child: Text(
+      //             "Ganti Password",
+      //             style: TextStyle(fontSize: 18.0, color: Colors.white),
+      //           ),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

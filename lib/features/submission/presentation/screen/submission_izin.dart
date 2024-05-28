@@ -38,32 +38,34 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            context.go('/submission');
-          },
-        ),
-        flexibleSpace: const Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 40,
-              child: Center(
-                child: Text(
-                  "Pengajuan Izin",
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-              ),
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-          ],
-        ),
-      ),
+            onPressed: () {
+              context.go("/submission");
+            },
+          ),
+          elevation: 0,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
+              Text(
+                "Pengajuan Izin",
+                style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          )),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FormBuilder(

@@ -26,32 +26,31 @@ class _AttendanceState extends ConsumerState<Attendance> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            context.go("/");
-          },
-        ),
-        flexibleSpace: const Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 40,
-              child: Center(
-                child: Text(
-                  "Kehadiran",
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-              ),
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-          ],
-        ),
-      ),
+            onPressed: () {
+              context.go("/");
+            },
+          ),
+          elevation: 0,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
+              Text(
+                "Kehadiran",
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+              ),
+            ],
+          )),
       body: Column(
         children: <Widget>[
           Container(

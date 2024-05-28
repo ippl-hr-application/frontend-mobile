@@ -35,6 +35,8 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
   );
 
   String? showFileName = "";
+  String errorMessage = '';
+  int maxSizeInBytes = 1 * 1024 * 1024;
   FilePickerResult? filePickerResult;
 
   late Future<dynamic> submissionHistoryDate;
@@ -62,10 +64,10 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
     // print(date);
     // final submissionHistoryDate =
     //     ref.read(attandanceHistoryProvider({'date': date}).future);
-    return Container(
+    return SingleChildScrollView(
       // height: double.infinity,
       child: Column(
-        children: [
+        children: <Widget>[
           Container(
             padding: const EdgeInsets.all(16.0),
             child: FormBuilder(
@@ -159,7 +161,7 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                                     );
                                   } else {
                                     final data = snapshot.data;
-                                    attendanceId = data.attendanceId;
+                                    attendanceId = data.attendanceId ?? 0;
                                     print(snapshot.data.date);
                                     return Column(
                                       crossAxisAlignment:
@@ -266,6 +268,13 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                           Expanded(
                             child: FormBuilderTextField(
                               name: 'keterangan',
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value == '') {
+                                  return 'Alasan harus diisi!';
+                                }
+                              },
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 16.0, horizontal: 10.0),
@@ -324,10 +333,27 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                                       );
 
                                       if (filePickerResult != null) {
-                                        setState(() {
-                                          showFileName = filePickerResult!
-                                              .files.first.name;
-                                        });
+                                        // Mendapatkan file yang dipilih
+                                        var file =
+                                            filePickerResult!.files.first;
+
+                                        // Ukuran maksimum dalam byte (1 MB = 1 * 1024 * 1024 bytes)
+
+                                        if (file.size > maxSizeInBytes) {
+                                          // Jika ukuran file lebih dari 1 MB, perbarui state dengan pesan kesalahan
+                                          setState(() {
+                                            errorMessage =
+                                                'Ukuran file tidak boleh lebih dari 1 MB';
+                                            showFileName = '';
+                                          });
+                                        } else {
+                                          // Jika ukuran file sesuai, perbarui state dengan nama file
+                                          setState(() {
+                                            showFileName = file.name;
+                                            errorMessage =
+                                                ''; // Clear any previous error message
+                                          });
+                                        }
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -346,13 +372,14 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                                     ),
                                   ),
                                   Expanded(
-                                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      showFileName.toString(),
-                                      overflow: TextOverflow.ellipsis,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        showFileName!,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                  ))
+                                  ),
                                 ],
                               ),
                             ),
@@ -363,7 +390,7 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                   ],
                 )),
           ),
-          // SizedBox(height: 20.0),
+          // SizedBox(height: 500.0),
 
           Container(
             padding: const EdgeInsets.all(16.0),
@@ -384,25 +411,6 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                           reason: formData['keterangan'],
                           attendanceSubmissionFile:
                               File(filePickerResult!.files.first.path ?? '')));
-
-                  // handleCutiSubmission(
-                  //     ref,
-                  //     CutiRequest(
-                  //       from: convertToIso8601(
-                  //           formData['CutiDate'].start.toString()),
-                  //       leaveReason: formData['Alasan'],
-                  //       leave_file:
-                  //           File(filePickerResult!.files.first.path ?? ''),
-                  //       leaveType: formData['Jenis_Cuti'],
-                  //       to: convertToIso8601(formData['CutiDate'].end.toString()),
-                  //     )).then((cutiSubmission) {
-                  //   return showDialog<String>(
-                  //     context: context,
-                  //     builder: (BuildContext context) => AlertSuccessSubmission(
-                  //       message: cutiSubmission.message,
-                  //     ),
-                  //   );
-                  // });
                 }
               },
               style: ElevatedButton.styleFrom(
