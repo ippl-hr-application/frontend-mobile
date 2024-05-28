@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
+import 'package:meraih_mobile/utils/auth.dart';
 import 'package:meraih_mobile/widgets/card_attendance.dart';
-// import 'package:meraih_mobile/widgets/card_attendance.dart';
 import 'package:meraih_mobile/data/image_home.dart';
 import 'package:meraih_mobile/models/image_model.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meraih_mobile/features/homepage/presentation/provider/profile_provider.dart';
-import 'package:meraih_mobile/features/homepage/domain/profile.dart';
+import 'package:meraih_mobile/utils/format_date.dart';
+import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
+import 'package:meraih_mobile/widgets/dialog_redirect.dart';
+import 'package:meraih_mobile/features/homepage/presentation/provider/announcment_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -16,20 +19,27 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     double screenWidth = MediaQuery.of(context).size.width;
     final homeHistoryData = ref.watch(homeProvider);
+    final announcmentData = ref.watch(announcmentProvider);
+    final authProvider = ref.watch(authTokenProvider);
+    if (authProvider == null || AuthUtils.isTokenExpired(authProvider)) {
+      return const DialogRedirect();
+    }
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Color.fromRGBO(32, 81, 229, 1),
-      // ),
+      appBar: PreferredSize(
+        preferredSize: Size.zero,
+        child: AppBar(
+          backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+        ),
+      ),
       body: homeHistoryData.when(
-        loading: () => Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Text('Error: $error'),
+        loading: () => const Center(child: CircularProgressIndicator()),
         data: ((data) {
-          return SafeArea(
-            child: Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
+          return SingleChildScrollView(
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  Column(
                     children: <Widget>[
                       Container(
                         height: 250.0,
@@ -46,7 +56,7 @@ class HomeScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              data!.employeeName.toString(),
+                              data?.employeeName ?? "",
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20.0,
@@ -94,9 +104,9 @@ class HomeScreen extends ConsumerWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16.0, vertical: 10.0),
-                        child: const Column(
+                        child: Column(
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -105,46 +115,96 @@ class HomeScreen extends ConsumerWidget {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
-                                  'Lihat Semua',
-                                  // style: TextStyle(
-                                  //   color: Color.fromARGB(31, 12, 113, 235),
-                                  // ),
-                                )
+                                // Text(
+                                //   'Lihat Semua',
+                                //   // style: TextStyle(
+                                //   //   color: Color.fromARGB(31, 12, 113, 235),
+                                //   // ),
+                                // )
                               ],
                             ),
-                            SizedBox(height: 8.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Libur Imlek 14 February"),
-                                Text("02 Feb 2023")
-                              ],
-                            )
+                            const SizedBox(height: 8.0),
+                            Container(
+                              child: announcmentData.when(
+                                data: (data) {
+                                  return Column(
+                                    children: data!
+                                        .map((e) => Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                    child: Wrap(
+                                                      children: [
+                                                        Text(
+                                                          e.title ?? "-",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      16.0),
+                                                          overflow: TextOverflow
+                                                              .visible, // Pastikan teks terpotong jika terlalu panjang
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                      width:
+                                                          10.0), // Memberikan jarak antara title dan date
+                                                  Text(
+                                                    formatDate(e.date ?? "-"),
+                                                    style: const TextStyle(
+                                                        fontSize: 16.0),
+                                                  ),
+                                                ],
+                                              ),
+                                            ))
+                                        .toList(),
+                                  );
+                                },
+                                error: (error, stackTrace) =>
+                                    Center(child: Text('Error: $error')),
+                                loading: () => const Center(
+                                    child: CircularProgressIndicator()),
+                              ),
+                            ),
                           ],
                         ),
                       )
                     ],
                   ),
-                ),
 
-                // Komponen bagian absen
-                Container(
-                    margin: const EdgeInsets.only(
-                        top: 90.0, left: 16.0, right: 16.0),
-                    child: CardAttendance(
-                        companyName: data.companyName,
-                        date: data.date,
-                        from: data.from,
-                        to: data.to)),
-              ],
+                  // Komponen bagian absen
+                  Container(
+                      margin: const EdgeInsets.only(
+                          top: 90.0, left: 16.0, right: 16.0),
+                      child: CardAttendance(
+                        companyName: data?.companyName,
+                        date: data?.date,
+                        from: data?.from,
+                        to: data?.to,
+                        jobPosition: data?.jobPosition,
+                      )),
+                ],
+              ),
             ),
           );
         }),
+        error: (Object error, StackTrace stackTrace) {
+          const DialogRedirect();
+          // return null;
+        },
       ),
-      bottomNavigationBar: Container(
-        child: const ButtomBar(),
-      ),
+      bottomNavigationBar: const ButtomBar(),
+      // bottomNavigationBar: Container(
+      //   child: const ButtomBar(),
+      // ),
     );
   }
 }

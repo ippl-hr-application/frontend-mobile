@@ -10,9 +10,11 @@ var imageHome = [
       category: "Task Pekerjaan",
       path: "/work-assignment"),
   ImageModel(
-      imageAssets: "assets/slip_gaji.png", category: "Slip Gaji", path: "/"),
-  ImageModel(
-      imageAssets: "assets/calender.png",
-      category: "Pelanggaran",
-      path: "/work-offense"),
+      imageAssets: "assets/slip_gaji.png",
+      category: "Slip Gaji",
+      path: "/payroll"),
+  // ImageModel(
+  //     imageAssets: "assets/calender.png",
+  //     category: "Pelanggaran",
+  //     path: "/work-offense"),
 ];

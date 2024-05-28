@@ -8,58 +8,51 @@ class CheckinSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 150.0,
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              'Kehadiran Berhasil !',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 150.0,
               ),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              '11 Maret 2024',
-              style: TextStyle(
-                fontSize: 18.0,
+              SizedBox(height: 20.0),
+              Text(
+                'Kehadiran Berhasil!',
+                style: TextStyle(
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
-            SizedBox(height: 2.0),
-            Text(
-              'Jam Kerja:',
-              style: TextStyle(
-                fontSize: 18.0,
+              
+              
+              
+              SizedBox(height: 50.0),
+              ElevatedButton(
+                onPressed: () {
+                  context.go("/");
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+                ),
+                child: Text(
+                  'Kembali ke Beranda',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 2.0),
-            Text(
-              '09.00 - 17.00',
-              style: TextStyle(
-                fontSize: 18.0,
-              ),
-            ),
-            SizedBox(height: 40.0),
-            Text(
-              '09.00',
-              style: TextStyle(
-                fontSize: 30.0,
-              ),
-            ),
-            SizedBox(height: 30.0),
-            ElevatedButton(
-              onPressed: () {
-                context.go("/");
-              },
-              child: Text('Kembali ke Beranda'),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

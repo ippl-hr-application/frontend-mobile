@@ -4,7 +4,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:signature/signature.dart';
+import 'package:go_router/go_router.dart';
 
 class FormReAbsen extends StatefulWidget {
   const FormReAbsen({Key? key}) : super(key: key);
@@ -15,10 +15,6 @@ class FormReAbsen extends StatefulWidget {
 
 class _FormReAbsenState extends State<FormReAbsen> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-  final SignatureController _signatureController = SignatureController(
-    penStrokeWidth: 5,
-    penColor: Colors.black,
-  );
 
   FilePickerResult? filePickerResult;
 
@@ -26,10 +22,30 @@ class _FormReAbsenState extends State<FormReAbsen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF2051E5),
-        title: Text(
-          'Form Absen Ulang',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            context.go('/');
+          },
+        ),
+        flexibleSpace: const Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 18,
+              child: Center(
+                child: Text(
+                  "Pengajuan Lupa Absen",
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       body: Padding(
@@ -53,10 +69,10 @@ class _FormReAbsenState extends State<FormReAbsen> {
                 name: 'izinDate',
                 format: DateFormat('yyyy-MM-dd'),
                 decoration: InputDecoration(
-                  labelText: 'Mulai dan Akhir Sakit Tanggal',
+                  labelText: '  Tanggal Mulai - Akhir Sakit',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                  ), 
+                  ),
                 ),
                 firstDate: DateTime.now(),
                 lastDate: DateTime.now().add(Duration(days: 365)),
@@ -70,28 +86,22 @@ class _FormReAbsenState extends State<FormReAbsen> {
                   );
                   setState(() {});
                 },
-                child: Text('File Bukti'),
+                child: Text('+ File Bukti'),
               ),
               SizedBox(height: 20),
               Text(
                 'Tanda Tangan Digital:',
                 style: TextStyle(fontSize: 16),
               ),
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 3.0,
-                  ),
-                  borderRadius:
-                      BorderRadius.circular(5.0),
-                ),
-                child: Signature(
-                  controller: _signatureController,
-                  height: 200,
-                  backgroundColor: Colors.white,
-                ),
+              ElevatedButton(
+                onPressed: () async {
+                  filePickerResult = await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowedExtensions: ['pdf', 'jpg', 'png'],
+                  );
+                  setState(() {});
+                },
+                child: Text('+ File Tanda Tangan'),
               ),
               SizedBox(height: 20),
               SizedBox(
@@ -102,14 +112,10 @@ class _FormReAbsenState extends State<FormReAbsen> {
                       Map<String, dynamic> formData =
                           _formKey.currentState!.value;
                       String keterangan = formData['keterangan'];
-                      String? buktiReabsen =
-                          filePickerResult?.files.first.path;
+                      String? buktiReabsen = filePickerResult?.files.first.path;
                       DateTimeRange izinDate = formData['izinDate'];
                       DateTime startDate = izinDate.start;
                       DateTime endDate = izinDate.end;
-
-                      // Access the signature image using _signatureController.toPngBytes()
-                      // Uint8List? signatureImage = await _signatureController.toPngBytes();
                     }
                   },
                   child: Text('Kirim Pengajuan'),

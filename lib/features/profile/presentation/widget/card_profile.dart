@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 
 class CardProfile extends StatelessWidget {
-  const CardProfile({super.key});
+  final String? firstName;
+  final String? lastName;
+  final String? positon;
+
+  const CardProfile(
+      {required this.firstName,
+      required this.lastName,
+      required this.positon,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
+    final String name = '${firstName ?? ''} ${lastName ?? ''}';
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
       decoration: BoxDecoration(
-          color: const Color.fromRGBO(235, 243, 252, 1),
+          color: const Color.fromRGBO(32, 81, 229, 1),
           // border: Border.all(color: Colors.black, width: 0.2),
-          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+          // borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -19,15 +29,29 @@ class CardProfile extends StatelessWidget {
               offset: const Offset(0, 3),
             )
           ]),
-      child: const Column(
+      child: Column(
         children: [
-          Text(
-            "Muhammad Saman",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          const Center(
+            child: Icon(
+              Icons.person,
+              size: 100,
+              color: Colors.white70,
+            ),
           ),
-          SizedBox(height: 10.0),
-          Text("Manajer accounting",
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.normal))
+          const SizedBox(height: 8.0),
+          Text(
+            name.toString().toUpperCase(),
+            style: const TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+          ),
+          const SizedBox(height: 3.0),
+          Text(positon.toString(),
+              style: const TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white))
         ],
       ),
     );

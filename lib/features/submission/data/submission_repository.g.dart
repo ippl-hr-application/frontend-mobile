@@ -13,7 +13,7 @@ class _SubmissionRepository implements SubmissionRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://e0c6-114-122-229-248.ngrok-free.app';
+    baseUrl ??= 'http://27.112.79.44';
   }
 
   final Dio _dio;
@@ -21,9 +21,17 @@ class _SubmissionRepository implements SubmissionRepository {
   String? baseUrl;
 
   @override
-  Future<SubmissionHistory> getSubmissionHistory() async {
+  Future<SubmissionHistory> getSubmissionHistory(
+    String year,
+    String month,
+    String status,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'year': year,
+      r'month': month,
+      r'status': status,
+    };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio

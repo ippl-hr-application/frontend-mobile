@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 class DetailTask extends StatelessWidget {
-  const DetailTask({super.key});
+  final String? title;
+  final String? description;
+
+  const DetailTask({required this.title, required this.description, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +18,9 @@ class DetailTask extends StatelessWidget {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Rekapitulasi',
-                  style: TextStyle(fontSize: 20.0),
+                Text(
+                  title.toString(),
+                  style: const TextStyle(fontSize: 20.0),
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -25,7 +29,7 @@ class DetailTask extends StatelessWidget {
                 ),
               ],
             ),
-            content: const Text("1. Menghitung laporan keuangan bulan ini"),
+            content: Text(description.toString()),
           ),
         ),
         child: const Text('Detail'),

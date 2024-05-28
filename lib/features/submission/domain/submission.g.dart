@@ -26,7 +26,7 @@ Map<String, dynamic> _$$SubmissionHistoryImplToJson(
 
 _$SubmissionDataImpl _$$SubmissionDataImplFromJson(Map<String, dynamic> json) =>
     _$SubmissionDataImpl(
-      submission_id: json['submission_id'] as int?,
+      submission_id: (json['submission_id'] as num?)?.toInt(),
       submission_date: json['submission_date'] as String?,
       status: json['status'] as String?,
       type: json['type'] as String?,
