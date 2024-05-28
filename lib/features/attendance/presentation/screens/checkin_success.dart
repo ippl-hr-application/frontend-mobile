@@ -28,16 +28,14 @@ class CheckinSuccess extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              
-              
-              
               SizedBox(height: 50.0),
               ElevatedButton(
                 onPressed: () {
                   context.go("/");
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),

@@ -3,7 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io' show File;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/attendance/domain/checkin.dart';
+import 'package:meraih_mobile/features/attendance/domain/checkout.dart';
 import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_today_provider.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/checkin_provider.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/checkout_provider.dart';
+import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 import 'camera_state.dart';
 import 'package:intl/intl.dart';
 
@@ -15,13 +20,11 @@ class ReviewPictureScreen extends ConsumerWidget {
     final cameraState = ref.watch(cameraStateProvider);
 
     // Simulate a post request
-    await Future.delayed(const Duration(seconds: 2));
-
-    print("Post Check In to backend with the following data:");
-    print("Location: ${cameraState.location}");
-    print("Description: ${cameraState.description}");
-    print("Image Path: ${cameraState.imagePath}");
-    print("Timestamp: ${cameraState.timestamp}");
+    handleCheckin(
+        ref,
+        CheckinRequest(
+          attendance_file: File(cameraState.imagePath ?? ''),
+        ));
 
     // Clear the state after posting
     ref.read(cameraStateProvider.notifier).clear();
@@ -37,11 +40,11 @@ class ReviewPictureScreen extends ConsumerWidget {
     // Simulate a post request
     await Future.delayed(const Duration(seconds: 2));
 
-    print("Post Check Out to backend with the following data:");
-    print("Location: ${cameraState.location}");
-    print("Description: ${cameraState.description}");
-    print("Image Path: ${cameraState.imagePath}");
-    print("Timestamp: ${cameraState.timestamp}");
+    handleCheckout(
+        ref,
+        CheckoutRequest(
+          attendance_file: File(cameraState.imagePath ?? ''),
+        ));
 
     // Clear the state after posting
     ref.read(cameraStateProvider.notifier).clear();
@@ -53,7 +56,7 @@ class ReviewPictureScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cameraState = ref.watch(cameraStateProvider);
-    final attendanceData = ref.watch(attandanceTodayProvider);
+    final homeHistoryDataAsyncValue = ref.watch(attandanceTodayProvider);
 
     Widget displayImage;
     if (kIsWeb) {
@@ -71,7 +74,7 @@ class ReviewPictureScreen extends ConsumerWidget {
       formattedTimestamp = DateFormat('EEEE, d MMMM yyyy, HH:mm:ss')
           .format(cameraState.timestamp!);
     }
-
+    print(cameraState.imagePath);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -154,56 +157,54 @@ class ReviewPictureScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              attendanceData.when(
+              homeHistoryDataAsyncValue.when(
                 data: (data) {
-                  final isCheckedIn =
-                      data?.checks?.any((check) => check.status == 'true') ??
-                          false;
                   return Column(
                     children: [
-                      if (!isCheckedIn)
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              await _postCheckInToBackend(context, ref);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                      data!.attendanceId == null
+                          ? SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await _postCheckInToBackend(context, ref);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  backgroundColor:
+                                      const Color.fromRGBO(32, 81, 229, 1),
+                                ),
+                                child: const Text(
+                                  'Submit Check In',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
                               ),
-                              backgroundColor:
-                                  const Color.fromRGBO(32, 81, 229, 1),
-                            ),
-                            child: const Text(
-                              'Submit Check In',
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      if (isCheckedIn)
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              await _postCheckOutToBackend(context, ref);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            )
+                          : SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await _postCheckOutToBackend(context, ref);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 16),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  backgroundColor: Colors.red,
+                                ),
+                                child: const Text(
+                                  'Submit Check Out',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
                               ),
-                              backgroundColor: Colors.red,
                             ),
-                            child: const Text(
-                              'Submit Check Out',
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
-                            ),
-                          ),
-                        ),
                     ],
                   );
                 },

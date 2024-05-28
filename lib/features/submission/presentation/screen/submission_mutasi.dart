@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/alert_success_submission.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:signature/signature.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +16,7 @@ import 'package:meraih_mobile/features/submission/presentation/providers/mutasi_
 import 'package:meraih_mobile/utils/format_date.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/providers/company_branch_provider.dart';
 
 class SubmissionMutasi extends ConsumerStatefulWidget {
   const SubmissionMutasi({super.key});
@@ -33,24 +35,17 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
   final _fileController = TextEditingController();
   final _cabangController = TextEditingController();
 
-  final int maxFileSize = 10 * 1024 * 1024; // Contoh: 10 MB
-
-  bool isFileSizeValid(FilePickerResult? result) {
-    if (result != null && result.files.isNotEmpty) {
-      if (result.files.first.size > maxFileSize) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   String? showFileName = "";
   String? selectTargetBranch = "";
+  String errorMessage = '';
+  String errorMessageBranch = '';
+  int maxSizeInBytes = 1 * 1024 * 1024;
   FilePickerResult? filePickerResult;
 
   @override
   Widget build(BuildContext context) {
     final homeHistoryData = ref.watch(homeProvider);
+    final companyBranchData = ref.watch(companyBranchProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -85,6 +80,7 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
         child: FormBuilder(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -178,12 +174,12 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   border: Border(
+                //     bottom: BorderSide(
+                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                //   ),
+                // ),
                 child: Row(
                   children: [
                     Container(
@@ -197,42 +193,81 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                         )),
                     const SizedBox(width: 16.0),
                     Expanded(
-                        child: FormBuilder(
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            child: FormBuilderDropdown(
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Cabang tidak boleh kosong";
-                                }
-                                return null;
-                              },
-                              name: 'cabang',
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 6.0),
-                                labelText: 'Cabang',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
+                        child: companyBranchData.when(
+                      data: (data) {
+                        // if (data!.branches == null || data.branches!.isEmpty) {
+                        //   return const Center(
+                        //       child: Text('No branches available'));
+                        // }
+                        // print(data.branches!.first.company_branch_id);
+
+                        return FormBuilder(
+                          child: FormBuilderDropdown(
+                            name: 'cabang',
+                            validator: (value) {
+                              if (value == null) {
+                                return "Cabang tidak boleh kosong";
+                              }
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 6.0),
+                              labelText: 'Cabang',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectTargetBranch = value;
-                                });
-                              },
-                              items: const [
-                                DropdownMenuItem(
-                                  child: Text('Balikpapan'),
-                                  value: '48931c6d-451e-4183-a9ff-30b3686a7f32',
-                                ),
-                                DropdownMenuItem(
-                                  child: Text('Samarinda'),
-                                  value: 'c2f985e5-c77b-4620-8367-ce410d20a9d1',
-                                ),
-                              ],
-                            )))
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                selectTargetBranch = value;
+                                if (homeHistoryData
+                                        .asData!.value!.companyBranchId ==
+                                    selectTargetBranch) {
+                                  setState(() {
+                                    errorMessageBranch =
+                                        'Pilih Cabang yang berbeda!';
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorMessageBranch = '';
+                                  });
+                                }
+                              });
+                            },
+                            items: data!.branches!
+                                .map((e) => DropdownMenuItem(
+                                      child: Text(
+                                        e.hq_initial.toString().toUpperCase(),
+                                        softWrap: true,
+                                      ),
+                                      value: e.company_branch_id,
+                                    ))
+                                .toList(),
+                          ),
+                        );
+                      },
+                      error: (error, stackTrace) =>
+                          Center(child: Text('Error: $error')),
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                    ))
                   ],
+                ),
+              ),
+              if (errorMessageBranch.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0, left: 65.0),
+                  child: Text(
+                    errorMessageBranch,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
                 ),
               ),
               Container(
@@ -257,13 +292,10 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                     const SizedBox(width: 16.0),
                     Expanded(
                       child: FormBuilderTextField(
-                        controller: _keteranganValidator,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Alasan tidak boleh kosong";
                           }
-                          return null;
                         },
                         name: 'keterangan',
                         decoration: InputDecoration(
@@ -281,81 +313,94 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   border: Border(
+                //     bottom: BorderSide(
+                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                //   ),
+                // ),
                 child: Row(
                   children: [
                     Container(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(8.0),
                         decoration: const BoxDecoration(
                             color: Color.fromRGBO(32, 81, 229, 1),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: const Icon(
-                          Icons.drive_file_move,
+                          Icons.upload_file_sharp,
                           color: Colors.white,
-                          size: 30,
                         )),
                     const SizedBox(width: 16.0),
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(8.0)),
-                            border:
-                                Border.all(color: Colors.black, width: 0.5)),
-                        child: Row(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          border: Border.all(color: Colors.black, width: 0.5),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ElevatedButton(
-                              onPressed: () async {
-                                filePickerResult =
-                                    await FilePicker.platform.pickFiles(
-                                  type: FileType.custom,
-                                  allowedExtensions: ['pdf', 'jpg', 'png'],
-                                );
-                                if (filePickerResult != null) {
-                                  if (!isFileSizeValid(filePickerResult)) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            'Ukuran file terlalu besar. Maksimum $maxFileSize bytes.'),
-                                      ),
+                            Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    filePickerResult =
+                                        await FilePicker.platform.pickFiles(
+                                      type: FileType.custom,
+                                      allowedExtensions: ['pdf', 'jpg', 'png'],
                                     );
-                                    return;
-                                  }
-                                  setState(() {
-                                    showFileName =
-                                        filePickerResult!.files.first.name;
-                                  });
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 13.0, horizontal: 8.0),
-                                  backgroundColor:
-                                      const Color.fromRGBO(243, 243, 243, 1),
-                                  shape: const RoundedRectangleBorder(
+
+                                    if (filePickerResult != null) {
+                                      // Mendapatkan file yang dipilih
+                                      var file = filePickerResult!.files.first;
+
+                                      // Ukuran maksimum dalam byte (1 MB = 1 * 1024 * 1024 bytes)
+
+                                      if (file.size > maxSizeInBytes) {
+                                        // Jika ukuran file lebih dari 1 MB, perbarui state dengan pesan kesalahan
+                                        setState(() {
+                                          errorMessage =
+                                              'Ukuran file tidak boleh lebih dari 1 MB';
+                                          showFileName = '';
+                                        });
+                                      } else {
+                                        // Jika ukuran file sesuai, perbarui state dengan nama file
+                                        setState(() {
+                                          showFileName = file.name;
+                                          errorMessage =
+                                              ''; // Clear any previous error message
+                                        });
+                                      }
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 13.0, horizontal: 8.0),
+                                    backgroundColor:
+                                        Color.fromRGBO(243, 243, 243, 1),
+                                    shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0)))),
-                              child: const Text(
-                                'Pilih File',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500),
-                              ),
+                                          Radius.circular(8.0)),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Pilih File',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      showFileName!,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(width: 8.0),
-                            Expanded(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                showFileName.toString(),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
                           ],
                         ),
                       ),
@@ -363,6 +408,22 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                   ],
                 ),
               ),
+              if (errorMessage.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0, left: 60.0),
+                  child: Text(
+                    errorMessage,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -377,26 +438,45 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
           ),
           child: ElevatedButton(
             onPressed: () {
-              if (_formKey.currentState!.saveAndValidate()) {
+              if (filePickerResult == null) {
+                setState(() {
+                  errorMessage = 'Pilih file terlebih dahulu!';
+                  showFileName = '';
+                });
+              }
+              if (_formKey.currentState!.saveAndValidate() &&
+                  filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
                 print(formData['keterangan']);
                 print(selectTargetBranch);
+                print(File(filePickerResult!.files.first.path ?? ''));
+                print(homeHistoryData.asData!.value!.companyBranchId);
 
                 // Memeriksa apakah nilai 'keterangan' tidak kosong
 
                 try {
-                  handleMutation(
-                      ref,
-                      MutasiRequest(
-                        mutationReason: formData['keterangan'],
-                        currenCompanyBranchId: homeHistoryData
-                            .asData!.value!.companyBranchId
-                            .toString(),
-                        targetCompanyBranchId: selectTargetBranch.toString(),
-                        mutationFile:
-                            File(filePickerResult!.files.first.path ?? ''),
-                      ));
+                  if (filePickerResult != null) {
+                    handleMutation(
+                        ref,
+                        MutasiRequest(
+                          mutationReason: formData['keterangan'],
+                          currenCompanyBranchId: homeHistoryData
+                              .asData!.value!.companyBranchId
+                              .toString(),
+                          targetCompanyBranchId: selectTargetBranch.toString(),
+                          mutationFile:
+                              File(filePickerResult!.files.first.path ?? ''),
+                        )).then((mutationSubmission) {
+                      return showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            AlertSuccessSubmission(
+                          message: mutationSubmission.message,
+                        ),
+                      );
+                    });
+                  }
                 } catch (e) {
                   print("Error: $e");
                 }

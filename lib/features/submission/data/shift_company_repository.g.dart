@@ -13,7 +13,7 @@ class _ShiftCompanyRepository implements ShiftCompanyRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://27.112.79.44/';
+    baseUrl ??= 'https://jzgp086z-3000.asse.devtunnels.ms/';
   }
 
   final Dio _dio;
@@ -21,7 +21,7 @@ class _ShiftCompanyRepository implements ShiftCompanyRepository {
   String? baseUrl;
 
   @override
-  Future<ShiftCompanyResponse> getShiftCompany() async {
+  Future<ShiftCompanyResponse> getShiftCompany(String companyId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -34,7 +34,7 @@ class _ShiftCompanyRepository implements ShiftCompanyRepository {
     )
             .compose(
               _dio.options,
-              '/shift',
+              '/shift/${companyId}',
               queryParameters: queryParameters,
               data: _data,
             )

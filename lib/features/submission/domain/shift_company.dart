@@ -10,19 +10,10 @@ class ShiftCompanyResponse with _$ShiftCompanyResponse {
   factory ShiftCompanyResponse(
       {@JsonKey(name: 'success') bool? success,
       @JsonKey(name: 'message') String? message,
-      @JsonKey(name: 'data') Shift? data}) = _ShiftCompanyResponse;
+      @JsonKey(name: 'data') List<DataShift>? data}) = _ShiftCompanyResponse;
 
   factory ShiftCompanyResponse.fromJson(Map<String, dynamic> json) =>
       _$ShiftCompanyResponseFromJson(json);
-}
-
-@freezed
-class Shift with _$Shift {
-  factory Shift({
-    @JsonKey(name: 'shifts') List<DataShift>? shifts,
-  }) = _Shift;
-
-  factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
 }
 
 @freezed

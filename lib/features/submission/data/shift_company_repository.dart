@@ -9,6 +9,6 @@ part 'shift_company_repository.g.dart';
 abstract class ShiftCompanyRepository {
   factory ShiftCompanyRepository(Dio dio, {String baseUrl}) =
       _ShiftCompanyRepository;
-  @GET('/shift')
-  Future<ShiftCompanyResponse> getShiftCompany();
+  @GET('/shift/{companyId}')
+  Future<ShiftCompanyResponse> getShiftCompany(@Path() String companyId);
 }

@@ -13,7 +13,7 @@ class _AuthRepository implements AuthRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://27.112.79.44/';
+    baseUrl ??= 'https://jzgp086z-3000.asse.devtunnels.ms/';
   }
 
   final Dio _dio;

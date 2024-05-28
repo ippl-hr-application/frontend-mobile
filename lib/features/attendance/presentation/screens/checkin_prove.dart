@@ -55,7 +55,6 @@ class _CameraViewState extends ConsumerState<CameraView> {
   String _currentDateTime = '';
   late TextEditingController _locationController;
   late TextEditingController _descriptionController;
-  int _selectedCameraIndex = 0;
 
   @override
   void initState() {
@@ -68,7 +67,8 @@ class _CameraViewState extends ConsumerState<CameraView> {
 
   void _updateDateTime() {
     setState(() {
-      _currentDateTime = DateFormat('EEEE, d MMMM yyyy, HH:mm:ss').format(DateTime.now());
+      _currentDateTime =
+          DateFormat('EEEE, d MMMM yyyy, HH:mm:ss').format(DateTime.now());
     });
   }
 
@@ -77,7 +77,7 @@ class _CameraViewState extends ConsumerState<CameraView> {
       _cameras = await availableCameras();
       if (_cameras!.isNotEmpty) {
         _controller = CameraController(
-          _cameras![_selectedCameraIndex],
+          _cameras![0],
           ResolutionPreset.high,
         );
         _initializeControllerFuture = _controller!.initialize().then((_) {
@@ -106,7 +106,8 @@ class _CameraViewState extends ConsumerState<CameraView> {
   Future<void> _toggleFlash() async {
     if (_controller != null) {
       _isFlashOn = !_isFlashOn;
-      await _controller!.setFlashMode(_isFlashOn ? FlashMode.torch : FlashMode.off);
+      await _controller!
+          .setFlashMode(_isFlashOn ? FlashMode.torch : FlashMode.off);
       setState(() {});
     }
   }
@@ -144,7 +145,8 @@ class _CameraViewState extends ConsumerState<CameraView> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Error'),
-        content: const Text('Lokasi harus diisi dengan nilai "Terjangkau" atau "Tidak Terjangkau" dari data Checkin Map.'),
+        content: const Text(
+            'Lokasi harus diisi dengan nilai "Terjangkau" atau "Tidak Terjangkau" dari data Checkin Map.'),
         actions: [
           TextButton(
             onPressed: () {
@@ -162,7 +164,8 @@ class _CameraViewState extends ConsumerState<CameraView> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Peringatan'),
-        content: const Text('Buka halaman peta terlebih dahulu untuk mengisi lokasi.'),
+        content: const Text(
+            'Buka halaman peta terlebih dahulu untuk mengisi lokasi.'),
         actions: [
           TextButton(
             onPressed: () {
@@ -173,13 +176,6 @@ class _CameraViewState extends ConsumerState<CameraView> {
         ],
       ),
     );
-  }
-
-  Future<void> _switchCamera() async {
-    if (_cameras != null && _cameras!.length > 1) {
-      _selectedCameraIndex = (_selectedCameraIndex + 1) % _cameras!.length;
-      await _initializeCamera();
-    }
   }
 
   @override
@@ -199,7 +195,8 @@ class _CameraViewState extends ConsumerState<CameraView> {
         FutureBuilder<void>(
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done && _controller != null) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                _controller != null) {
               return CameraPreview(_controller!);
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
@@ -267,7 +264,9 @@ class _CameraViewState extends ConsumerState<CameraView> {
                 onPressed: _toggleFlash,
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
-                  backgroundColor: _isFlashOn ? Colors.yellow : const Color.fromARGB(255, 175, 219, 255),
+                  backgroundColor: _isFlashOn
+                      ? Colors.yellow
+                      : const Color.fromARGB(255, 175, 219, 255),
                   padding: const EdgeInsets.all(20),
                 ),
                 child: Icon(_isFlashOn ? Icons.flash_on : Icons.flash_off),
@@ -295,15 +294,6 @@ class _CameraViewState extends ConsumerState<CameraView> {
                   padding: const EdgeInsets.all(20),
                 ),
                 child: const Icon(Icons.map, size: 30),
-              ),
-              ElevatedButton(
-                onPressed: _switchCamera,
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  backgroundColor: const Color.fromARGB(255, 175, 219, 255),
-                  padding: const EdgeInsets.all(20),
-                ),
-                child: const Icon(Icons.switch_camera, size: 30),
               ),
             ],
           ),

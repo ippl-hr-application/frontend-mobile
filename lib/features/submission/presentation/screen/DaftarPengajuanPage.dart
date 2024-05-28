@@ -52,7 +52,9 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final submissionHistoryData = ref.watch(submissionProvider({
+    print(month);
+
+    final submissionHistoryData = ref.read(submissionProvider({
       'year': year,
       'month': month,
       'status': status,

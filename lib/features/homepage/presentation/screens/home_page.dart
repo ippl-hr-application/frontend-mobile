@@ -8,6 +8,7 @@ import 'package:meraih_mobile/data/image_home.dart';
 import 'package:meraih_mobile/models/image_model.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meraih_mobile/utils/format_date.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 import 'package:meraih_mobile/widgets/dialog_redirect.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/announcment_provider.dart';
@@ -21,6 +22,7 @@ class HomeScreen extends ConsumerWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     final homeHistoryData = ref.watch(homeProvider);
     final announcmentData = ref.watch(announcmentProvider);
+    final homeHistoryDataAsyncValue = ref.watch(attandanceTodayProvider);
     final authProvider = ref.watch(authTokenProvider);
     final attendanceToday = ref.watch(attandanceTodayProvider);
 
@@ -116,9 +118,12 @@ class HomeScreen extends ConsumerWidget {
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
-                                  'Lihat Semua',
-                                )
+                                // Text(
+                                //   'Lihat Semua',
+                                //   // style: TextStyle(
+                                //   //   color: Color.fromARGB(31, 12, 113, 235),
+                                //   // ),
+                                // )
                               ],
                             ),
                             const SizedBox(height: 8.0),
@@ -127,15 +132,41 @@ class HomeScreen extends ConsumerWidget {
                                 data: (data) {
                                   return Column(
                                     children: data!
-                                        .map((e) => Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(e.title.toString()),
-                                                Text(e.companyAnnouncementId
-                                                    .toString()),
-                                              ],
+                                        .map((e) => Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                    child: Wrap(
+                                                      children: [
+                                                        Text(
+                                                          e.title ?? "-",
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize:
+                                                                      16.0),
+                                                          overflow: TextOverflow
+                                                              .visible, // Pastikan teks terpotong jika terlalu panjang
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                      width:
+                                                          10.0), // Memberikan jarak antara title dan date
+                                                  Text(
+                                                    formatDate(e.date ?? "-"),
+                                                    style: const TextStyle(
+                                                        fontSize: 16.0),
+                                                  ),
+                                                ],
+                                              ),
                                             ))
                                         .toList(),
                                   );
@@ -151,26 +182,20 @@ class HomeScreen extends ConsumerWidget {
                       )
                     ],
                   ),
-                  // Attendance section
-                  attendanceToday.when(
-                    data: (attendanceData) {
-                      final isCheckedIn = attendanceData?.checks?.any((check) => check.status == 'true') ?? false;
-                      return Container(
-                        margin: const EdgeInsets.only(
-                            top: 90.0, left: 16.0, right: 16.0),
-                        child: CardAttendance(
+
+                  // Komponen bagian absen
+                  Container(
+                      margin: const EdgeInsets.only(
+                          top: 90.0, left: 16.0, right: 16.0),
+                      child: CardAttendance(
                           companyName: data?.companyName,
                           date: data?.date,
                           from: data?.from,
                           to: data?.to,
                           jobPosition: data?.jobPosition,
-                          isCheckedIn: isCheckedIn,
-                        ),
-                      );
-                    },
-                    loading: () => const Center(child: CircularProgressIndicator()),
-                    error: (error, stackTrace) => Center(child: Text('Error: $error')),
-                  ),
+                          idAttendance: homeHistoryDataAsyncValue
+                              .asData?.value?.attendanceId
+                              .toString())),
                 ],
               ),
             ),

@@ -68,7 +68,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
 
       setState(() {
         _distance = distance;
-        _status = distance <= 120 ? 'Terjangkau' : 'Tidak Terjangkau';
+        _status = distance <= 9999999999999 ? 'Terjangkau' : 'Tidak Terjangkau';
       });
     }
   }
@@ -104,33 +104,47 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
         ),
       ),
       body: ref.watch(companyBranchIdProvider).when(
-        data: (companyBranchId) {
-          final companyMapAsyncValue = ref.watch(companyBranchProvider(companyBranchId));
-          return companyMapAsyncValue.when(
-            data: (companyMap) {
-              final branch = companyMap.data?.branch;
-              if (branch == null || branch.latitude == null || branch.longitude == null) {
-                return _buildMap(null, null, branch?.hqInitial, branch?.city, branch?.province, branch?.address, null);
-              }
+            data: (companyBranchId) {
+              final companyMapAsyncValue =
+                  ref.watch(companyBranchProvider(companyBranchId));
+              return companyMapAsyncValue.when(
+                data: (companyMap) {
+                  final branch = companyMap.data?.branch;
+                  print(branch);
+                  if (branch == null ||
+                      branch.latitude == null ) {
+                    return _buildMap(branch?.latitude, branch?.longitude, branch?.hqInitial,
+                        branch?.city, branch?.province, branch?.address, null);
+                  }
 
-              _customMarkerLocation = LatLng(branch.latitude!, branch.longitude!);
-              _updateStatus();
-              print(branch.hqInitial);
+                  _customMarkerLocation =
+                      LatLng(branch.latitude!, branch.longitude!);
+                  _updateStatus();
 
-              return _buildMap(branch.latitude, branch.longitude, branch.hqInitial, branch.city, branch.province, branch.address, branch);
+                  return _buildMap(
+                      branch.latitude,
+                      branch.longitude,
+                      branch.hqInitial,
+                      branch.city,
+                      branch.province,
+                      branch.address,
+                      branch);
+                },
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stack) => Center(child: Text('Error: $error')),
+              );
             },
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, stack) => Center(child: Text('Error: $error')),
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text('Error: $error')),
-      ),
+          ),
     );
   }
 
-  Widget _buildMap(double? latitude, double? longitude, String? hqInitial, String? city, String? province, String? address, Branch? branch) {
-    _customMarkerLocation = latitude != null && longitude != null ? LatLng(latitude, longitude) : null;
+  Widget _buildMap(double? latitude, double? longitude, String? hqInitial,
+      String? city, String? province, String? address, Branch? branch) {
+    _customMarkerLocation = latitude != null && longitude != null
+        ? LatLng(latitude, longitude)
+        : null;
 
     return Stack(
       children: [
@@ -162,8 +176,9 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                           size: 40.0,
                         ),
                         Text(
-                          'Your Location !',
-                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                          'Your Location!',
+                          style: TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -186,7 +201,8 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                         ),
                         Text(
                           'HQ Location',
-                          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -224,7 +240,8 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
                       'Jarak: ${_distance!.toStringAsFixed(2)} meters',
-                      style: const TextStyle(fontSize: 18.0, color: Colors.black),
+                      style:
+                          const TextStyle(fontSize: 18.0, color: Colors.black),
                     ),
                   ),
                 ),
@@ -286,12 +303,38 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Address: ${address ?? "null"}',
-                    style: const TextStyle(fontSize: 18.0, color: Colors.black),
-                  )
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Address: ${address ?? "null"}',
+                      style:
+                          const TextStyle(fontSize: 18.0, color: Colors.black),
+                    )),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
+                child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Address: ${longitude ?? "null"}',
+                      style:
+                          const TextStyle(fontSize: 18.0, color: Colors.black),
+                    )),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Address: ${latitude ?? "null"}',
+                      style:
+                          const TextStyle(fontSize: 18.0, color: Colors.black),
+                    )),
               ),
             ],
           ),

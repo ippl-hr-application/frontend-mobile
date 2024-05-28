@@ -205,6 +205,8 @@ mixin _$AnnoucmentData {
   String? get title => throw _privateConstructorUsedError;
   @JsonKey(name: 'description')
   String? get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'date')
+  String? get date => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -222,7 +224,8 @@ abstract class $AnnoucmentDataCopyWith<$Res> {
       {@JsonKey(name: 'company_announcement_id') int? companyAnnouncementId,
       @JsonKey(name: 'company_id') String? companyId,
       @JsonKey(name: 'title') String? title,
-      @JsonKey(name: 'description') String? description});
+      @JsonKey(name: 'description') String? description,
+      @JsonKey(name: 'date') String? date});
 }
 
 /// @nodoc
@@ -242,6 +245,7 @@ class _$AnnoucmentDataCopyWithImpl<$Res, $Val extends AnnoucmentData>
     Object? companyId = freezed,
     Object? title = freezed,
     Object? description = freezed,
+    Object? date = freezed,
   }) {
     return _then(_value.copyWith(
       companyAnnouncementId: freezed == companyAnnouncementId
@@ -260,6 +264,10 @@ class _$AnnoucmentDataCopyWithImpl<$Res, $Val extends AnnoucmentData>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -276,7 +284,8 @@ abstract class _$$AnnoucmentDataImplCopyWith<$Res>
       {@JsonKey(name: 'company_announcement_id') int? companyAnnouncementId,
       @JsonKey(name: 'company_id') String? companyId,
       @JsonKey(name: 'title') String? title,
-      @JsonKey(name: 'description') String? description});
+      @JsonKey(name: 'description') String? description,
+      @JsonKey(name: 'date') String? date});
 }
 
 /// @nodoc
@@ -294,6 +303,7 @@ class __$$AnnoucmentDataImplCopyWithImpl<$Res>
     Object? companyId = freezed,
     Object? title = freezed,
     Object? description = freezed,
+    Object? date = freezed,
   }) {
     return _then(_$AnnoucmentDataImpl(
       companyAnnouncementId: freezed == companyAnnouncementId
@@ -312,6 +322,10 @@ class __$$AnnoucmentDataImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -324,7 +338,8 @@ class _$AnnoucmentDataImpl implements _AnnoucmentData {
       required this.companyAnnouncementId,
       @JsonKey(name: 'company_id') required this.companyId,
       @JsonKey(name: 'title') required this.title,
-      @JsonKey(name: 'description') required this.description});
+      @JsonKey(name: 'description') required this.description,
+      @JsonKey(name: 'date') required this.date});
 
   factory _$AnnoucmentDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$AnnoucmentDataImplFromJson(json);
@@ -341,10 +356,13 @@ class _$AnnoucmentDataImpl implements _AnnoucmentData {
   @override
   @JsonKey(name: 'description')
   final String? description;
+  @override
+  @JsonKey(name: 'date')
+  final String? date;
 
   @override
   String toString() {
-    return 'AnnoucmentData(companyAnnouncementId: $companyAnnouncementId, companyId: $companyId, title: $title, description: $description)';
+    return 'AnnoucmentData(companyAnnouncementId: $companyAnnouncementId, companyId: $companyId, title: $title, description: $description, date: $date)';
   }
 
   @override
@@ -358,13 +376,14 @@ class _$AnnoucmentDataImpl implements _AnnoucmentData {
                 other.companyId == companyId) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.date, date) || other.date == date));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, companyAnnouncementId, companyId, title, description);
+      runtimeType, companyAnnouncementId, companyId, title, description, date);
 
   @JsonKey(ignore: true)
   @override
@@ -387,7 +406,8 @@ abstract class _AnnoucmentData implements AnnoucmentData {
           required final int? companyAnnouncementId,
           @JsonKey(name: 'company_id') required final String? companyId,
           @JsonKey(name: 'title') required final String? title,
-          @JsonKey(name: 'description') required final String? description}) =
+          @JsonKey(name: 'description') required final String? description,
+          @JsonKey(name: 'date') required final String? date}) =
       _$AnnoucmentDataImpl;
 
   factory _AnnoucmentData.fromJson(Map<String, dynamic> json) =
@@ -405,6 +425,9 @@ abstract class _AnnoucmentData implements AnnoucmentData {
   @override
   @JsonKey(name: 'description')
   String? get description;
+  @override
+  @JsonKey(name: 'date')
+  String? get date;
   @override
   @JsonKey(ignore: true)
   _$$AnnoucmentDataImplCopyWith<_$AnnoucmentDataImpl> get copyWith =>

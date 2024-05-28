@@ -1,12 +1,19 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/checkout_success.dart';
+
 import 'package:meraih_mobile/features/attendance/presentation/screens/request_attandance.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/request_attandance.dart';
+import 'package:meraih_mobile/features/authentication/presentation/screens/forget_password.dart';
 import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
 import 'package:meraih_mobile/features/payroll/presentation/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/DaftarPengajuanPage.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
+import 'package:meraih_mobile/features/authentication/presentation/screens/login_page.dart';
+import 'package:meraih_mobile/features/homepage/presentation/screens/home_page.dart';
+
 import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/profile_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -80,6 +87,30 @@ GoRouter goRouter(GoRouterRef ref) {
         },
       ),
       GoRoute(
+        path: '/review',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ReviewPictureScreen(),
+          );
+        },
+      ),
+      // GoRoute(
+      //   path: '/review',
+      //   pageBuilder: (context, state) {
+      //     return const NoTransitionPage(
+      //       child: ReviewPictureScreen(),
+      //     );
+      //   },
+      // ),
+      // GoRoute(
+      //   path: '/checkin-map',
+      //   pageBuilder: (context, state) {
+      //     return const NoTransitionPage(
+      //       child: CheckinMap(),
+      //     );
+      //   },
+      // ),
+      GoRoute(
         path: '/checkin-prove',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
@@ -100,6 +131,14 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: CheckinSuccess(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/checkout-success',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckoutSuccess(),
           );
         },
       ),
@@ -197,6 +236,14 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: RequestAttandance(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/reset-password',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ForgetPassword(),
           );
         },
       ),

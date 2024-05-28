@@ -1,30 +1,34 @@
-// // ignore_for_file: invalid_annotation_target
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-// import 'package:freezed_annotation/freezed_annotation.dart';
+part 'company_branch.g.dart';
+part 'company_branch.freezed.dart';
 
-// part 'company_branch.freezed.dart';
-// part 'company_branch.g.dart';
+@freezed
+class CompanyBranchId with _$CompanyBranchId {
+  factory CompanyBranchId({
+    @JsonKey(name: 'success') required bool? success,
+    @JsonKey(name: 'data') required Data? data,
+    @JsonKey(name: 'message') required String? message,
+  }) = _CompanyBranchId;
 
+  factory CompanyBranchId.fromJson(Map<String, dynamic> json) =>
+      _$CompanyBranchIdFromJson(json);
+}
 
-// @freezed
-// class CompanyBranchResponse with _$CompanyResponse {
-//   factory CompanyBranchResponse(
-//           {@JsonKey(name: 'success') bool? success,
-//           @JsonKey(name: 'message') String? message,
-//           @JsonKey(name: 'data') List<CompanyBranchData>? data}) =
-//       _CompanyBranchResponse;
+@freezed
+class Data with _$Data {
+  factory Data({@JsonKey(name: 'branches') List<Branchs>? branches}) = _Data;
+  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+}
 
-//   factory CompanyBranchResponse.fromJson(Map<String, dynamic> json) =>
-//       _$CompanyBranchResponseFromJson(json);
-// }
+@freezed
+class Branchs with _$Branchs {
+  factory Branchs({
+    @JsonKey(name: 'company_branch_id') String? company_branch_id,
+    @JsonKey(name: 'company_id') String? company_id,
+    @JsonKey(name: 'hq_initial') String? hq_initial,
+  }) = _Branchs;
 
-// @freezed
-// class CompanyBranchData with _$ComapanyBranchData {
-//   factory CompanyBranchData({
-//     @JsonKey(name: 'company_branch_id') String? companyBranchId,
-//     @JsonKey(name: 'city') String? city,
-//   }) = _CompanyBranchData;
-
-//   factory CompanyBranchData.fromJson(Map<String, dynamic> json) =>
-//       _$CompanyBranchDataFromJson(json);
-// }
+  factory Branchs.fromJson(Map<String, dynamic> json) =>
+      _$BranchsFromJson(json);
+}
