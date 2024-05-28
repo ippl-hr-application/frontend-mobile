@@ -240,7 +240,12 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
           child: ElevatedButton(
             onPressed: () {
               print(isSubmitting);
-
+              if (filePickerResult == null) {
+                setState(() {
+                  errorMessage = 'Pilih file terlebih dahulu!';
+                  showFileName = '';
+                });
+              }
               if (_formKey.currentState!.saveAndValidate() &&
                   filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
@@ -251,29 +256,30 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
                 });
 
                 print(formData['keterangan']);
+                if (filePickerResult != null) {
+                  handleResignSubmission(
+                          ref,
+                          ResignRequest(
+                              reason: formData['keterangan'],
+                              resign_file: File(
+                                  filePickerResult!.files.first.path ?? '')))
+                      .then((resignSubmission) {
+                    setState(() {
+                      isSubmitting = false;
+                    });
 
-                handleResignSubmission(
-                        ref,
-                        ResignRequest(
-                            reason: formData['keterangan'],
-                            resign_file:
-                                File(filePickerResult!.files.first.path ?? '')))
-                    .then((resignSubmission) {
-                  setState(() {
-                    isSubmitting = false;
+                    return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertSuccessSubmission(
+                        message: resignSubmission.message,
+                      ),
+                    );
+                  }).catchError((error) {
+                    setState(() {
+                      isSubmitting = false;
+                    });
                   });
-
-                  return showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertSuccessSubmission(
-                      message: resignSubmission.message,
-                    ),
-                  );
-                }).catchError((error) {
-                  setState(() {
-                    isSubmitting = false;
-                  });
-                });
+                }
               }
 
               setState(() {
