@@ -3,19 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:io' show File;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_today_provider.dart';
 import 'camera_state.dart';
 import 'package:intl/intl.dart';
 
 class ReviewPictureScreen extends ConsumerWidget {
   const ReviewPictureScreen({super.key});
 
-  Future<void> _postToBackend(BuildContext context, WidgetRef ref) async {
+  Future<void> _postCheckInToBackend(
+      BuildContext context, WidgetRef ref) async {
     final cameraState = ref.watch(cameraStateProvider);
 
     // Simulate a post request
     await Future.delayed(const Duration(seconds: 2));
 
-    print("Post to backend with the following data:");
+    print("Post Check In to backend with the following data:");
     print("Location: ${cameraState.location}");
     print("Description: ${cameraState.description}");
     print("Image Path: ${cameraState.imagePath}");
@@ -28,9 +30,30 @@ class ReviewPictureScreen extends ConsumerWidget {
     context.go('/checkin-success');
   }
 
+  Future<void> _postCheckOutToBackend(
+      BuildContext context, WidgetRef ref) async {
+    final cameraState = ref.watch(cameraStateProvider);
+
+    // Simulate a post request
+    await Future.delayed(const Duration(seconds: 2));
+
+    print("Post Check Out to backend with the following data:");
+    print("Location: ${cameraState.location}");
+    print("Description: ${cameraState.description}");
+    print("Image Path: ${cameraState.imagePath}");
+    print("Timestamp: ${cameraState.timestamp}");
+
+    // Clear the state after posting
+    ref.read(cameraStateProvider.notifier).clear();
+
+    // Navigate to the success page
+    context.go('/checkout-success');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cameraState = ref.watch(cameraStateProvider);
+    final attendanceData = ref.watch(attandanceTodayProvider);
 
     Widget displayImage;
     if (kIsWeb) {
@@ -45,7 +68,8 @@ class ReviewPictureScreen extends ConsumerWidget {
 
     String formattedTimestamp = '';
     if (cameraState.timestamp != null) {
-      formattedTimestamp = DateFormat('EEEE, d MMMM yyyy, HH:mm:ss').format(cameraState.timestamp!);
+      formattedTimestamp = DateFormat('EEEE, d MMMM yyyy, HH:mm:ss')
+          .format(cameraState.timestamp!);
     }
 
     return Scaffold(
@@ -130,21 +154,62 @@ class ReviewPictureScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () async {
-                  await _postToBackend(context, ref);
+              attendanceData.when(
+                data: (data) {
+                  final isCheckedIn =
+                      data?.checks?.any((check) => check.status == 'true') ??
+                          false;
+                  return Column(
+                    children: [
+                      if (!isCheckedIn)
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await _postCheckInToBackend(context, ref);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor:
+                                  const Color.fromRGBO(32, 81, 229, 1),
+                            ),
+                            child: const Text(
+                              'Submit Check In',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      if (isCheckedIn)
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await _postCheckOutToBackend(context, ref);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              backgroundColor: Colors.red,
+                            ),
+                            child: const Text(
+                              'Submit Check Out',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
                 },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-                ),
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
+                loading: () => const Center(child: CircularProgressIndicator()),
+                error: (error, stackTrace) =>
+                    const Center(child: Text('Error loading attendance data')),
               ),
             ],
           ),

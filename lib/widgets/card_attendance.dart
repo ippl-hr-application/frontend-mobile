@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import "package:go_router/go_router.dart";
-// import "package:flutter/widgets.dart";
 import "package:meraih_mobile/data/user_data.dart";
 import "package:meraih_mobile/models/user.model.dart";
 import 'package:meraih_mobile/utils/format_date.dart';
@@ -12,6 +11,7 @@ class CardAttendance extends StatelessWidget {
   final String? from;
   final String? to;
   final String? jobPosition;
+  final bool isCheckedIn;
 
   const CardAttendance(
       {required this.companyName,
@@ -19,7 +19,9 @@ class CardAttendance extends StatelessWidget {
       required this.from,
       required this.to,
       required this.jobPosition,
+      required this.isCheckedIn,
       super.key});
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -39,7 +41,6 @@ class CardAttendance extends StatelessWidget {
                 offset: const Offset(0, 3),
               )
             ]),
-        // padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Container(
@@ -130,22 +131,25 @@ class CardAttendance extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6.0),
               child: TextButton(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                style: ButtonStyle(
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                onPressed: () {
+                  context.go('/checkin-prove');
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 6.0, horizontal: 40.0),
+                  decoration: BoxDecoration(
+                    color: isCheckedIn
+                        ? Colors.red
+                        : const Color.fromRGBO(79, 199, 177, 1),
+                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   ),
-                  onPressed: () {
-                    context.go('/checkin-prove');
-                  },
-                  child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 40.0),
-                      decoration: const BoxDecoration(
-                          color: Color.fromRGBO(79, 199, 177, 1),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))
-                          // border: Border.all(color: Colors.black, width: 1.0)
-                          ),
-                      child: const Text('CHECK IN'))),
+                  child: Text(isCheckedIn ? 'CHECK OUT' : 'CHECK IN'),
+                ),
+              ),
             )
           ],
         ));
