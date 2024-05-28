@@ -55,6 +55,7 @@ class _CameraViewState extends ConsumerState<CameraView> {
   String _currentDateTime = '';
   late TextEditingController _locationController;
   late TextEditingController _descriptionController;
+  int _selectedCameraIndex = 0;
 
   @override
   void initState() {
@@ -76,7 +77,7 @@ class _CameraViewState extends ConsumerState<CameraView> {
       _cameras = await availableCameras();
       if (_cameras!.isNotEmpty) {
         _controller = CameraController(
-          _cameras![0],
+          _cameras![_selectedCameraIndex],
           ResolutionPreset.high,
         );
         _initializeControllerFuture = _controller!.initialize().then((_) {
@@ -172,6 +173,13 @@ class _CameraViewState extends ConsumerState<CameraView> {
         ],
       ),
     );
+  }
+
+  Future<void> _switchCamera() async {
+    if (_cameras != null && _cameras!.length > 1) {
+      _selectedCameraIndex = (_selectedCameraIndex + 1) % _cameras!.length;
+      await _initializeCamera();
+    }
   }
 
   @override
@@ -287,6 +295,15 @@ class _CameraViewState extends ConsumerState<CameraView> {
                   padding: const EdgeInsets.all(20),
                 ),
                 child: const Icon(Icons.map, size: 30),
+              ),
+              ElevatedButton(
+                onPressed: _switchCamera,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor: const Color.fromARGB(255, 175, 219, 255),
+                  padding: const EdgeInsets.all(20),
+                ),
+                child: const Icon(Icons.switch_camera, size: 30),
               ),
             ],
           ),
