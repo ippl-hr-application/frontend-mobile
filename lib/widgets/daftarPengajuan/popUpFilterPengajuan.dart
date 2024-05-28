@@ -7,14 +7,16 @@ import 'custom_radio_button.dart';
 import 'package:flutter/material.dart';
 
 class PopUpFilterScreen extends StatefulWidget {
-  const PopUpFilterScreen({super.key});
+  final Function(String) onFilterChanged;
+
+  const PopUpFilterScreen({super.key, required this.onFilterChanged});
 
   @override
   PopUpFilterScreenState createState() => PopUpFilterScreenState();
 }
 
 class PopUpFilterScreenState extends State<PopUpFilterScreen> {
-  // bool isIconClose = false;
+  String selectedStatus = 'PENDING';
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,6 @@ class PopUpFilterScreenState extends State<PopUpFilterScreen> {
           topRight: Radius.circular(16.0),
         ),
       ),
-      // width: 398,
       padding: const EdgeInsets.symmetric(
         horizontal: 38,
         vertical: 20,
@@ -49,11 +50,10 @@ class PopUpFilterScreenState extends State<PopUpFilterScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  // context.go('/submission')
+                  Navigator.pop(context);
                 },
                 child: Container(
                   height: 20,
-                  // width: double.infinity,
                   alignment: Alignment.topRight,
                   margin: const EdgeInsets.only(right: 1),
                   child: const Icon(Icons.close),
@@ -61,158 +61,32 @@ class PopUpFilterScreenState extends State<PopUpFilterScreen> {
               ),
             ],
           ),
-
           const SizedBox(height: 20.0),
-          _buildDalamProses(context),
+          _buildStatusOption(context, 'PENDING', 'Dalam Proses'),
           const SizedBox(height: 10),
-          _buildDiTolak(context),
+          _buildStatusOption(context, 'REJECTED', 'Ditolak'),
           const SizedBox(height: 10),
-          _buildDiTerima(context),
+          _buildStatusOption(context, 'APPROVED', 'Diterima'),
           const SizedBox(height: 15),
-          // const Padding(
-          //   padding: EdgeInsets.only(left: 1),
-          //   child: Text(
-          //     "Keterangan Pengajuan",
-          //     style: TextStyle(
-          //       color: Color(0XFF000000),
-          //       fontSize: 20,
-          //       fontFamily: 'Open Sans',
-          //       fontWeight: FontWeight.w700,
-          //     ),
-          //   ),
-          // ),
-          // const SizedBox(height: 16),
-          // _buildStatusPengajuan(context),
         ],
       ),
     ));
   }
 
-  /// Section Widget
-  Widget _buildDalamProses(BuildContext context) {
+  Widget _buildStatusOption(BuildContext context, String value, String label) {
     return Padding(
       padding: const EdgeInsets.only(left: 6),
-      child: Consumer(
-        builder: (context, ref, _) {
-          return CustomCheckboxButton(
-            text: "dalam proses",
-            value: true,
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            onChange: (value) {},
-          );
+      child: RadioListTile<String>(
+        title: Text(label),
+        value: value,
+        groupValue: selectedStatus,
+        onChanged: (String? newValue) {
+          setState(() {
+            selectedStatus = newValue!;
+          });
+          widget.onFilterChanged(selectedStatus);
         },
       ),
     );
   }
-
-  /// Section Widget
-  Widget _buildDiTolak(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 6),
-      child: Consumer(
-        builder: (context, ref, _) {
-          return CustomCheckboxButton(
-            text: "ditolak",
-            value: true,
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            onChange: (value) {},
-          );
-        },
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildDiTerima(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 6),
-      child: Consumer(
-        builder: (context, ref, _) {
-          return CustomCheckboxButton(
-            text: "diterima",
-            value: true,
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            onChange: (value) {},
-          );
-        },
-      ),
-    );
-  }
-
-  /// Section Widget
-  // Widget _buildStatusPengajuan(BuildContext context) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(
-  //       left: 5,
-  //       right: 230,
-  //     ),
-  //     child: Consumer(
-  //       builder: (context, ref, _) {
-  //         return Column(
-  //           children: [
-  //             Padding(
-  //               padding: const EdgeInsets.only(right: 27),
-  //               child: CustomRadioButton(
-  //                 text: "izin",
-  //                 value: "true",
-  //                 groupValue: "statusPengajuan",
-  //                 padding: const EdgeInsets.symmetric(vertical: 2),
-  //                 onChange: (value) {},
-  //               ),
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.only(
-  //                 top: 10,
-  //                 right: 18,
-  //               ),
-  //               child: CustomRadioButton(
-  //                 text: "sakit",
-  //                 value: "",
-  //                 groupValue: "statusPengajuan",
-  //                 padding: const EdgeInsets.symmetric(vertical: 2),
-  //                 onChange: (value) {},
-  //               ),
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.only(
-  //                 top: 10,
-  //                 right: 20,
-  //               ),
-  //               child: CustomRadioButton(
-  //                 text: "shift",
-  //                 value: "",
-  //                 groupValue: "statusPengajuan",
-  //                 padding: const EdgeInsets.symmetric(vertical: 2),
-  //                 onChange: (value) {},
-  //               ),
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.only(
-  //                 top: 10,
-  //                 right: 7,
-  //               ),
-  //               child: CustomRadioButton(
-  //                 text: "mutasi",
-  //                 value: "",
-  //                 groupValue: "statusPengajuan",
-  //                 padding: const EdgeInsets.symmetric(vertical: 2),
-  //                 onChange: (value) {},
-  //               ),
-  //             ),
-  //             Padding(
-  //               padding: const EdgeInsets.only(top: 10),
-  //               child: CustomRadioButton(
-  //                 text: "lembur",
-  //                 value: "",
-  //                 groupValue: "statusPengajuan",
-  //                 padding: const EdgeInsets.symmetric(vertical: 2),
-  //                 onChange: (value) {},
-  //               ),
-  //             ),
-  //           ],
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
 }

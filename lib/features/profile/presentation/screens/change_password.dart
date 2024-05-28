@@ -114,7 +114,7 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
             color: Colors.white,
           ),
           onPressed: () {
-            context.go("/");
+            context.go("/profile");
           },
         ),
         flexibleSpace: const Stack(

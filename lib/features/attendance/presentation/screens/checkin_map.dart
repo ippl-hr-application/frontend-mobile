@@ -110,7 +110,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
             data: (companyMap) {
               final branch = companyMap.data?.branch;
               if (branch == null || branch.latitude == null || branch.longitude == null) {
-                return _buildMap(null, null, branch?.hqInitial, null, null, null, null);
+                return _buildMap(null, null, branch?.hqInitial, branch?.city, branch?.province, branch?.address, null);
               }
 
               _customMarkerLocation = LatLng(branch.latitude!, branch.longitude!);
@@ -154,10 +154,18 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                     width: 100.0,
                     height: 100.0,
                     point: _userLocation!,
-                    child: const Icon(
-                      Icons.location_pin,
-                      color: Colors.red,
-                      size: 40.0,
+                    child: const Column(
+                      children: [
+                        Icon(
+                          Icons.location_pin,
+                          color: Colors.red,
+                          size: 40.0,
+                        ),
+                        Text(
+                          'Your Location !',
+                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -169,10 +177,18 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                     width: 100.0,
                     height: 100.0,
                     point: _customMarkerLocation!,
-                    child: const Icon(
-                      Icons.location_on,
-                      color: Colors.blue,
-                      size: 40.0,
+                    child: const Column(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: Colors.blue,
+                          size: 40.0,
+                        ),
+                        Text(
+                          'HQ Location',
+                          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                 ],

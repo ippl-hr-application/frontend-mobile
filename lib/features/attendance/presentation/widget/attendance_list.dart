@@ -41,21 +41,7 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
     }
   }
 
-  Future<void> _selectMonth(BuildContext context) async {
-    final DateTime? picked = await showMonthYearPicker(
-      context: context,
-      initialDate: _selectedMonth ?? DateTime.now(),
-      firstDate: DateTime(DateTime.now().year - 1),
-      lastDate: DateTime(DateTime.now().year + 1),
-    );
-    if (picked != null && picked != _selectedMonth) {
-      setState(() {
-        _selectedMonth = picked;
-        _focusedDay = DateTime(picked.year, picked.month, 1);
-      });
-      fetchAttendanceData(_selectedMonth!);
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -178,20 +164,7 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
                 fetchAttendanceData(focusedDay);
               },
             ),
-            const SizedBox(height: 10),
-            TextFormField(
-              readOnly: true,
-              onTap: () => _selectMonth(context),
-              decoration: InputDecoration(
-                labelText: 'Selected Month',
-                hintText: _selectedMonth != null
-                    ? '${_selectedMonth!.month}/${_selectedMonth!.year}'
-                    : 'None',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-            ),
+            
           ],
         ),
       ),

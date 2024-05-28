@@ -4,15 +4,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/data/bottom_bar.dart';
-import 'package:meraih_mobile/data/pengajuan.dart';
 import 'package:meraih_mobile/models/buttom_app_model.dart';
-import 'package:meraih_mobile/models/pengajuan.dart';
+import 'package:meraih_mobile/widgets/card_app_bar.dart';
 import 'package:meraih_mobile/widgets/daftarPengajuan/custom_icon_button.dart';
 import 'package:meraih_mobile/widgets/daftarPengajuan/popUpFilterPengajuan.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/submission_provider.dart';
 import 'package:meraih_mobile/features/submission/presentation/widgets/submission_item.dart';
-import 'package:meraih_mobile/widgets/card_app_bar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
 class DaftarPengajuanScreen extends ConsumerStatefulWidget {
   const DaftarPengajuanScreen({super.key});
@@ -23,28 +22,37 @@ class DaftarPengajuanScreen extends ConsumerStatefulWidget {
 }
 
 class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
-  String showYears = 'Pilih Tahun';
-  DateTime _selectedYear = DateTime.now();
-  bool _isPlusIcon = true;
-
-  late String year;
-  late String month;
-  late String status;
+  String showYearMonth = 'Pilih Bulan dan Tahun !';
+  DateTime _selectedYearMonth = DateTime.now();
+  String year = DateTime.now().year.toString();
+  String month = DateTime.now().month.toString().padLeft(2, '0');
+  String status = 'PENDING';
 
   @override
   void initState() {
     super.initState();
-    final currentDate = DateTime.now();
-    year = currentDate.year.toString();
-    month = currentDate.month.toString().padLeft(2, '0');
-    status = 'PENDING';
+  }
+
+  Future<void> _selectYearMonth(BuildContext context) async {
+    final DateTime? picked = await showMonthYearPicker(
+      context: context,
+      initialDate: _selectedYearMonth,
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime(DateTime.now().year + 5),
+    );
+    if (picked != null && picked != _selectedYearMonth) {
+      setState(() {
+        _selectedYearMonth = picked;
+        year = picked.year.toString();
+        month = picked.month.toString().padLeft(2, '0');
+        showYearMonth = "${picked.year}/${picked.month.toString().padLeft(2, '0')}";
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(month);
-    
-    final submissionHistoryData = ref.read(submissionProvider({
+    final submissionHistoryData = ref.watch(submissionProvider({
       'year': year,
       'month': month,
       'status': status,
@@ -72,19 +80,17 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
               children: [
                 Expanded(
                   child: Container(
-                    // width: double.infinity,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: Colors.black, width: 0.8),
                         borderRadius: BorderRadius.circular(8)),
                     padding: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 10.0),
-                    // width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          showYears,
+                          showYearMonth,
                           style: const TextStyle(
                               fontSize: 18.0, fontWeight: FontWeight.bold),
                         ),
@@ -92,7 +98,7 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                selectYear(context);
+                                _selectYearMonth(context);
                               },
                               child: const Icon(Icons.calendar_month),
                             ),
@@ -107,7 +113,6 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
                 CustomIconButton(
                     height: 38,
                     width: 44,
-                    // padding: const EdgeInsets.all(9),
                     onTap: () {
                       onTapBtnPrefixIcon(context);
                     },
@@ -117,7 +122,6 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
           ),
           Expanded(
             child: Container(
-                // color: Colors.white,
                 padding: const EdgeInsets.all(16.0),
                 child: submissionHistoryData.when(
                   data: (data) {
@@ -248,9 +252,6 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
         ],
       ),
       bottomNavigationBar: const ButtomBar(),
-      // bottomNavigationBar: Container(
-      //   child: const ButtomBar(),
-      // ),
     );
   }
 
@@ -260,45 +261,16 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(16.0))),
       builder: (BuildContext context) {
-        return const SizedBox(
-          // decoration: const BoxDecoration(
-          //   borderRadius: BorderRadius.only(
-          //     topLeft: Radius.circular(16.0),
-          //     topRight: Radius.circular(16.0),
-          //   ),
-          // ),
-          child:
-              const PopUpFilterScreen(), // Ganti dengan widget layar aktual Anda
-        ); // Replace with your actual screen widget
+        return SizedBox(
+          child: PopUpFilterScreen(
+            onFilterChanged: (newStatus) {
+              setState(() {
+                status = newStatus;
+              });
+            },
+          ),
+        );
       },
     );
-  }
-
-  selectYear(contex) async {
-    // print("calling date picker");
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: const Center(child: Text("Pilih Tahun")),
-              content: SizedBox(
-                  width: 300,
-                  height: 300,
-                  child: YearPicker(
-                    firstDate: DateTime(DateTime.now().year - 5, 1),
-                    // lastDate: DateTime.now(),
-                    lastDate: DateTime.now(),
-                    // ignore: deprecated_member_use
-                    initialDate: DateTime.now(),
-                    selectedDate: _selectedYear,
-                    onChanged: (DateTime dateTime) {
-                      setState(() {
-                        _selectedYear = dateTime;
-                        showYears = "${dateTime.year}";
-                      });
-                      Navigator.pop(context);
-                    },
-                  )));
-        });
   }
 }
