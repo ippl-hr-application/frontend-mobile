@@ -28,11 +28,14 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
     penStrokeWidth: 5,
     penColor: Colors.black,
   );
-
+  bool isSingleDate = true;
   String? showFileName = "";
   String errorMessage = '';
   int maxSizeInBytes = 1 * 1024 * 1024;
   FilePickerResult? filePickerResult;
+  final currentDate = DateTime.now();
+  final currentEnd = DateTime.now().add(const Duration(days: 1));
+  String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +116,28 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Ingin lebih dari 1 hari? ',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  Switch(
+                    value: !isSingleDate,
+                    onChanged: (value) {
+                      setState(() {
+                        isSingleDate = !isSingleDate;
+                      });
+                    },
+                    activeColor: const Color.fromRGBO(32, 81, 229, 1),
+                    activeTrackColor: Colors.blue[100],
+                    inactiveThumbColor: Color.fromARGB(255, 238, 53, 20),
+                    inactiveTrackColor: Color.fromARGB(255, 255, 186, 180),
+                  ),
+                ],
+              ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 decoration: const BoxDecoration(
@@ -129,36 +153,69 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                         decoration: const BoxDecoration(
                             color: Color.fromRGBO(32, 81, 229, 1),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.date_range_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        )),
+                        child: const Icon(Icons.date_range_outlined,
+                            color: Colors.white, size: 30)),
                     const SizedBox(width: 16.0),
                     Expanded(
-                      child: FormBuilderDateRangePicker(
-                        name: 'sakitDate',
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Pilih Tanggal!';
-                          }
-                        },
-                        format: DateFormat('yyyy-MM-dd'),
-                        decoration: InputDecoration(
-                            labelText: 'Mulai dan Akhir Sakit Tanggal',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
+                      child: isSingleDate
+                          ? FormBuilderDateTimePicker(
+                              name: 'cutiDate',
+                              format: DateFormat('yyyy-MM-dd'),
+                              inputType: InputType.date,
+                              decoration: InputDecoration(
+                                labelText: 'Pilih Tanggal Sakit',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 16.0, horizontal: 10.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              initialValue: currentDate,
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime.now().add(
+                                Duration(days: 365),
+                              ),
+                              onChanged: (value) {
+                                if (value != null) {
+                                  final startDate =
+                                      DateFormat('yyyy-MM-dd').format(value);
+                                  setState(() {
+                                    date = startDate;
+                                  });
+                                }
+                              },
+                            )
+                          : FormBuilderDateRangePicker(
+                              name: 'cutiDateRange',
+                              format: DateFormat('yyyy-MM-dd'),
+                              decoration: InputDecoration(
+                                labelText: 'Pilih Tanggal Sakit',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 16.0, horizontal: 10.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              initialValue: DateTimeRange(
+                                  start: currentDate, end: currentEnd),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime.now().add(
+                                Duration(days: 365),
+                              ),
+                              onChanged: (value) {
+                                if (value != null) {
+                                  final startDate = DateFormat('yyyy-MM-dd')
+                                      .format(value.start);
+                                  setState(() {
+                                    date = startDate;
+                                  });
+                                }
+                              },
                             ),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 10.0)),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(const Duration(days: 365)),
-                      ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 // decoration: const BoxDecoration(
@@ -297,13 +354,21 @@ class SakitSubmissionState extends ConsumerState<FormSakit> {
                           handleSakitSubmission(
                                   ref,
                                   SakitRequest(
-                                      from: convertToIso8601(
-                                          formData['sakitDate']
-                                              .start
-                                              .toString()),
+                                      from: isSingleDate
+                                          ? convertToIso8601(
+                                              formData['cutiDate'].toString())
+                                          : convertToIso8601(
+                                              formData['cutiDateRange']
+                                                  .start
+                                                  .toString()),
                                       permissionReason: formData['keterangan'],
-                                      to: convertToIso8601(
-                                          formData['sakitDate'].end.toString()),
+                                      to: isSingleDate
+                                          ? convertToIso8601(
+                                              formData['cutiDate'].toString())
+                                          : convertToIso8601(
+                                              formData['cutiDateRange']
+                                                  .end
+                                                  .toString()),
                                       sickFile: File(
                                           filePickerResult!.files.first.path ??
                                               '')))

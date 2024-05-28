@@ -21,7 +21,7 @@ part 'app_router.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: "/login",
+    initialLocation: "/",
     routes: [
       GoRoute(
         path: "/login",

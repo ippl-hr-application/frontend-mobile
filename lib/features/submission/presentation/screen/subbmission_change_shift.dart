@@ -30,6 +30,8 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
   );
   String errorMessage = '';
   int? selectedShiftBaru;
+  final currentDate = DateTime.now();
+  String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -89,26 +91,33 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                             color: Colors.white, size: 30)),
                     const SizedBox(width: 16.0),
                     Expanded(
-                      child: FormBuilderDateRangePicker(
-                        name: 'izinDate',
-                        format: DateFormat('yyyy-MM-dd'),
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Pilih Tanggal!';
-                          }
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Pilih Tanggal Izin',
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 10.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
+                        child: FormBuilderDateTimePicker(
+                      name: 'shiftDate',
+                      format: DateFormat('yyyy-MM-dd'),
+                      inputType: InputType.date,
+                      decoration: InputDecoration(
+                        labelText: 'Pilih Tanggal Shift',
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(Duration(days: 365)),
                       ),
-                    )
+                      initialValue: currentDate,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(
+                        Duration(days: 365),
+                      ),
+                      onChanged: (value) {
+                        if (value != null) {
+                          final startDate =
+                              DateFormat('yyyy-MM-dd').format(value);
+                          setState(() {
+                            date = startDate;
+                          });
+                        }
+                      },
+                    )),
                   ],
                 ),
               ),
@@ -207,6 +216,17 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                           onChanged: (value) {
                             setState(() {
                               selectedShiftBaru = value;
+                              if (homeHistoryData.asData!.value!.shiftId ==
+                                  selectedShiftBaru) {
+                                setState(() {
+                                  errorMessage =
+                                      'Pilih Shift Baru yang berbeda!';
+                                });
+                              } else {
+                                setState(() {
+                                  errorMessage = '';
+                                });
+                              }
                             });
                           },
                           items: (data!
@@ -296,11 +316,6 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
             onPressed: () {
               print(selectedShiftBaru);
               print(homeHistoryData.asData!.value!.shiftId);
-              if (homeHistoryData.asData!.value!.shiftId == selectedShiftBaru) {
-                setState(() {
-                  errorMessage = 'Pilih Shift Baru yang berbeda!';
-                });
-              }
               if (_formKey.currentState!.saveAndValidate()) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
@@ -313,7 +328,7 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                           ref,
                           ChangeShiftRequest(
                               targetDate: convertToIso8601(
-                                  formData['izinDate'].start.toString()),
+                                  formData['shiftDate'].toString()),
                               currentShift: int.parse(homeHistoryData
                                   .asData!.value!.shiftId
                                   .toString()),
