@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/checkout_success.dart';
 
 import 'package:meraih_mobile/features/attendance/presentation/screens/request_attandance.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
@@ -81,6 +82,22 @@ GoRouter goRouter(GoRouterRef ref) {
           );
         },
       ),
+      GoRoute(
+        path: '/checkin-map',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckinMap(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/review',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ReviewPictureScreen(),
+          );
+        },
+      ),
       // GoRoute(
       //   path: '/review',
       //   pageBuilder: (context, state) {
@@ -110,6 +127,14 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: CheckinSuccess(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/checkout-success',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckoutSuccess(),
           );
         },
       ),

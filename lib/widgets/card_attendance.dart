@@ -12,6 +12,7 @@ class CardAttendance extends StatelessWidget {
   final String? from;
   final String? to;
   final String? jobPosition;
+  final String? idAttendance;
 
   const CardAttendance(
       {required this.companyName,
@@ -19,6 +20,7 @@ class CardAttendance extends StatelessWidget {
       required this.from,
       required this.to,
       required this.jobPosition,
+      required this.idAttendance,
       super.key});
   @override
   Widget build(BuildContext context) {
@@ -127,26 +129,45 @@ class CardAttendance extends StatelessWidget {
               ]),
             ),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6.0),
-              child: TextButton(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                  ),
-                  onPressed: () {
-                    context.go('/checkin-prove');
-                  },
-                  child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 40.0),
-                      decoration: const BoxDecoration(
-                          color: Color.fromRGBO(79, 199, 177, 1),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))
-                          // border: Border.all(color: Colors.black, width: 1.0)
-                          ),
-                      child: const Text('CHECK IN'))),
-            )
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6.0),
+                child: idAttendance == null
+                    ? TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                        ),
+                        onPressed: () {
+                          context.go('/checkin-prove');
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 6.0, horizontal: 40.0),
+                            decoration: const BoxDecoration(
+                                color: Color.fromRGBO(79, 199, 177, 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))
+                                // border: Border.all(color: Colors.black, width: 1.0)
+                                ),
+                            child: const Text('CHECK IN')))
+                    : TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                        ),
+                        onPressed: () {
+                          context.go('/checkin-prove');
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 6.0, horizontal: 40.0),
+                            decoration: const BoxDecoration(
+                                color: Colors.red,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))
+                                // border: Border.all(color: Colors.black, width: 1.0)
+                                ),
+                            child: const Text('CHECK OUT'))))
           ],
         ));
   }

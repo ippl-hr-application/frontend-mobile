@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_today_provider.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 import 'package:meraih_mobile/utils/auth.dart';
 import 'package:meraih_mobile/widgets/card_attendance.dart';
@@ -20,6 +21,7 @@ class HomeScreen extends ConsumerWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     final homeHistoryData = ref.watch(homeProvider);
     final announcmentData = ref.watch(announcmentProvider);
+    final homeHistoryDataAsyncValue = ref.watch(attandanceTodayProvider);
     final authProvider = ref.watch(authTokenProvider);
     if (authProvider == null || AuthUtils.isTokenExpired(authProvider)) {
       return const DialogRedirect();
@@ -185,12 +187,14 @@ class HomeScreen extends ConsumerWidget {
                       margin: const EdgeInsets.only(
                           top: 90.0, left: 16.0, right: 16.0),
                       child: CardAttendance(
-                        companyName: data?.companyName,
-                        date: data?.date,
-                        from: data?.from,
-                        to: data?.to,
-                        jobPosition: data?.jobPosition,
-                      )),
+                          companyName: data?.companyName,
+                          date: data?.date,
+                          from: data?.from,
+                          to: data?.to,
+                          jobPosition: data?.jobPosition,
+                          idAttendance: homeHistoryDataAsyncValue
+                              .asData?.value?.attendanceId
+                              .toString())),
                 ],
               ),
             ),
