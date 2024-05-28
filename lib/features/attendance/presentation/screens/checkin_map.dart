@@ -4,20 +4,21 @@ import 'package:latlong2/latlong.dart';
 import 'package:go_router/go_router.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'camera_state.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/map/data/company_map_repository.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/map/domain/company_map.dart';
 
-class CheckinMap extends StatefulWidget {
+class CheckinMap extends ConsumerStatefulWidget {
   const CheckinMap({super.key});
 
   @override
   _CheckinMapState createState() => _CheckinMapState();
 }
 
-class _CheckinMapState extends State<CheckinMap> {
+class _CheckinMapState extends ConsumerState<CheckinMap> {
   LatLng? _userLocation;
-  final LatLng _customMarkerLocation = const LatLng(-1.2279, 116.8157); // Default position for the custom marker
-  String _status = 'Tidak Terjangkau'; 
-  double? _distance; 
+  LatLng? _customMarkerLocation;
+  String _status = 'Tidak Terjangkau';
+  double? _distance;
 
   @override
   void initState() {
@@ -29,13 +30,11 @@ class _CheckinMapState extends State<CheckinMap> {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Check if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
     }
 
-    // Check for location permissions.
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -59,18 +58,16 @@ class _CheckinMapState extends State<CheckinMap> {
   }
 
   void _updateStatus() {
-    if (_userLocation != null) {
+    if (_userLocation != null && _customMarkerLocation != null) {
       final distance = Geolocator.distanceBetween(
-        _customMarkerLocation.latitude,
-        _customMarkerLocation.longitude,
+        _customMarkerLocation!.latitude,
+        _customMarkerLocation!.longitude,
         _userLocation!.latitude,
         _userLocation!.longitude,
       );
 
-
       setState(() {
         _distance = distance;
-        // Set the threshold for the distance to 50 meters
         _status = distance <= 120 ? 'Terjangkau' : 'Tidak Terjangkau';
       });
     }
@@ -87,7 +84,6 @@ class _CheckinMapState extends State<CheckinMap> {
             color: Colors.white,
           ),
           onPressed: () {
-            
             context.pop(_status);
           },
         ),
@@ -107,116 +103,184 @@ class _CheckinMapState extends State<CheckinMap> {
           ],
         ),
       ),
-      body: Stack(
-        children: [
-          FlutterMap(
-            options: MapOptions(
-              initialCenter: _userLocation ?? const LatLng(-1.2346, 116.8352),
-              initialZoom: 15.0,
-              onPositionChanged: (MapPosition position, bool hasGesture) {
-                _updateStatus();
-              },
+      body: ref.watch(companyBranchIdProvider).when(
+        data: (companyBranchId) {
+          final companyMapAsyncValue = ref.watch(companyBranchProvider(companyBranchId));
+          return companyMapAsyncValue.when(
+            data: (companyMap) {
+              final branch = companyMap.data?.branch;
+              if (branch == null || branch.latitude == null || branch.longitude == null) {
+                return _buildMap(null, null, branch?.hqInitial, null, null, null, null);
+              }
+
+              _customMarkerLocation = LatLng(branch.latitude!, branch.longitude!);
+              _updateStatus();
+              print(branch.hqInitial);
+
+              return _buildMap(branch.latitude, branch.longitude, branch.hqInitial, branch.city, branch.province, branch.address, branch);
+            },
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stack) => Center(child: Text('Error: $error')),
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(child: Text('Error: $error')),
+      ),
+    );
+  }
+
+  Widget _buildMap(double? latitude, double? longitude, String? hqInitial, String? city, String? province, String? address, Branch? branch) {
+    _customMarkerLocation = latitude != null && longitude != null ? LatLng(latitude, longitude) : null;
+
+    return Stack(
+      children: [
+        FlutterMap(
+          options: MapOptions(
+            initialCenter: _userLocation ?? const LatLng(-1.2346, 116.8352),
+            initialZoom: 15.0,
+            onPositionChanged: (MapPosition position, bool hasGesture) {
+              _updateStatus();
+            },
+          ),
+          children: [
+            TileLayer(
+              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              subdomains: const ['a', 'b', 'c'],
             ),
-            children: [
-              TileLayer(
-                urlTemplate:
-                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                subdomains: const ['a', 'b', 'c'],
-              ),
-              if (_userLocation != null)
-                MarkerLayer(
-                  markers: [
-                    Marker(
-                      width: 100.0,
-                      height: 100.0,
-                      point: _userLocation!,
-                      child: const Column(
-                        children: [
-                          Icon(
-                            Icons.location_pin,
-                            color: Colors.red,
-                            size: 40.0,
-                          ),
-                          Text(
-                            'User Location',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+            if (_userLocation != null)
               MarkerLayer(
                 markers: [
                   Marker(
                     width: 100.0,
                     height: 100.0,
-                    point: _customMarkerLocation,
-                    child: const Column(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: Colors.blue,
-                          size: 40.0,
-                        ),
-                        Text(
-                          'Custom Location',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
+                    point: _userLocation!,
+                    child: const Icon(
+                      Icons.location_pin,
+                      color: Colors.red,
+                      size: 40.0,
                     ),
                   ),
                 ],
               ),
-              if (_userLocation != null)
-                PolylineLayer(
-                  polylines: [
-                    Polyline(
-                      points: [
-                        _userLocation!,
-                        _customMarkerLocation,
-                      ],
-                      color: Colors.green,
-                      strokeWidth: 4.0,
+            if (_customMarkerLocation != null)
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    width: 100.0,
+                    height: 100.0,
+                    point: _customMarkerLocation!,
+                    child: const Icon(
+                      Icons.location_on,
+                      color: Colors.blue,
+                      size: 40.0,
                     ),
-                  ],
-                ),
-            ],
-          ),
-          Positioned(
-            top: 50,
-            left: 20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (_distance != null)
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(8.0),
+                  ),
+                ],
+              ),
+            if (_userLocation != null && _customMarkerLocation != null)
+              PolylineLayer(
+                polylines: [
+                  Polyline(
+                    points: [
+                      _userLocation!,
+                      _customMarkerLocation!,
+                    ],
+                    color: Colors.green,
+                    strokeWidth: 4.0,
+                  ),
+                ],
+              ),
+          ],
+        ),
+        Positioned(
+          top: 50,
+          left: 20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (_distance != null)
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
                     child: Text(
                       'Jarak: ${_distance!.toStringAsFixed(2)} meters',
                       style: const TextStyle(fontSize: 18.0, color: Colors.black),
                     ),
                   ),
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.all(8.0),
+                ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
                   child: Text(
                     'Status: $_status',
                     style: const TextStyle(fontSize: 18.0, color: Colors.black),
                   ),
                 ),
-              ],
-            ),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'HQ Initial: ${hqInitial ?? "null"}',
+                    style: const TextStyle(fontSize: 18.0, color: Colors.black),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'City: ${city ?? "null"}',
+                    style: const TextStyle(fontSize: 18.0, color: Colors.black),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'Province: ${province ?? "null"}',
+                    style: const TextStyle(fontSize: 18.0, color: Colors.black),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'Address: ${address ?? "null"}',
+                    style: const TextStyle(fontSize: 18.0, color: Colors.black),
+                  )
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

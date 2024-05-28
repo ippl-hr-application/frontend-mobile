@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
+import 'package:meraih_mobile/features/authentication/forgetpassword/domain/forgetpassword.dart';
+import 'package:meraih_mobile/features/authentication/forgetpassword/provider/forgetpassword_provider.dart';
 
 class LoginPage extends ConsumerWidget {
   final TextEditingController _employeeId = TextEditingController();
@@ -37,7 +39,7 @@ class LoginPage extends ConsumerWidget {
     }
   }
 
-  void _showForgotPasswordSheet(BuildContext context) {
+  void _showForgotPasswordSheet(BuildContext context, WidgetRef ref) {
     final TextEditingController _forgotEmployeeIdController =
         TextEditingController();
 
@@ -89,8 +91,53 @@ class LoginPage extends ConsumerWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
+                        onPressed: () async {
+                          final employeeId = _forgotEmployeeIdController.text;
+                          final request = ForgetpasswordRequest(employeeId: employeeId);
+
+                          try {
+                            final response = await ref.read(handleForgetPasswordProvider(request).future);
+
+                            Navigator.pop(context);
+
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(response.success == true ? "Success" : "Error"),
+                                content: Text(
+                                  response.success == true
+                                      ? "Data berhasil dikirim. Tunggu sebentar, Akun anda segera dipulihkan !"
+                                      : response.message ?? "Unknown error",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("OK"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } catch (e) {
+                            Navigator.pop(context);
+
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text("Error"),
+                                content: Text(e.toString()),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("OK"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromRGBO(32, 81, 229, 1)),
@@ -158,7 +205,7 @@ class LoginPage extends ConsumerWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      _showForgotPasswordSheet(context);
+                      _showForgotPasswordSheet(context, ref);
                     },
                     child: const Text("Lupa Password?"),
                   ),
