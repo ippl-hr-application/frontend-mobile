@@ -26,20 +26,29 @@ class HomeScreen extends ConsumerWidget {
     if (authProvider == null || AuthUtils.isTokenExpired(authProvider)) {
       return const DialogRedirect();
     }
+    Future<void> _refresh() async {
+      // ignore: unused_result
+      ref.refresh(homeProvider);
+      // ignore: unused_result
+      ref.refresh(announcmentProvider);
+      await Future.delayed(Duration(seconds: 1)); // Simulasi proses refresh
+    }
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.zero,
-        child: AppBar(
-          backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.zero,
+          child: AppBar(
+            backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+          ),
         ),
-      ),
-      body: homeHistoryData.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        data: ((data) {
-          return SingleChildScrollView(
-            child: SafeArea(
-              child: Stack(
+        body: homeHistoryData.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          data: ((data) {
+            return SingleChildScrollView(
+              child: SafeArea(
+                  child: Stack(
                 children: [
                   Column(
                     children: <Widget>[
@@ -196,19 +205,21 @@ class HomeScreen extends ConsumerWidget {
                               .asData?.value?.attendanceId
                               .toString())),
                 ],
-              ),
-            ),
-          );
-        }),
-        error: (Object error, StackTrace stackTrace) {
-          const DialogRedirect();
-          // return null;
-        },
+              )),
+            );
+          }),
+          error: (Object error, StackTrace stackTrace) {
+            const DialogRedirect();
+            // return null;
+          },
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          selectedIndex: 0,
+        ),
+        // bottomNavigationBar: Container(
+        //   child: const ButtomBar(),
+        // ),
       ),
-      bottomNavigationBar: const ButtomBar(),
-      // bottomNavigationBar: Container(
-      //   child: const ButtomBar(),
-      // ),
     );
   }
 }

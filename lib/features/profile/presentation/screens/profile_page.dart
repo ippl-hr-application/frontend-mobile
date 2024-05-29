@@ -168,7 +168,7 @@ class Profile extends ConsumerWidget {
           );
         }),
       ),
-      bottomNavigationBar: const ButtomBar(),
+      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 2),
     );
   }
 }
