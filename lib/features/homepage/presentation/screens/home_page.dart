@@ -29,6 +29,7 @@ class HomeScreen extends ConsumerWidget {
     if (authProvider == null || AuthUtils.isTokenExpired(authProvider)) {
       return const DialogRedirect();
     }
+    print(homeHistoryDataAsyncValue.asData?.value?.attendanceId);
     Future<void> _refresh() async {
       // ignore: unused_result
       ref.refresh(homeProvider);
@@ -203,8 +204,7 @@ class HomeScreen extends ConsumerWidget {
                           to: data?.to,
                           jobPosition: data?.jobPosition,
                           idAttendance: homeHistoryDataAsyncValue
-                              .asData?.value?.attendanceId
-                              .toString())),
+                              .asData?.value?.attendanceId)),
                 ],
               )),
             );

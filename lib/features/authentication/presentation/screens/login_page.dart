@@ -205,7 +205,7 @@ class LoginPage extends ConsumerWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      _showForgotPasswordSheet(context, ref);
+                      context.go("/reset-password");
                     },
                     child: const Text("Lupa Password?"),
                   ),
