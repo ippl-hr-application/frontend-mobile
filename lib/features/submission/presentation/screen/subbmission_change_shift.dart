@@ -28,8 +28,10 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
     penStrokeWidth: 5,
     penColor: Colors.black,
   );
-
+  String errorMessage = '';
   int? selectedShiftBaru;
+  final currentDate = DateTime.now();
+  String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -91,26 +93,33 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                             color: Colors.white, size: 30)),
                     const SizedBox(width: 16.0),
                     Expanded(
-                      child: FormBuilderDateRangePicker(
-                        name: 'izinDate',
-                        format: DateFormat('yyyy-MM-dd'),
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Pilih Tanggal!';
-                          }
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Pilih Tanggal Izin',
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 10.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
+                        child: FormBuilderDateTimePicker(
+                      name: 'shiftDate',
+                      format: DateFormat('yyyy-MM-dd'),
+                      inputType: InputType.date,
+                      decoration: InputDecoration(
+                        labelText: 'Pilih Tanggal Shift',
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(Duration(days: 365)),
                       ),
-                    )
+                      initialValue: currentDate,
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(
+                        Duration(days: 365),
+                      ),
+                      onChanged: (value) {
+                        if (value != null) {
+                          final startDate =
+                              DateFormat('yyyy-MM-dd').format(value);
+                          setState(() {
+                            date = startDate;
+                          });
+                        }
+                      },
+                    )),
                   ],
                 ),
               ),
@@ -167,12 +176,12 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   border: Border(
+                //     bottom: BorderSide(
+                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                //   ),
+                // ),
                 child: Row(
                   children: [
                     Container(
@@ -209,6 +218,17 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                           onChanged: (value) {
                             setState(() {
                               selectedShiftBaru = value;
+                              if (homeHistoryData.asData!.value!.shiftId ==
+                                  selectedShiftBaru) {
+                                setState(() {
+                                  errorMessage =
+                                      'Pilih Shift Baru yang berbeda!';
+                                });
+                              } else {
+                                setState(() {
+                                  errorMessage = '';
+                                });
+                              }
                             });
                           },
                           items: (data!
@@ -227,6 +247,22 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
                           const Center(child: CircularProgressIndicator()),
                     ))
                   ],
+                ),
+              ),
+              if (errorMessage.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0),
+                  child: Text(
+                    errorMessage,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
                 ),
               ),
               Container(
@@ -280,31 +316,35 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
+              print(selectedShiftBaru);
+              print(homeHistoryData.asData!.value!.shiftId);
               if (_formKey.currentState!.saveAndValidate()) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
                 // print(formData['izinDate']);
                 // print(selectedShiftBaru);
                 // print(homeHistoryData.asData!.value!.shiftId);
-
-                handleChangeShift(
-                        ref,
-                        ChangeShiftRequest(
-                            targetDate: convertToIso8601(
-                                formData['izinDate'].start.toString()),
-                            currentShift: int.parse(homeHistoryData
-                                .asData!.value!.shiftId
-                                .toString()),
-                            targetShift: selectedShiftBaru!,
-                            reason: formData['keterangan']))
-                    .then((changeShiftSubmission) {
-                  return showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertSuccessSubmission(
-                      message: changeShiftSubmission.message,
-                    ),
-                  );
-                });
+                if (homeHistoryData.asData!.value!.shiftId !=
+                    selectedShiftBaru) {
+                  handleChangeShift(
+                          ref,
+                          ChangeShiftRequest(
+                              targetDate: convertToIso8601(
+                                  formData['shiftDate'].toString()),
+                              currentShift: int.parse(homeHistoryData
+                                  .asData!.value!.shiftId
+                                  .toString()),
+                              targetShift: selectedShiftBaru!,
+                              reason: formData['keterangan']))
+                      .then((changeShiftSubmission) {
+                    return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertSuccessSubmission(
+                        message: changeShiftSubmission.message,
+                      ),
+                    );
+                  });
+                }
               }
             },
             style: ElevatedButton.styleFrom(

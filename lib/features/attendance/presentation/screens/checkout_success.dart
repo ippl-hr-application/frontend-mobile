@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class CheckinSuccess extends StatelessWidget {
-  const CheckinSuccess({super.key});
+class CheckoutSuccess extends StatelessWidget {
+  const CheckoutSuccess({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +15,12 @@ class CheckinSuccess extends StatelessWidget {
             children: [
               Icon(
                 Icons.check_circle,
-                color: Colors.green,
+                color: Colors.red,
                 size: 150.0,
               ),
               SizedBox(height: 20.0),
               Text(
-                'Kehadiran Berhasil!',
+                'Checkout Berhasil!',
                 style: TextStyle(
                   fontSize: 28.0,
                   fontWeight: FontWeight.bold,

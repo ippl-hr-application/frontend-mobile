@@ -29,10 +29,14 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
     penStrokeWidth: 5,
     penColor: Colors.black,
   );
+  bool isSingleDate = true;
   String? showFileName = "";
   String errorMessage = '';
   int maxSizeInBytes = 1 * 1024 * 1024;
   FilePickerResult? filePickerResult;
+  final currentDate = DateTime.now();
+  final currentEnd = DateTime.now().add(const Duration(days: 1));
+  String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -89,52 +93,6 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
                             color: Color.fromRGBO(32, 81, 229, 1),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: const Icon(
-                          Icons.date_range_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: FormBuilderDateRangePicker(
-                        name: 'izinDate',
-                        format: DateFormat('yyyy-MM-dd'),
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Pilih Tanggal!';
-                          }
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 10.0),
-                          labelText: 'Pilih Tanggal',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(Duration(days: 365)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
                           Icons.edit_square,
                           color: Colors.white,
                           size: 30,
@@ -157,6 +115,106 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
                           ),
                         ),
                       ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Ingin lebih dari 1 hari? ',
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                  Switch(
+                    value: !isSingleDate,
+                    onChanged: (value) {
+                      setState(() {
+                        isSingleDate = !isSingleDate;
+                      });
+                    },
+                    activeColor: const Color.fromRGBO(32, 81, 229, 1),
+                    activeTrackColor: Colors.blue[100],
+                    inactiveThumbColor: Color.fromARGB(255, 238, 53, 20),
+                    inactiveTrackColor: Color.fromARGB(255, 255, 186, 180),
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(32, 81, 229, 1),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: const Icon(Icons.date_range_outlined,
+                            color: Colors.white, size: 30)),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: isSingleDate
+                          ? FormBuilderDateTimePicker(
+                              name: 'izinDate',
+                              format: DateFormat('yyyy-MM-dd'),
+                              inputType: InputType.date,
+                              decoration: InputDecoration(
+                                labelText: 'Pilih Tanggal Izin',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 16.0, horizontal: 10.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              initialValue: currentDate,
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime.now().add(
+                                Duration(days: 365),
+                              ),
+                              onChanged: (value) {
+                                if (value != null) {
+                                  final startDate =
+                                      DateFormat('yyyy-MM-dd').format(value);
+                                  setState(() {
+                                    date = startDate;
+                                  });
+                                }
+                              },
+                            )
+                          : FormBuilderDateRangePicker(
+                              name: 'izinDateRange',
+                              format: DateFormat('yyyy-MM-dd'),
+                              decoration: InputDecoration(
+                                labelText: 'Pilih Tanggal Izin',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 16.0, horizontal: 10.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              initialValue: DateTimeRange(
+                                  start: currentDate, end: currentEnd),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime.now().add(
+                                Duration(days: 365),
+                              ),
+                              onChanged: (value) {
+                                if (value != null) {
+                                  final startDate = DateFormat('yyyy-MM-dd')
+                                      .format(value.start);
+                                  setState(() {
+                                    date = startDate;
+                                  });
+                                }
+                              },
+                            ),
                     ),
                   ],
                 ),
@@ -259,6 +317,7 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
                     style: TextStyle(color: Colors.red),
                   ),
                 ),
+              SizedBox(height: 20),
               Container(
                 decoration: const BoxDecoration(
                   border: Border(
@@ -276,29 +335,42 @@ class SubmissionIzinState extends ConsumerState<SubmissionIzin> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
+              if (filePickerResult == null) {
+                setState(() {
+                  errorMessage = 'Pilih file terlebih dahulu!';
+                  showFileName = '';
+                });
+              }
               if (_formKey.currentState!.saveAndValidate() &&
                   filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
                 print(formData['Alasan']);
                 print(File(filePickerResult!.files.first.path ?? '').path);
-                handleIzinSubmission(
-                    ref,
-                    IzinRequest(
-                      from: convertToIso8601(
-                          formData['izinDate'].start.toString()),
-                      permission_reason: formData['Alasan'],
-                      permission_file:
-                          File(filePickerResult!.files.first.path ?? ''),
-                      to: convertToIso8601(formData['izinDate'].end.toString()),
-                    )).then((izinSubmission) {
-                  return showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertSuccessSubmission(
-                      message: izinSubmission.message,
-                    ),
-                  );
-                });
+                if (filePickerResult != null) {
+                  handleIzinSubmission(
+                      ref,
+                      IzinRequest(
+                        from: isSingleDate
+                            ? convertToIso8601(formData['izinDate'].toString())
+                            : convertToIso8601(
+                                formData['izinDateRange'].start.toString()),
+                        permission_reason: formData['Alasan'],
+                        permission_file:
+                            File(filePickerResult!.files.first.path ?? ''),
+                        to: isSingleDate
+                            ? convertToIso8601(formData['izinDate'].toString())
+                            : convertToIso8601(
+                                formData['izinDateRange'].end.toString()),
+                      )).then((izinSubmission) {
+                    return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertSuccessSubmission(
+                        message: izinSubmission.message,
+                      ),
+                    );
+                  });
+                }
               } else {}
             },
             style: ElevatedButton.styleFrom(

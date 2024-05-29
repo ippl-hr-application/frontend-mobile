@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
+import 'package:meraih_mobile/features/submission/presentation/widgets/alert_success_submission.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:signature/signature.dart';
 import 'package:go_router/go_router.dart';
@@ -37,6 +38,7 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
   String? showFileName = "";
   String? selectTargetBranch = "";
   String errorMessage = '';
+  String errorMessageBranch = '';
   int maxSizeInBytes = 1 * 1024 * 1024;
   FilePickerResult? filePickerResult;
 
@@ -174,12 +176,12 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   border: Border(
+                //     bottom: BorderSide(
+                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                //   ),
+                // ),
                 child: Row(
                   children: [
                     Container(
@@ -220,6 +222,18 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                             onChanged: (value) {
                               setState(() {
                                 selectTargetBranch = value;
+                                if (homeHistoryData
+                                        .asData!.value!.companyBranchId ==
+                                    selectTargetBranch) {
+                                  setState(() {
+                                    errorMessageBranch =
+                                        'Pilih Cabang yang berbeda!';
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorMessageBranch = '';
+                                  });
+                                }
                               });
                             },
                             items: data!.branches!
@@ -240,6 +254,22 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                           const Center(child: CircularProgressIndicator()),
                     ))
                   ],
+                ),
+              ),
+              if (errorMessageBranch.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0, left: 65.0),
+                  child: Text(
+                    errorMessageBranch,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  ),
                 ),
               ),
               Container(
@@ -410,27 +440,45 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
           ),
           child: ElevatedButton(
             onPressed: () {
+              if (filePickerResult == null) {
+                setState(() {
+                  errorMessage = 'Pilih file terlebih dahulu!';
+                  showFileName = '';
+                });
+              }
               if (_formKey.currentState!.saveAndValidate() &&
                   filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
 
                 print(formData['keterangan']);
                 print(selectTargetBranch);
+                print(File(filePickerResult!.files.first.path ?? ''));
+                print(homeHistoryData.asData!.value!.companyBranchId);
 
                 // Memeriksa apakah nilai 'keterangan' tidak kosong
 
                 try {
-                  handleMutation(
-                      ref,
-                      MutasiRequest(
-                        mutationReason: formData['keterangan'],
-                        currenCompanyBranchId: homeHistoryData
-                            .asData!.value!.companyBranchId
-                            .toString(),
-                        targetCompanyBranchId: selectTargetBranch.toString(),
-                        mutationFile:
-                            File(filePickerResult!.files.first.path ?? ''),
-                      ));
+                  if (filePickerResult != null) {
+                    handleMutation(
+                        ref,
+                        MutasiRequest(
+                          mutationReason: formData['keterangan'],
+                          currenCompanyBranchId: homeHistoryData
+                              .asData!.value!.companyBranchId
+                              .toString(),
+                          targetCompanyBranchId: selectTargetBranch.toString(),
+                          mutationFile:
+                              File(filePickerResult!.files.first.path ?? ''),
+                        )).then((mutationSubmission) {
+                      return showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            AlertSuccessSubmission(
+                          message: mutationSubmission.message,
+                        ),
+                      );
+                    });
+                  }
                 } catch (e) {
                   print("Error: $e");
                 }
