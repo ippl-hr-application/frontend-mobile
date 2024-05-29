@@ -19,6 +19,8 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
   LatLng? _customMarkerLocation;
   String _status = 'Tidak Terjangkau';
   double? _distance;
+  
+  get longitute => null;
 
   @override
   void initState() {
@@ -112,7 +114,8 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                   final branch = companyMap.data?.branch;
                   print(branch);
                   if (branch == null ||
-                      branch.latitude == null ) {
+                      branch.latitude == null ||
+                      branch.longitude == null) {
                     return _buildMap(branch?.latitude, branch?.longitude, branch?.hqInitial,
                         branch?.city, branch?.province, branch?.address, null);
                   }
@@ -318,7 +321,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                 child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      'Address: ${longitude ?? "null"}',
+                      'Address: ${longitute ?? "null"}',
                       style:
                           const TextStyle(fontSize: 18.0, color: Colors.black),
                     )),
