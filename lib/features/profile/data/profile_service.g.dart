@@ -34,7 +34,7 @@ class _ProfileRepository implements ProfileRepository {
     )
             .compose(
               _dio.options,
-              '/profile',
+              '/auth/me',
               queryParameters: queryParameters,
               data: _data,
             )

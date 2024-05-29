@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/profile/presentation/provider/profile_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:meraih_mobile/utils/format_date.dart';
 
 class MyProfile extends ConsumerWidget {
   const MyProfile({super.key});
@@ -122,49 +123,49 @@ class MyProfile extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${data?.firstName.toString()} ${data?.lastName.toString()}',
+                                  '${data?.user?.firstName.toString()} ${data?.user?.lastName.toString()}',
                                   style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text(
-                                  data!.email.toString(),
+                                  data!.user!.email.toString(),
                                   style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text(
-                                  data.residentialAddress.toString(),
+                                  data!.user!.residentialAddress.toString(),
                                   style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text(
-                                  '${data.firstName.toString()} ${data.lastName.toString()}',
+                                  formatDate(data!.user!.join_date.toString()),
                                   style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text(
-                                  data.jobPosition!.name.toString(),
+                                  data!.user!.jobPosition!.name.toString(),
                                   style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text(
-                                  data.employmentStatus!.name.toString(),
+                                  data!.user!.employmentStatus!.name.toString(),
                                   style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text(
-                                  data.phoneNumber.toString(),
+                                  data!.user!.phoneNumber.toString(),
                                   style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w500),

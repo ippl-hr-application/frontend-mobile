@@ -12,7 +12,7 @@ class CardAttendance extends StatelessWidget {
   final String? from;
   final String? to;
   final String? jobPosition;
-  final String? idAttendance;
+  final int? idAttendance;
 
   const CardAttendance(
       {required this.companyName,

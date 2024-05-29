@@ -97,22 +97,22 @@ GoRouter goRouter(GoRouterRef ref) {
       //     );
       //   },
       // ),
-      // GoRoute(
-      //   path: '/review',
-      //   pageBuilder: (context, state) {
-      //     return const NoTransitionPage(
-      //       child: ReviewPictureScreen(),
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   path: '/checkin-map',
-      //   pageBuilder: (context, state) {
-      //     return const NoTransitionPage(
-      //       child: CheckinMap(),
-      //     );
-      //   },
-      // ),
+      GoRoute(
+        path: '/review',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ReviewPictureScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/checkin-map',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckinMap(),
+          );
+        },
+      ),
       GoRoute(
         path: '/checkin-prove',
         pageBuilder: (context, state) {

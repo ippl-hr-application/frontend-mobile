@@ -19,13 +19,13 @@ Future<dynamic> handleCheckout(WidgetRef ref, CheckoutRequest checkout) async {
   return homeHistoryDataAsyncValue.when(
     data: (homeHistoryData) async {
       if (homeHistoryData != null && homeHistoryData.attendanceId != null) {
-        final attandanceId = homeHistoryData.attendanceId.toString();
+        final attandanceId = homeHistoryData.attendanceId;
 
         final dio = Dio();
         dio.options.contentType = "multipart/form-data";
         dio.options.headers["Authorization"] = "Bearer $token";
         final checkoutRepository = CheckoutRepository(dio);
-
+        print("attandance id" + attandanceId.toString());
         try {
           final checkoutFinal = await checkoutRepository.postCheckout(
             attandanceId,
