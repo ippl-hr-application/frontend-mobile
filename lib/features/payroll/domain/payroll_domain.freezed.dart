@@ -229,8 +229,6 @@ Payrolls _$PayrollsFromJson(Map<String, dynamic> json) {
 mixin _$Payrolls {
   @JsonKey(name: 'payrolls')
   List<PayrollData>? get payrolls => throw _privateConstructorUsedError;
-  @JsonKey(name: 'total_wage')
-  int? get total_wage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -243,9 +241,7 @@ abstract class $PayrollsCopyWith<$Res> {
   factory $PayrollsCopyWith(Payrolls value, $Res Function(Payrolls) then) =
       _$PayrollsCopyWithImpl<$Res, Payrolls>;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'payrolls') List<PayrollData>? payrolls,
-      @JsonKey(name: 'total_wage') int? total_wage});
+  $Res call({@JsonKey(name: 'payrolls') List<PayrollData>? payrolls});
 }
 
 /// @nodoc
@@ -262,17 +258,12 @@ class _$PayrollsCopyWithImpl<$Res, $Val extends Payrolls>
   @override
   $Res call({
     Object? payrolls = freezed,
-    Object? total_wage = freezed,
   }) {
     return _then(_value.copyWith(
       payrolls: freezed == payrolls
           ? _value.payrolls
           : payrolls // ignore: cast_nullable_to_non_nullable
               as List<PayrollData>?,
-      total_wage: freezed == total_wage
-          ? _value.total_wage
-          : total_wage // ignore: cast_nullable_to_non_nullable
-              as int?,
     ) as $Val);
   }
 }
@@ -285,9 +276,7 @@ abstract class _$$PayrollsImplCopyWith<$Res>
       __$$PayrollsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'payrolls') List<PayrollData>? payrolls,
-      @JsonKey(name: 'total_wage') int? total_wage});
+  $Res call({@JsonKey(name: 'payrolls') List<PayrollData>? payrolls});
 }
 
 /// @nodoc
@@ -302,17 +291,12 @@ class __$$PayrollsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? payrolls = freezed,
-    Object? total_wage = freezed,
   }) {
     return _then(_$PayrollsImpl(
       payrolls: freezed == payrolls
           ? _value._payrolls
           : payrolls // ignore: cast_nullable_to_non_nullable
               as List<PayrollData>?,
-      total_wage: freezed == total_wage
-          ? _value.total_wage
-          : total_wage // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -320,9 +304,7 @@ class __$$PayrollsImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PayrollsImpl implements _Payrolls {
-  _$PayrollsImpl(
-      {@JsonKey(name: 'payrolls') final List<PayrollData>? payrolls,
-      @JsonKey(name: 'total_wage') this.total_wage})
+  _$PayrollsImpl({@JsonKey(name: 'payrolls') final List<PayrollData>? payrolls})
       : _payrolls = payrolls;
 
   factory _$PayrollsImpl.fromJson(Map<String, dynamic> json) =>
@@ -340,12 +322,8 @@ class _$PayrollsImpl implements _Payrolls {
   }
 
   @override
-  @JsonKey(name: 'total_wage')
-  final int? total_wage;
-
-  @override
   String toString() {
-    return 'Payrolls(payrolls: $payrolls, total_wage: $total_wage)';
+    return 'Payrolls(payrolls: $payrolls)';
   }
 
   @override
@@ -353,15 +331,13 @@ class _$PayrollsImpl implements _Payrolls {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PayrollsImpl &&
-            const DeepCollectionEquality().equals(other._payrolls, _payrolls) &&
-            (identical(other.total_wage, total_wage) ||
-                other.total_wage == total_wage));
+            const DeepCollectionEquality().equals(other._payrolls, _payrolls));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_payrolls), total_wage);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_payrolls));
 
   @JsonKey(ignore: true)
   @override
@@ -379,8 +355,8 @@ class _$PayrollsImpl implements _Payrolls {
 
 abstract class _Payrolls implements Payrolls {
   factory _Payrolls(
-      {@JsonKey(name: 'payrolls') final List<PayrollData>? payrolls,
-      @JsonKey(name: 'total_wage') final int? total_wage}) = _$PayrollsImpl;
+          {@JsonKey(name: 'payrolls') final List<PayrollData>? payrolls}) =
+      _$PayrollsImpl;
 
   factory _Payrolls.fromJson(Map<String, dynamic> json) =
       _$PayrollsImpl.fromJson;
@@ -388,9 +364,6 @@ abstract class _Payrolls implements Payrolls {
   @override
   @JsonKey(name: 'payrolls')
   List<PayrollData>? get payrolls;
-  @override
-  @JsonKey(name: 'total_wage')
-  int? get total_wage;
   @override
   @JsonKey(ignore: true)
   _$$PayrollsImplCopyWith<_$PayrollsImpl> get copyWith =>

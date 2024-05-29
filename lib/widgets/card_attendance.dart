@@ -65,7 +65,7 @@ class CardAttendance extends StatelessWidget {
                   ),
                   const SizedBox(height: 6.0),
                   Text(
-                    jobPosition.toString(),
+                    jobPosition.toString().toUpperCase(),
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w500,

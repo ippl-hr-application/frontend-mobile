@@ -19,9 +19,8 @@ class PayroleHistory with _$PayroleHistory {
 
 @freezed
 class Payrolls with _$Payrolls {
-  factory Payrolls(
-      {@JsonKey(name: 'payrolls') List<PayrollData>? payrolls,
-      @JsonKey(name: 'total_wage') int? total_wage}) = _Payrolls;
+  factory Payrolls({@JsonKey(name: 'payrolls') List<PayrollData>? payrolls}) =
+      _Payrolls;
 
   factory Payrolls.fromJson(Map<String, dynamic> json) =>
       _$PayrollsFromJson(json);

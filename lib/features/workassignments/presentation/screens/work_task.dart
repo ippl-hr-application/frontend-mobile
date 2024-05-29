@@ -15,32 +15,34 @@ class WorkTask extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            context.go("/");
-          },
-        ),
-        flexibleSpace: const Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 40,
-              child: Center(
-                child: Text(
-                  "Task Pekerjaan",
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-              ),
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-          ],
-        ),
-      ),
+            onPressed: () {
+              context.go("/");
+            },
+          ),
+          elevation: 0,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
+              Text(
+                "Task Pekerjaan",
+                style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          )),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -68,9 +70,8 @@ class WorkTask extends ConsumerWidget {
                               endDate: data?.tasks?[index].endDate,
                               firstName:
                                   data?.tasks?[index].givenbyId?.first_name,
-                                  
-                              jobPosition: data?.tasks?[index].givenbyId?.job_position?.name
-                              );
+                              jobPosition: data?.tasks?[index].givenbyId
+                                  ?.job_position?.name);
                         }
                       },
                     );

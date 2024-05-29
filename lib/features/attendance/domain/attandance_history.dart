@@ -23,7 +23,8 @@ class DataHistory with _$DataHistory {
     @JsonKey(name: 'date') String? date,
     @JsonKey(name: 'start_time') String? startTime,
     @JsonKey(name: 'end_time') String? endTime,
-    @JsonKey(name: 'check_in_time') String? checkInTime,
+    @JsonKey(name: 'check_in_time') String? check_in_time,
+    @JsonKey(name: 'check_out_time') String? check_out_time,
   }) = _DataHistory;
 
   factory DataHistory.fromJson(Map<String, dynamic> json) =>

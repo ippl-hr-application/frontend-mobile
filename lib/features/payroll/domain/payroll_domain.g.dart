@@ -28,13 +28,11 @@ _$PayrollsImpl _$$PayrollsImplFromJson(Map<String, dynamic> json) =>
       payrolls: (json['payrolls'] as List<dynamic>?)
           ?.map((e) => PayrollData.fromJson(e as Map<String, dynamic>))
           .toList(),
-      total_wage: (json['total_wage'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$PayrollsImplToJson(_$PayrollsImpl instance) =>
     <String, dynamic>{
       'payrolls': instance.payrolls,
-      'total_wage': instance.total_wage,
     };
 
 _$PayrollDataImpl _$$PayrollDataImplFromJson(Map<String, dynamic> json) =>

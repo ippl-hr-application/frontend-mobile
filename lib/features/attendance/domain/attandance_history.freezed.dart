@@ -241,7 +241,9 @@ mixin _$DataHistory {
   @JsonKey(name: 'end_time')
   String? get endTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'check_in_time')
-  String? get checkInTime => throw _privateConstructorUsedError;
+  String? get check_in_time => throw _privateConstructorUsedError;
+  @JsonKey(name: 'check_out_time')
+  String? get check_out_time => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -260,7 +262,8 @@ abstract class $DataHistoryCopyWith<$Res> {
       @JsonKey(name: 'date') String? date,
       @JsonKey(name: 'start_time') String? startTime,
       @JsonKey(name: 'end_time') String? endTime,
-      @JsonKey(name: 'check_in_time') String? checkInTime});
+      @JsonKey(name: 'check_in_time') String? check_in_time,
+      @JsonKey(name: 'check_out_time') String? check_out_time});
 }
 
 /// @nodoc
@@ -280,7 +283,8 @@ class _$DataHistoryCopyWithImpl<$Res, $Val extends DataHistory>
     Object? date = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
-    Object? checkInTime = freezed,
+    Object? check_in_time = freezed,
+    Object? check_out_time = freezed,
   }) {
     return _then(_value.copyWith(
       attendanceId: freezed == attendanceId
@@ -299,9 +303,13 @@ class _$DataHistoryCopyWithImpl<$Res, $Val extends DataHistory>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      checkInTime: freezed == checkInTime
-          ? _value.checkInTime
-          : checkInTime // ignore: cast_nullable_to_non_nullable
+      check_in_time: freezed == check_in_time
+          ? _value.check_in_time
+          : check_in_time // ignore: cast_nullable_to_non_nullable
+              as String?,
+      check_out_time: freezed == check_out_time
+          ? _value.check_out_time
+          : check_out_time // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -320,7 +328,8 @@ abstract class _$$DataHistoryImplCopyWith<$Res>
       @JsonKey(name: 'date') String? date,
       @JsonKey(name: 'start_time') String? startTime,
       @JsonKey(name: 'end_time') String? endTime,
-      @JsonKey(name: 'check_in_time') String? checkInTime});
+      @JsonKey(name: 'check_in_time') String? check_in_time,
+      @JsonKey(name: 'check_out_time') String? check_out_time});
 }
 
 /// @nodoc
@@ -338,7 +347,8 @@ class __$$DataHistoryImplCopyWithImpl<$Res>
     Object? date = freezed,
     Object? startTime = freezed,
     Object? endTime = freezed,
-    Object? checkInTime = freezed,
+    Object? check_in_time = freezed,
+    Object? check_out_time = freezed,
   }) {
     return _then(_$DataHistoryImpl(
       attendanceId: freezed == attendanceId
@@ -357,9 +367,13 @@ class __$$DataHistoryImplCopyWithImpl<$Res>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      checkInTime: freezed == checkInTime
-          ? _value.checkInTime
-          : checkInTime // ignore: cast_nullable_to_non_nullable
+      check_in_time: freezed == check_in_time
+          ? _value.check_in_time
+          : check_in_time // ignore: cast_nullable_to_non_nullable
+              as String?,
+      check_out_time: freezed == check_out_time
+          ? _value.check_out_time
+          : check_out_time // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -373,7 +387,8 @@ class _$DataHistoryImpl implements _DataHistory {
       @JsonKey(name: 'date') this.date,
       @JsonKey(name: 'start_time') this.startTime,
       @JsonKey(name: 'end_time') this.endTime,
-      @JsonKey(name: 'check_in_time') this.checkInTime});
+      @JsonKey(name: 'check_in_time') this.check_in_time,
+      @JsonKey(name: 'check_out_time') this.check_out_time});
 
   factory _$DataHistoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$DataHistoryImplFromJson(json);
@@ -392,11 +407,14 @@ class _$DataHistoryImpl implements _DataHistory {
   final String? endTime;
   @override
   @JsonKey(name: 'check_in_time')
-  final String? checkInTime;
+  final String? check_in_time;
+  @override
+  @JsonKey(name: 'check_out_time')
+  final String? check_out_time;
 
   @override
   String toString() {
-    return 'DataHistory(attendanceId: $attendanceId, date: $date, startTime: $startTime, endTime: $endTime, checkInTime: $checkInTime)';
+    return 'DataHistory(attendanceId: $attendanceId, date: $date, startTime: $startTime, endTime: $endTime, check_in_time: $check_in_time, check_out_time: $check_out_time)';
   }
 
   @override
@@ -410,14 +428,16 @@ class _$DataHistoryImpl implements _DataHistory {
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
-            (identical(other.checkInTime, checkInTime) ||
-                other.checkInTime == checkInTime));
+            (identical(other.check_in_time, check_in_time) ||
+                other.check_in_time == check_in_time) &&
+            (identical(other.check_out_time, check_out_time) ||
+                other.check_out_time == check_out_time));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, attendanceId, date, startTime, endTime, checkInTime);
+  int get hashCode => Object.hash(runtimeType, attendanceId, date, startTime,
+      endTime, check_in_time, check_out_time);
 
   @JsonKey(ignore: true)
   @override
@@ -439,7 +459,8 @@ abstract class _DataHistory implements DataHistory {
           @JsonKey(name: 'date') final String? date,
           @JsonKey(name: 'start_time') final String? startTime,
           @JsonKey(name: 'end_time') final String? endTime,
-          @JsonKey(name: 'check_in_time') final String? checkInTime}) =
+          @JsonKey(name: 'check_in_time') final String? check_in_time,
+          @JsonKey(name: 'check_out_time') final String? check_out_time}) =
       _$DataHistoryImpl;
 
   factory _DataHistory.fromJson(Map<String, dynamic> json) =
@@ -459,7 +480,10 @@ abstract class _DataHistory implements DataHistory {
   String? get endTime;
   @override
   @JsonKey(name: 'check_in_time')
-  String? get checkInTime;
+  String? get check_in_time;
+  @override
+  @JsonKey(name: 'check_out_time')
+  String? get check_out_time;
   @override
   @JsonKey(ignore: true)
   _$$DataHistoryImplCopyWith<_$DataHistoryImpl> get copyWith =>

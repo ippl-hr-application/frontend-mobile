@@ -30,7 +30,8 @@ _$DataHistoryImpl _$$DataHistoryImplFromJson(Map<String, dynamic> json) =>
       date: json['date'] as String?,
       startTime: json['start_time'] as String?,
       endTime: json['end_time'] as String?,
-      checkInTime: json['check_in_time'] as String?,
+      check_in_time: json['check_in_time'] as String?,
+      check_out_time: json['check_out_time'] as String?,
     );
 
 Map<String, dynamic> _$$DataHistoryImplToJson(_$DataHistoryImpl instance) =>
@@ -39,5 +40,6 @@ Map<String, dynamic> _$$DataHistoryImplToJson(_$DataHistoryImpl instance) =>
       'date': instance.date,
       'start_time': instance.startTime,
       'end_time': instance.endTime,
-      'check_in_time': instance.checkInTime,
+      'check_in_time': instance.check_in_time,
+      'check_out_time': instance.check_out_time,
     };

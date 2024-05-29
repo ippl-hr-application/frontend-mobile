@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter/widgets.dart';
+import 'package:meraih_mobile/features/payroll/domain/payroll_domain.dart';
 import 'package:meraih_mobile/features/payroll/presentation/provider/payroll_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/features/payroll/presentation/widget/card_payroll.dart';
@@ -16,41 +17,51 @@ class PayrollPage extends ConsumerStatefulWidget {
 }
 
 class _PayrollPageState extends ConsumerState<PayrollPage> {
-  String year = 'Pilih Tahun';
+  late String year;
+  late Future<dynamic> payrollData;
   DateTime _selectedYear = DateTime.now();
 
   @override
+  void initState() {
+    super.initState();
+    final currentDate = DateTime.now();
+    year = currentDate.year.toString();
+    _fetchData();
+  }
+
+  void _fetchData() {
+    payrollData = ref.read(payrollProvider({'year': year}).future);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(year);
-    final payrollHistory = ref.read(payrollProvider({'year': year}));
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              context.go('/');
-            },
-          ),
-          flexibleSpace: const Stack(
-            children: [
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 40,
-                child: Center(
-                  child: Text(
-                    "Pengajuan Izin",
-                    style: TextStyle(fontSize: 18.0, color: Colors.white),
-                  ),
-                ),
+            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+            centerTitle: true,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
               ),
-            ],
-          ),
-        ),
+              onPressed: () {
+                context.go("/");
+              },
+            ),
+            elevation: 0,
+            title: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
+                Text(
+                  "Slip Gaji",
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+              ],
+            )),
         body: Container(
           child: Column(
             children: [
@@ -90,45 +101,117 @@ class _PayrollPageState extends ConsumerState<PayrollPage> {
                   ),
                 ),
               ),
-
+              const SizedBox(height: 10.0),
               Container(
-                padding: EdgeInsets.only(
-                    top: 16.0, left: 20.0, right: 20.0, bottom: 0.0),
-                child: PayrollItem(),
+                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300, width: 0.5),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Color.fromRGBO(32, 81, 229, 1),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(12.0),
+                            topRight: Radius.circular(12.0),
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 10.0),
+                        // color: const Color.fromRGBO(32, 81, 229, 1),
+                        child: Table(
+                          columnWidths: const {
+                            0: FlexColumnWidth(1),
+                            1: FlexColumnWidth(1),
+                            2: FlexColumnWidth(1),
+                          },
+                          border: const TableBorder(
+                            horizontalInside:
+                                BorderSide(color: Colors.white, width: 0.5),
+                          ),
+                          children: const [
+                            TableRow(children: [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Bulan",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Status",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Total",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ])
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: FutureBuilder(
+                            future: payrollData,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                if (snapshot.data.isEmpty) {
+                                  return Center(
+                                    child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 20.0, horizontal: 0.0),
+                                        child: Text("Belum Ada History Gaji")),
+                                  );
+                                } else {
+                                  return ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.data.length,
+                                      itemBuilder: (context, int index) {
+                                        return PayrollItem(
+                                          month: snapshot.data[index].month,
+                                          status: snapshot.data[index].status,
+                                          wage: snapshot.data[index].wage,
+                                        );
+                                      });
+                                }
+                              }
+                            }),
+                      )
+                    ],
+                  ),
+                ),
               )
-
-              // Container(
-              //   child: payrollHistory.when(
-              //     data: (data) {
-              //       final payrolls = data.data?.payrolls ?? [];
-
-              //       if (payrolls == null || payrolls.isEmpty) {
-              //         return const Center(
-              //           child: Text(
-              //             "Gaji tidak ditemukan",
-              //           ),
-              //         );
-              //       } else {
-              //         return ListView.builder(
-              //           scrollDirection: Axis.vertical,
-              //           shrinkWrap: true,
-              //           itemCount: payrolls.length,
-              //           itemBuilder: (context, int index) {
-
-              //             return PayrollItem(
-              //               month: payroll[index].
-
-              //               );
-              //           },
-              //         );
-              //       }
-              //     },
-              //     error: (error, stackTrace) =>
-              //         Center(child: Text('Error: $error')),
-              //     loading: () =>
-              //         const Center(child: CircularProgressIndicator()),
-              //   ),
-              // )
             ],
           ),
         )
@@ -161,6 +244,7 @@ class _PayrollPageState extends ConsumerState<PayrollPage> {
                       setState(() {
                         _selectedYear = dateTime;
                         year = "${dateTime.year}";
+                        _fetchData();
                       });
                       Navigator.pop(context);
                     },

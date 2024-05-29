@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'annoucment_service.dart';
+part of 'request_attandance_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'annoucment_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AnnouncmentRepository implements AnnouncmentRepository {
-  _AnnouncmentRepository(
+class _RequestAttandanceRepository implements RequestAttandanceRepository {
+  _RequestAttandanceRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,23 +21,41 @@ class _AnnouncmentRepository implements AnnouncmentRepository {
   String? baseUrl;
 
   @override
-  Future<AnnoucmentResponse> getAnnouncment(
-    String companyId,
-    int page,
+  Future<AttandanceRequest> postRequestAttandance(
+    int attendanceId,
+    String reason,
+    File attendance_submission_file,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'page': page};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'attendance_id',
+      attendanceId.toString(),
+    ));
+    _data.fields.add(MapEntry(
+      'reason',
+      reason,
+    ));
+    _data.files.add(MapEntry(
+      'attendance_submission_file',
+      MultipartFile.fromFileSync(
+        attendance_submission_file.path,
+        filename:
+            attendance_submission_file.path.split(Platform.pathSeparator).last,
+      ),
+    ));
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<AnnoucmentResponse>(Options(
-      method: 'GET',
+        .fetch<Map<String, dynamic>>(_setStreamType<AttandanceRequest>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
-              '/announcement/${companyId}/branch',
+              '/submission/attendance',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -46,7 +64,7 @@ class _AnnouncmentRepository implements AnnouncmentRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = AnnoucmentResponse.fromJson(_result.data!);
+    final value = AttandanceRequest.fromJson(_result.data!);
     return value;
   }
 
