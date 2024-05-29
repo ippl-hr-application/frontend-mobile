@@ -207,7 +207,10 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                           child: FormBuilderDropdown(
                             name: 'cabang',
                             validator: (value) {
-                              if (value == null) {
+                              print(value);
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value == '') {
                                 return "Cabang tidak boleh kosong";
                               }
                             },
@@ -446,14 +449,10 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                   showFileName = '';
                 });
               }
+
               if (_formKey.currentState!.saveAndValidate() &&
                   filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;
-
-                print(formData['keterangan']);
-                print(selectTargetBranch);
-                print(File(filePickerResult!.files.first.path ?? ''));
-                print(homeHistoryData.asData!.value!.companyBranchId);
 
                 // Memeriksa apakah nilai 'keterangan' tidak kosong
 
