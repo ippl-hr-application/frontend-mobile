@@ -25,21 +25,12 @@ class AlertDeleteSubmission extends ConsumerWidget {
         ),
         CupertinoDialogAction(
           isDestructiveAction: true,
-          onPressed: () async {
-            final success = await handleDeleteSubmission(ref, submissionId!);
-            if (success) {
-              // Muat ulang data di halaman submission
-              ref.invalidate(submissionProvider);
+          onPressed: () {
+            handleDeleteSubmission(ref, submissionId!);
+            // ref.watch(submissionProvider as ProviderListenable);
 
-              // Navigasikan kembali ke halaman /submission
-              // ignore: use_build_context_synchronously
-              Navigator.popUntil(context, ModalRoute.withName('/submission'));
-            } else {
-              // Tampilkan pesan kesalahan atau lakukan sesuatu jika penghapusan gagal
-              print('Failed to delete submission');
-            }
             // print(submissionId);
-            // Navigator.pop(context);
+            Navigator.pop(context);
           },
           child: const Text('Yes'),
         ),

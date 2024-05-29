@@ -4,7 +4,6 @@ import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/request_attandance.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/request_attandance.dart';
-import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
 import 'package:meraih_mobile/features/payroll/presentation/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/DaftarPengajuanPage.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
@@ -190,14 +189,6 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: PayrollPage(),
-          );
-        },
-      ),
-      GoRoute(
-        path: '/notifications',
-        pageBuilder: (context, state) {
-          return const NoTransitionPage(
-            child: Notif_Page(),
           );
         },
       ),
