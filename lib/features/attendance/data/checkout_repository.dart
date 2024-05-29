@@ -13,7 +13,7 @@ abstract class CheckoutRepository {
   @POST('/attendance/check-out')
   @MultiPart()
   Future<CheckoutResponse> postCheckout(
-    @Part(name: 'attandance_id') String attandance_id,
+    @Part(name: 'attendance_id') int? attandance_id,
     @Part(name: 'attendance_file') File attendance_file,
   );
 }

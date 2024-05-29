@@ -22,17 +22,20 @@ class _CheckoutRepository implements CheckoutRepository {
 
   @override
   Future<CheckoutResponse> postCheckout(
-    String attandance_id,
+    int? attandance_id,
     File attendance_file,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = FormData();
-    _data.fields.add(MapEntry(
-      'attandance_id',
-      attandance_id,
-    ));
+    if (attandance_id != null) {
+      _data.fields.add(MapEntry(
+        'attendance_id',
+        attandance_id.toString(),
+      ));
+    }
     _data.files.add(MapEntry(
       'attendance_file',
       MultipartFile.fromFileSync(

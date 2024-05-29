@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
@@ -73,6 +71,7 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
             child: FormBuilder(
                 key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -290,13 +289,13 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                              width: 1.0,
-                              color: Color.fromARGB(255, 186, 186, 186)),
-                        ),
-                      ),
+                      // decoration: const BoxDecoration(
+                      //   border: Border(
+                      //     bottom: BorderSide(
+                      //         width: 1.0,
+                      //         color: Color.fromARGB(255, 186, 186, 186)),
+                      //   ),
+                      // ),
                       child: Row(
                         children: [
                           Container(
@@ -387,6 +386,23 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                         ],
                       ),
                     ),
+                    if (errorMessage.isNotEmpty)
+                      Padding(
+                        padding: EdgeInsets.only(left: 75.0),
+                        child: Text(
+                          errorMessage,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 1.0,
+                              color: Color.fromARGB(255, 186, 186, 186)),
+                        ),
+                      ),
+                    ),
                   ],
                 )),
           ),
@@ -397,6 +413,12 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
+                if (filePickerResult == null) {
+                  setState(() {
+                    errorMessage = 'Pilih file terlebih dahulu!';
+                    showFileName = '';
+                  });
+                }
                 if (_formKey.currentState!.saveAndValidate()) {
                   Map<String, dynamic> formData = _formKey.currentState!.value;
                   print(attendanceId);

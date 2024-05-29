@@ -32,9 +32,9 @@ class Profile extends ConsumerWidget {
                   SizedBox(
                     width: double.infinity,
                     child: CardProfile(
-                        firstName: data?.firstName,
-                        lastName: data?.lastName,
-                        positon: data?.jobPosition?.name),
+                        firstName: data?.user?.firstName,
+                        lastName: data?.user?.lastName,
+                        positon: data?.user?.jobPosition?.name),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(

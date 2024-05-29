@@ -9,6 +9,6 @@ part 'profile_service.g.dart';
 @RestApi(baseUrl: AppConfigs.baseUrl)
 abstract class ProfileRepository {
   factory ProfileRepository(Dio dio, {String baseUrl}) = _ProfileRepository;
-  @GET('/profile')
+  @GET('/auth/me')
   Future<ProfileResponse> getProfile();
 }
