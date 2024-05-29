@@ -13,7 +13,7 @@ class _ForgetpasswordRepository implements ForgetpasswordRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://jzgp086z-3000.asse.devtunnels.ms/';
+    baseUrl ??= 'http://27.112.79.44/';
   }
 
   final Dio _dio;

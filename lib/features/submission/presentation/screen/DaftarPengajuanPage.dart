@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:meraih_mobile/data/bottom_bar.dart';
 import 'package:meraih_mobile/models/buttom_app_model.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
@@ -22,15 +24,31 @@ class DaftarPengajuanScreen extends ConsumerStatefulWidget {
 }
 
 class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
-  String showYearMonth = 'Pilih Bulan dan Tahun !';
+  String formatCurrentMonthYear(String showYearMonth) {
+  DateTime now = DateTime.now();
+  return DateFormat('MM/yyyy').format(now);
+}
+
   DateTime _selectedYearMonth = DateTime.now();
   String year = DateTime.now().year.toString();
   String month = DateTime.now().month.toString().padLeft(2, '0');
-  String status = 'PENDING';
+  String status = '';
+  
+  String showYearMonth = DateTime.now().toString().padLeft(2, '0');
+  late Future<dynamic> submissionHistoryData;
 
   @override
   void initState() {
     super.initState();
+    _fetchData();
+  }
+
+  void _fetchData() {
+    submissionHistoryData = ref.read(submissionProvider({
+      'year': year,
+      'month': month,
+      'status': status,
+    }).future);
   }
 
   Future<void> _selectYearMonth(BuildContext context) async {
@@ -46,214 +64,219 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
         year = picked.year.toString();
         month = picked.month.toString().padLeft(2, '0');
         showYearMonth = "${picked.year}/${picked.month.toString().padLeft(2, '0')}";
+        _fetchData();
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(month);
+    Future<void> _refresh() async {
+      _fetchData();
+      setState(() {});
+      await Future.delayed(Duration());
+    }
 
-    final submissionHistoryData = ref.read(submissionProvider({
-      'year': year,
-      'month': month,
-      'status': status,
-    }));
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        title: const Center(
-            child: Text(
-          "Pengajuan",
-          style: TextStyle(
-              fontSize: 24.0, color: Colors.white, fontWeight: FontWeight.w500),
-        )),
-      ),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            height: 60.0,
-            decoration:
-                const BoxDecoration(color: Color.fromRGBO(32, 81, 229, 1)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black, width: 0.8),
-                        borderRadius: BorderRadius.circular(8)),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 4.0, horizontal: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          showYearMonth,
-                          style: const TextStyle(
-                              fontSize: 18.0, fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                _selectYearMonth(context);
-                              },
-                              child: const Icon(Icons.calendar_month),
-                            ),
-                            const SizedBox(width: 10.0),
-                          ],
-                        )
-                      ],
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+          title: const Center(
+              child: Text(
+            "Pengajuan",
+            style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w500),
+          )),
+        ),
+        body: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              height: 60.0,
+              decoration:
+                  const BoxDecoration(color: Color.fromRGBO(32, 81, 229, 1)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black, width: 0.8),
+                          borderRadius: BorderRadius.circular(8)),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            formatCurrentMonthYear(showYearMonth),
+                            style: const TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                          ),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                
+                                onTap: () {
+                                  _selectYearMonth(context);
+                                },
+                                child: const Icon(Icons.calendar_month),
+                              ),
+                              const SizedBox(width: 10.0),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 20.0),
-                CustomIconButton(
-                    height: 38,
-                    width: 44,
-                    onTap: () {
-                      onTapBtnPrefixIcon(context);
+                  const SizedBox(width: 20.0),
+                  CustomIconButton(
+                      height: 38,
+                      width: 44,
+                      onTap: () {
+                        onTapBtnPrefixIcon(context);
+                      },
+                      child: const Icon(Icons.filter_list_alt)),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                  padding: const EdgeInsets.all(16.0),
+                  child: FutureBuilder(
+                    future: submissionHistoryData,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, int index) {
+                              return SubmissionItem(
+                                submissionId:
+                                    snapshot.data[index].submission_id,
+                                submissionDate:
+                                    snapshot.data[index].submission_date,
+                                status: snapshot.data[index].status,
+                                type: snapshot.data[index].type,
+                              );
+                            });
+                      }
                     },
-                    child: const Icon(Icons.filter_list_alt)),
-              ],
+                  )),
             ),
-          ),
-          Expanded(
-            child: Container(
-                padding: const EdgeInsets.all(16.0),
-                child: submissionHistoryData.when(
-                  data: (data) {
-                    if (data == null || data.isEmpty) {
-                      return const Center(
-                        child: Text(
-                          "Anda belum Melakukan pengajuan",
-                        ),
-                      );
-                    } else {
-                      return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: data.length,
-                        itemBuilder: (context, int index) {
-                          return SubmissionItem(
-                            submissionId: data[index].submission_id,
-                            submissionDate: data[index].submission_date,
-                            status: data[index].status,
-                            type: data[index].type,
-                          );
-                        },
-                      );
-                    }
-                  },
-                  error: (error, stackTrace) =>
-                      Center(child: Text('Error: $error')),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                )),
-          ),
-        ],
+          ],
+        ),
+        floatingActionButton: SpeedDial(
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+          animatedIcon: AnimatedIcons.menu_close,
+          children: [
+            SpeedDialChild(
+              onTap: () {
+                context.go('/izin');
+              },
+              child: const Icon(
+                Icons.note_alt_outlined,
+                color: Colors.white,
+              ),
+              label: 'Izin',
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+              backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+              shape: const CircleBorder(),
+            ),
+            SpeedDialChild(
+              onTap: () {
+                context.go('/cuti');
+              },
+              child: const Icon(
+                Icons.date_range_outlined,
+                color: Colors.white,
+              ),
+              label: 'Cuti',
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+              backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+              shape: const CircleBorder(),
+            ),
+            SpeedDialChild(
+              onTap: () {
+                context.go('/sick');
+              },
+              child: const Icon(
+                Icons.health_and_safety_outlined,
+                color: Colors.white,
+              ),
+              label: 'Sakit',
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+              backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+              shape: const CircleBorder(),
+            ),
+            SpeedDialChild(
+              onTap: () {
+                context.go('/resign');
+              },
+              child: const Icon(
+                Icons.leave_bags_at_home_outlined,
+                color: Colors.white,
+              ),
+              label: 'Resign',
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+              backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+              shape: const CircleBorder(),
+            ),
+            SpeedDialChild(
+              onTap: () {
+                context.go('/change-shift');
+              },
+              child: const Icon(
+                Icons.swap_horiz,
+                color: Colors.white,
+              ),
+              label: 'Ganti Shift',
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+              backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+              shape: const CircleBorder(),
+            ),
+            SpeedDialChild(
+              onTap: () {
+                context.go('/mutasi');
+              },
+              child: const Icon(
+                Icons.swap_horiz,
+                color: Colors.white,
+              ),
+              label: 'Mutasi',
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+              backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+              shape: const CircleBorder(),
+            ),
+          ],
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          selectedIndex: 1,
+        ),
       ),
-      floatingActionButton: SpeedDial(
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        animatedIcon: AnimatedIcons.menu_close,
-        children: [
-          SpeedDialChild(
-            onTap: () {
-              context.go('/izin');
-            },
-            child: const Icon(
-              Icons.note_alt_outlined,
-              color: Colors.white,
-            ),
-            label: 'Izin',
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-            shape: const CircleBorder(),
-          ),
-          SpeedDialChild(
-            onTap: () {
-              context.go('/cuti');
-            },
-            child: const Icon(
-              Icons.date_range_outlined,
-              color: Colors.white,
-            ),
-            label: 'Cuti',
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-            shape: const CircleBorder(),
-          ),
-          SpeedDialChild(
-            onTap: () {
-              context.go('/sick');
-            },
-            child: const Icon(
-              Icons.health_and_safety_outlined,
-              color: Colors.white,
-            ),
-            label: 'Sakit',
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-            shape: const CircleBorder(),
-          ),
-          SpeedDialChild(
-            onTap: () {
-              context.go('/resign');
-            },
-            child: const Icon(
-              Icons.leave_bags_at_home_outlined,
-              color: Colors.white,
-            ),
-            label: 'Resign',
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-            shape: const CircleBorder(),
-          ),
-          SpeedDialChild(
-            onTap: () {
-              context.go('/change-shift');
-            },
-            child: const Icon(
-              Icons.leave_bags_at_home_outlined,
-              color: Colors.white,
-            ),
-            label: 'Ganti Shift',
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-            shape: const CircleBorder(),
-          ),
-          SpeedDialChild(
-            onTap: () {
-              context.go('/mutasi');
-            },
-            child: const Icon(
-              Icons.leave_bags_at_home_outlined,
-              color: Colors.white,
-            ),
-            label: 'Mutasi',
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
-            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-            shape: const CircleBorder(),
-          ),
-        ],
-      ),
-      bottomNavigationBar: const ButtomBar(),
     );
   }
 
@@ -268,6 +291,7 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
             onFilterChanged: (newStatus) {
               setState(() {
                 status = newStatus;
+                _fetchData();
               });
             },
           ),

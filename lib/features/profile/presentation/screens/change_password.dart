@@ -17,7 +17,8 @@ class _ChangePasswordState extends ConsumerState<ChangePassword> {
   bool _isObscured = true;
   final TextEditingController _oldPasswordController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   void _showAlert(String title, String message, VoidCallback onPressed) {
     showDialog(

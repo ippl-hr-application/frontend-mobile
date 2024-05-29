@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/submission/presentation/providers/delete_submission_provider.dart';
+import 'package:meraih_mobile/features/submission/presentation/providers/submission_provider.dart';
 
 class AlertDeleteSubmission extends ConsumerWidget {
   final String? type;
@@ -26,7 +27,9 @@ class AlertDeleteSubmission extends ConsumerWidget {
           isDestructiveAction: true,
           onPressed: () {
             handleDeleteSubmission(ref, submissionId!);
-            print(submissionId);
+            // ref.watch(submissionProvider as ProviderListenable);
+
+            // print(submissionId);
             Navigator.pop(context);
           },
           child: const Text('Yes'),

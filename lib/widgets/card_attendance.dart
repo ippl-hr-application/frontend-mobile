@@ -65,7 +65,7 @@ class CardAttendance extends StatelessWidget {
                   ),
                   const SizedBox(height: 6.0),
                   Text(
-                    jobPosition.toString(),
+                    jobPosition.toString().toUpperCase(),
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w500,
@@ -147,7 +147,7 @@ class CardAttendance extends StatelessWidget {
                                 color: Color.fromRGBO(79, 199, 177, 1),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0))
-                                // border: Border.all(color: Colors.black, width: 1.0)
+                                
                                 ),
                             child: const Text('CHECK IN')))
                     : TextButton(

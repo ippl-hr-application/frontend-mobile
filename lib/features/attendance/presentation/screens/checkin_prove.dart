@@ -26,7 +26,7 @@ class CheckinProve extends StatelessWidget {
             const Expanded(
               child: Center(
                 child: Text(
-                  'Check In - Bukti Kehadiran',
+                  'Bukti Kehadiran',
                   style: TextStyle(color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
@@ -55,6 +55,7 @@ class _CameraViewState extends ConsumerState<CameraView> {
   String _currentDateTime = '';
   late TextEditingController _locationController;
   late TextEditingController _descriptionController;
+  int _selectedCameraIndex = 0;
 
   @override
   void initState() {
@@ -77,7 +78,7 @@ class _CameraViewState extends ConsumerState<CameraView> {
       _cameras = await availableCameras();
       if (_cameras!.isNotEmpty) {
         _controller = CameraController(
-          _cameras![0],
+          _cameras![_selectedCameraIndex],
           ResolutionPreset.high,
         );
         _initializeControllerFuture = _controller!.initialize().then((_) {
@@ -112,7 +113,20 @@ class _CameraViewState extends ConsumerState<CameraView> {
     }
   }
 
+  Future<void> _switchCamera() async {
+    if (_cameras != null && _cameras!.length > 1) {
+      _selectedCameraIndex = (_selectedCameraIndex + 1) % _cameras!.length;
+      await _initializeCamera();
+      setState(() {});
+    }
+  }
+
   Future<void> _takePicture() async {
+    if (_locationController.text.isEmpty) {
+      _showValidationError(context, 'Lokasi harus diisi sebelum mengambil foto ! - Silahkan buka halaman Lokasi terlebih dahulu.');
+      return;
+    }
+
     if (_controller != null && _controller!.value.isInitialized) {
       try {
         await _initializeControllerFuture;
@@ -140,12 +154,12 @@ class _CameraViewState extends ConsumerState<CameraView> {
     return location == 'Terjangkau' || location == 'Tidak Terjangkau';
   }
 
-  void _showValidationError(BuildContext context) {
+  void _showValidationError(BuildContext context, [String? message]) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Error'),
-        content: const Text(
+        content: Text(message ??
             'Lokasi harus diisi dengan nilai "Terjangkau" atau "Tidak Terjangkau" dari data Checkin Map.'),
         actions: [
           TextButton(
@@ -184,10 +198,6 @@ class _CameraViewState extends ConsumerState<CameraView> {
 
     if (_locationController.text != cameraState.location) {
       _locationController.text = cameraState.location;
-    }
-
-    if (_descriptionController.text != cameraState.description) {
-      _descriptionController.text = cameraState.description;
     }
 
     return Stack(
@@ -230,21 +240,7 @@ class _CameraViewState extends ConsumerState<CameraView> {
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
-              TextField(
-                controller: _descriptionController,
-                onChanged: (value) {
-                  ref.read(cameraStateProvider.notifier).setDescription(value);
-                },
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Keterangan Tambahan',
-                  labelStyle: TextStyle(color: Colors.white),
-                  filled: true,
-                  fillColor: Color.fromRGBO(32, 81, 229, 0.5),
-                ),
-              ),
+              
               const SizedBox(height: 8),
               Text(
                 'Waktu: $_currentDateTime',
@@ -272,13 +268,25 @@ class _CameraViewState extends ConsumerState<CameraView> {
                 child: Icon(_isFlashOn ? Icons.flash_on : Icons.flash_off),
               ),
               ElevatedButton(
-                onPressed: _takePicture,
+                onPressed: _locationController.text.isEmpty
+                    ? () => _showValidationError(
+                        context, 'Lokasi harus diisi sebelum mengambil foto.')
+                    : _takePicture,
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   backgroundColor: const Color.fromARGB(255, 175, 219, 255),
                   padding: const EdgeInsets.all(20),
                 ),
                 child: const Icon(Icons.camera, size: 30),
+              ),
+              ElevatedButton(
+                onPressed: _switchCamera,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  backgroundColor: const Color.fromARGB(255, 175, 219, 255),
+                  padding: const EdgeInsets.all(20),
+                ),
+                child: const Icon(Icons.switch_camera, size: 30),
               ),
               ElevatedButton(
                 onPressed: () async {

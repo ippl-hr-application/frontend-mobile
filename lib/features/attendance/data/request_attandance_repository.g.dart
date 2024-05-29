@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'attandance_submission_repository.dart';
+part of 'request_attandance_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'attandance_submission_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
-  _AttandanceHistoryRepository(
+class _RequestAttandanceRepository implements RequestAttandanceRepository {
+  _RequestAttandanceRepository(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,10 +21,10 @@ class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
   String? baseUrl;
 
   @override
-  Future<AttandanceHistoryData> postAttandanceHistory(
-    String attendanceId,
+  Future<AttandanceRequest> postRequestAttandance(
+    int attendanceId,
     String reason,
-    File attendanceSubmissionFile,
+    File attendance_submission_file,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -32,22 +32,22 @@ class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
     final _data = FormData();
     _data.fields.add(MapEntry(
       'attendance_id',
-      attendanceId,
+      attendanceId.toString(),
     ));
     _data.fields.add(MapEntry(
       'reason',
       reason,
     ));
     _data.files.add(MapEntry(
-      ' attendance_submission_file',
+      'attendance_submission_file',
       MultipartFile.fromFileSync(
-        attendanceSubmissionFile.path,
+        attendance_submission_file.path,
         filename:
-            attendanceSubmissionFile.path.split(Platform.pathSeparator).last,
+            attendance_submission_file.path.split(Platform.pathSeparator).last,
       ),
     ));
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AttandanceHistoryData>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<AttandanceRequest>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -55,7 +55,7 @@ class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
     )
             .compose(
               _dio.options,
-              '/submission',
+              '/submission/attendance',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -64,7 +64,7 @@ class _AttandanceHistoryRepository implements AttandanceHistoryRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = AttandanceHistoryData.fromJson(_result.data!);
+    final value = AttandanceRequest.fromJson(_result.data!);
     return value;
   }
 

@@ -10,6 +10,9 @@ part 'annoucment_service.g.dart';
 abstract class AnnouncmentRepository {
   factory AnnouncmentRepository(Dio dio, {String baseUrl}) =
       _AnnouncmentRepository;
-  @GET('/announcement/branch')
-  Future<AnnoucmentResponse> getAnnouncment();
+  @GET('/announcement/{companyId}/branch')
+  Future<AnnoucmentResponse> getAnnouncment(
+    @Path() String companyId,
+    @Query('page') int page,
+  );
 }

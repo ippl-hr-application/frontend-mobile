@@ -27,7 +27,10 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
   Future<void> fetchAttendanceData(DateTime selectedMonth) async {
     final month = selectedMonth.month;
     final year = selectedMonth.year;
-    final response = await ref.read(attandanceRecapProvider({'month': month.toString().padLeft(2, '0'), 'year': year.toString()}).future);
+    final response = await ref.read(attandanceRecapProvider({
+      'month': month.toString().padLeft(2, '0'),
+      'year': year.toString(),
+    }).future);
 
     if (response != null && response.detail != null) {
       final newStatusMap = <DateTime, bool>{};
@@ -41,23 +44,18 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final filteredStatusMap = statusMap.entries.where((entry) {
-      return entry.key.year == _selectedMonth?.year && entry.key.month == _selectedMonth?.month;
+      return entry.key.year == _selectedMonth?.year &&
+          entry.key.month == _selectedMonth?.month;
     }).map((entry) => entry.value).toList();
 
     int presentCount = filteredStatusMap.where((status) => status == true).length;
     int absentCount = filteredStatusMap.where((status) => status == false).length;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Attendance List'),
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-      ),
-      body: Padding(
+    return 
+      Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +114,6 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
                   shape: BoxShape.circle,
                 ),
                 selectedTextStyle: TextStyle(color: Colors.white),
-                
                 outsideDaysVisible: true,
                 outsideTextStyle: TextStyle(color: Colors.grey),
                 cellMargin: EdgeInsets.all(2),
@@ -164,10 +161,8 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
                 fetchAttendanceData(focusedDay);
               },
             ),
-            
           ],
         ),
-      ),
     );
   }
 }

@@ -70,7 +70,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
 
       setState(() {
         _distance = distance;
-        _status = distance <= 9999999999999 ? 'Terjangkau' : 'Tidak Terjangkau';
+        _status = distance <= 10000000000 ? 'Terjangkau' : 'Tidak Terjangkau';
       });
     }
   }
@@ -115,18 +115,18 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                   print(branch);
                   if (branch == null ||
                       branch.latitude == null ||
-                      branch.longitude == null) {
-                    return _buildMap(branch?.latitude, branch?.longitude, branch?.hqInitial,
+                      branch.longitute == null) {
+                    return _buildMap(branch?.latitude, branch?.longitute, branch?.hqInitial,
                         branch?.city, branch?.province, branch?.address, null);
                   }
 
                   _customMarkerLocation =
-                      LatLng(branch.latitude!, branch.longitude!);
+                      LatLng(branch.latitude!, branch.longitute!);
                   _updateStatus();
 
                   return _buildMap(
                       branch.latitude,
-                      branch.longitude,
+                      branch.longitute,
                       branch.hqInitial,
                       branch.city,
                       branch.province,
@@ -143,10 +143,10 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
     );
   }
 
-  Widget _buildMap(double? latitude, double? longitude, String? hqInitial,
+  Widget _buildMap(double? latitude, double? longitute, String? hqInitial,
       String? city, String? province, String? address, Branch? branch) {
-    _customMarkerLocation = latitude != null && longitude != null
-        ? LatLng(latitude, longitude)
+    _customMarkerLocation = latitude   != null && longitute != null
+        ? LatLng(latitude, longitute)
         : null;
 
     return Stack(
@@ -321,7 +321,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                 child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      'Address: ${longitute ?? "null"}',
+                      'Longitude: ${longitute ?? "null"}',
                       style:
                           const TextStyle(fontSize: 18.0, color: Colors.black),
                     )),

@@ -9,11 +9,17 @@ final announcmentProvider = FutureProvider((ref) async {
   final dio = Dio();
   final token = ref.watch(authTokenProvider);
   dio.options.headers['Authorization'] = 'Bearer $token';
+  final home = ref.watch(homeProvider);
+
+  final companyId = home.value!.companyBranchId.toString();
+
+  int page = 1;
 
   final announcmentRepository = AnnouncmentRepository(dio);
 
   try {
-    final announcmentHistory = await announcmentRepository.getAnnouncment();
+    final announcmentHistory =
+        await announcmentRepository.getAnnouncment(companyId, page);
     return announcmentHistory.data;
   } on DioException {
     rethrow;

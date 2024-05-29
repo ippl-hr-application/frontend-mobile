@@ -4,8 +4,8 @@ import 'package:meraih_mobile/features/payroll/data/payroll_repository.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 
-final payrollProvider = FutureProvider.autoDispose
-    .family<dynamic, Map<String, dynamic>>((ref, params) async {
+final payrollProvider =
+    FutureProvider.family<dynamic, Map<String, dynamic>>((ref, params) async {
   final dio = Dio();
 
   final token = ref.watch(authTokenProvider);
@@ -22,7 +22,8 @@ final payrollProvider = FutureProvider.autoDispose
         await payrollRepository.getPayrollHistory(companyId, year);
 
     if (payrollHistory.success == true) {
-      return payrollHistory.data;
+      print(payrollHistory);
+      return payrollHistory.data?.payrolls;
     }
   } on DioException {
     rethrow;

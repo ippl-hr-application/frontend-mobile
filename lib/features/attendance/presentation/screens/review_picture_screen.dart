@@ -19,17 +19,14 @@ class ReviewPictureScreen extends ConsumerWidget {
       BuildContext context, WidgetRef ref) async {
     final cameraState = ref.watch(cameraStateProvider);
 
-    // Simulate a post request
     handleCheckin(
         ref,
         CheckinRequest(
           attendance_file: File(cameraState.imagePath ?? ''),
         ));
 
-    // Clear the state after posting
     ref.read(cameraStateProvider.notifier).clear();
 
-    // Navigate to the success page
     context.go('/checkin-success');
   }
 
@@ -37,7 +34,6 @@ class ReviewPictureScreen extends ConsumerWidget {
       BuildContext context, WidgetRef ref) async {
     final cameraState = ref.watch(cameraStateProvider);
 
-    // Simulate a post request
     await Future.delayed(const Duration(seconds: 2));
 
     handleCheckout(
@@ -46,11 +42,27 @@ class ReviewPictureScreen extends ConsumerWidget {
           attendance_file: File(cameraState.imagePath ?? ''),
         ));
 
-    // Clear the state after posting
     ref.read(cameraStateProvider.notifier).clear();
 
-    // Navigate to the success page
     context.go('/checkout-success');
+  }
+
+  void _showNotReachableAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text('Anda tidak terjangkau dari perusahaan'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -74,7 +86,7 @@ class ReviewPictureScreen extends ConsumerWidget {
       formattedTimestamp = DateFormat('EEEE, d MMMM yyyy, HH:mm:ss')
           .format(cameraState.timestamp!);
     }
-    print(cameraState.imagePath);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
@@ -125,32 +137,22 @@ class ReviewPictureScreen extends ConsumerWidget {
                     children: [
                       Text(
                         'Lokasi:',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 4),
                       Text(
                         cameraState.location,
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Keterangan Tambahan:',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        cameraState.description,
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'Waktu Pengambilan Foto:',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 4),
                       Text(
                         formattedTimestamp,
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
@@ -165,12 +167,13 @@ class ReviewPictureScreen extends ConsumerWidget {
                           ? SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () async {
-                                  await _postCheckInToBackend(context, ref);
-                                },
+                                onPressed: cameraState.location == 'Tidak Terjangkau'
+                                    ? () => _showNotReachableAlert(context)
+                                    : () async {
+                                        await _postCheckInToBackend(context, ref);
+                                      },
                                 style: ElevatedButton.styleFrom(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 16),
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -187,12 +190,13 @@ class ReviewPictureScreen extends ConsumerWidget {
                           : SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () async {
-                                  await _postCheckOutToBackend(context, ref);
-                                },
+                                onPressed: cameraState.location == 'Tidak Terjangkau'
+                                    ? () => _showNotReachableAlert(context)
+                                    : () async {
+                                        await _postCheckOutToBackend(context, ref);
+                                      },
                                 style: ElevatedButton.styleFrom(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 16),
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),

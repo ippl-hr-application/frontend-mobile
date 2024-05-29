@@ -1,57 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ButtomBar extends StatefulWidget {
-  const ButtomBar({super.key});
+class CustomBottomNavigationBar extends StatefulWidget {
+  final int selectedIndex;
+  const CustomBottomNavigationBar({required this.selectedIndex});
 
   @override
-  State<ButtomBar> createState() => _ButtomBarState();
+  _CustomBottomNavigationBarState createState() =>
+      _CustomBottomNavigationBarState();
 }
 
-class _ButtomBarState extends State<ButtomBar> {
-  int _currentIndex = 0;
-
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    _handleNavigation(context, index);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.blue,
-      currentIndex: _currentIndex,
-      onTap: _onItemTapped,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Beranda',
-        ),
-        // BottomNavigationBarItem(
-        //   icon: Icon(Icons.notifications),
-        //   label: 'Notifikasi',
-        // ),
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.content_paste_sharp,
-          ),
-          label: 'pengajuan',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Pengaturan',
-        )
-      ],
-    );
-  }
-
-  void _handleNavigation(BuildContext context, int index) {
-    // setState(() {
-    //   _currentIndex = index;
-    // });
+    if (index == widget.selectedIndex)
+      return; // Skip if the selected index is the same
     switch (index) {
       case 0:
         context.go('/');
@@ -62,12 +24,29 @@ class _ButtomBarState extends State<ButtomBar> {
       case 2:
         context.go('/profile');
         break;
-      default:
-        break;
     }
+  }
 
-    // setState(() {
-    //   _currentIndex = index;
-    // });
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.content_paste_sharp),
+          label: 'Pengajuan',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
+        ),
+      ],
+      currentIndex: widget.selectedIndex,
+      selectedItemColor: Colors.blue,
+      onTap: _onItemTapped,
+    );
   }
 }

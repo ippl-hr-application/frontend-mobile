@@ -33,11 +33,11 @@ class AttandanceHistoryRequest with _$AttandanceHistoryRequest {
 
 @freezed
 class AttandanceHistoryData with _$AttandanceHistoryData {
-  factory AttandanceHistoryData({
-    @JsonKey(name: 'success') bool? success,
-    @JsonKey(name: 'message') String? message,
-    @JsonKey(name: 'data') String? data,
-  }) = _AttandanceHistoryData;
+  factory AttandanceHistoryData(
+      {
+        @JsonKey(name: 'success') bool? success,
+      @JsonKey(name: 'message') String? message,
+      @JsonKey(name: 'data') String? data}) = _AttandanceHistoryData;
 
   factory AttandanceHistoryData.fromJson(Map<String, dynamic> json) =>
       _$AttandanceHistoryDataFromJson(json);

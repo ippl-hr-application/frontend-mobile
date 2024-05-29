@@ -13,35 +13,34 @@ class MyProfile extends ConsumerWidget {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              context.go('/profile');
-            },
-          ),
-          flexibleSpace: const Stack(
-            children: [
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 40,
-                child: Center(
-                  child: Text(
-                    "Data Diri",
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+            backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+            centerTitle: true,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
               ),
-            ],
-          ),
-        ),
+              onPressed: () {
+                context.go("/profile");
+              },
+            ),
+            elevation: 0,
+            title: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
+                Text(
+                  "Data Diri",
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            )),
         body: profileData.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, stackTrace) => Text('Error: $error'),

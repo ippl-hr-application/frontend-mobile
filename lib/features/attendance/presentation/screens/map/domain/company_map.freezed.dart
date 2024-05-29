@@ -366,8 +366,8 @@ mixin _$Branch {
   String? get province => throw _privateConstructorUsedError;
   @JsonKey(name: 'city')
   String? get city => throw _privateConstructorUsedError;
-  @JsonKey(name: 'longitude')
-  double? get longitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'longitute')
+  double? get longitute => throw _privateConstructorUsedError;
   @JsonKey(name: 'latitude')
   double? get latitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'hq_initial')
@@ -387,7 +387,7 @@ abstract class $BranchCopyWith<$Res> {
       {@JsonKey(name: 'address') String? address,
       @JsonKey(name: 'province') String? province,
       @JsonKey(name: 'city') String? city,
-      @JsonKey(name: 'longitude') double? longitude,
+      @JsonKey(name: 'longitute') double? longitute,
       @JsonKey(name: 'latitude') double? latitude,
       @JsonKey(name: 'hq_initial') String? hqInitial});
 }
@@ -408,7 +408,7 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
     Object? address = freezed,
     Object? province = freezed,
     Object? city = freezed,
-    Object? longitude = freezed,
+    Object? longitute = freezed,
     Object? latitude = freezed,
     Object? hqInitial = freezed,
   }) {
@@ -425,9 +425,9 @@ class _$BranchCopyWithImpl<$Res, $Val extends Branch>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      longitude: freezed == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
+      longitute: freezed == longitute
+          ? _value.longitute
+          : longitute // ignore: cast_nullable_to_non_nullable
               as double?,
       latitude: freezed == latitude
           ? _value.latitude
@@ -452,7 +452,7 @@ abstract class _$$BranchImplCopyWith<$Res> implements $BranchCopyWith<$Res> {
       {@JsonKey(name: 'address') String? address,
       @JsonKey(name: 'province') String? province,
       @JsonKey(name: 'city') String? city,
-      @JsonKey(name: 'longitude') double? longitude,
+      @JsonKey(name: 'longitute') double? longitute,
       @JsonKey(name: 'latitude') double? latitude,
       @JsonKey(name: 'hq_initial') String? hqInitial});
 }
@@ -471,7 +471,7 @@ class __$$BranchImplCopyWithImpl<$Res>
     Object? address = freezed,
     Object? province = freezed,
     Object? city = freezed,
-    Object? longitude = freezed,
+    Object? longitute = freezed,
     Object? latitude = freezed,
     Object? hqInitial = freezed,
   }) {
@@ -488,9 +488,9 @@ class __$$BranchImplCopyWithImpl<$Res>
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
               as String?,
-      longitude: freezed == longitude
-          ? _value.longitude
-          : longitude // ignore: cast_nullable_to_non_nullable
+      longitute: freezed == longitute
+          ? _value.longitute
+          : longitute // ignore: cast_nullable_to_non_nullable
               as double?,
       latitude: freezed == latitude
           ? _value.latitude
@@ -511,7 +511,7 @@ class _$BranchImpl implements _Branch {
       {@JsonKey(name: 'address') this.address,
       @JsonKey(name: 'province') this.province,
       @JsonKey(name: 'city') this.city,
-      @JsonKey(name: 'longitude') this.longitude,
+      @JsonKey(name: 'longitute') this.longitute,
       @JsonKey(name: 'latitude') this.latitude,
       @JsonKey(name: 'hq_initial') this.hqInitial});
 
@@ -528,8 +528,8 @@ class _$BranchImpl implements _Branch {
   @JsonKey(name: 'city')
   final String? city;
   @override
-  @JsonKey(name: 'longitude')
-  final double? longitude;
+  @JsonKey(name: 'longitute')
+  final double? longitute;
   @override
   @JsonKey(name: 'latitude')
   final double? latitude;
@@ -539,7 +539,7 @@ class _$BranchImpl implements _Branch {
 
   @override
   String toString() {
-    return 'Branch(address: $address, province: $province, city: $city, longitude: $longitude, latitude: $latitude, hqInitial: $hqInitial)';
+    return 'Branch(address: $address, province: $province, city: $city, longitute: $longitute, latitude: $latitude, hqInitial: $hqInitial)';
   }
 
   @override
@@ -551,8 +551,8 @@ class _$BranchImpl implements _Branch {
             (identical(other.province, province) ||
                 other.province == province) &&
             (identical(other.city, city) || other.city == city) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
+            (identical(other.longitute, longitute) ||
+                other.longitute == longitute) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.hqInitial, hqInitial) ||
@@ -562,7 +562,7 @@ class _$BranchImpl implements _Branch {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, address, province, city, longitude, latitude, hqInitial);
+      runtimeType, address, province, city, longitute, latitude, hqInitial);
 
   @JsonKey(ignore: true)
   @override
@@ -583,7 +583,7 @@ abstract class _Branch implements Branch {
       {@JsonKey(name: 'address') final String? address,
       @JsonKey(name: 'province') final String? province,
       @JsonKey(name: 'city') final String? city,
-      @JsonKey(name: 'longitude') final double? longitude,
+      @JsonKey(name: 'longitute') final double? longitute,
       @JsonKey(name: 'latitude') final double? latitude,
       @JsonKey(name: 'hq_initial') final String? hqInitial}) = _$BranchImpl;
 
@@ -599,8 +599,8 @@ abstract class _Branch implements Branch {
   @JsonKey(name: 'city')
   String? get city;
   @override
-  @JsonKey(name: 'longitude')
-  double? get longitude;
+  @JsonKey(name: 'longitute')
+  double? get longitute;
   @override
   @JsonKey(name: 'latitude')
   double? get latitude;
