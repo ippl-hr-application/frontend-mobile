@@ -14,7 +14,6 @@ export 'package:meraih_mobile/features/authentication/presentation/screens/login
 export 'package:meraih_mobile/routes/app_router.dart';
 export 'package:meraih_mobile/features/attendance/presentation/screens/attendance.dart';
 export 'package:meraih_mobile/features/attendance/presentation/widget/card_attandance_today.dart';
-export 'package:meraih_mobile/features/authentication/presentation/screens/forget_password.dart';
 export 'package:meraih_mobile/features/attendance/presentation/screens/checkin_map.dart';
 export 'package:meraih_mobile/features/attendance/presentation/screens/checkin_prove.dart';
 export 'package:meraih_mobile/features/attendance/presentation/screens/checkin_success.dart';

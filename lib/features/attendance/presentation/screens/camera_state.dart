@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class CameraState extends ChangeNotifier {
   String _location = '';
-  String _description = '';
+  
   String? _imagePath;
   DateTime? _timestamp;
 
   String get location => _location;
-  String get description => _description;
+ 
   String? get imagePath => _imagePath;
   DateTime? get timestamp => _timestamp;
 
@@ -17,10 +17,7 @@ class CameraState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setDescription(String value) {
-    _description = value;
-    notifyListeners();
-  }
+
 
   void setImagePath(String path) {
     _imagePath = path;
@@ -34,7 +31,7 @@ class CameraState extends ChangeNotifier {
 
   void clear() {
     _location = '';
-    _description = '';
+
     _imagePath = null;
     _timestamp = null;
     notifyListeners();

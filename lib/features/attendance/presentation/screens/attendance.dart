@@ -7,7 +7,6 @@ import 'package:meraih_mobile/features/attendance/presentation/widget/attendance
 import 'package:meraih_mobile/features/attendance/presentation/provider/attancande_recap_provider.dart';
 import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_today_provider.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/request_attandance.dart';
-import 'package:meraih_mobile/utils/format_date_to_day.dart';
 
 class Attendance extends ConsumerStatefulWidget {
   const Attendance({super.key});
@@ -22,7 +21,6 @@ class _AttendanceState extends ConsumerState<Attendance> {
   @override
   Widget build(BuildContext context) {
     final attandanceToday = ref.watch(attandanceTodayProvider);
-    final attandanceRecap = ref.watch(attandanceRecapProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -125,7 +123,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
                         color: selectAttandance == "Request"
-                            ? Colors.white // Warna putih jika dipilih
+                            ? Colors.white
                             : Colors.black,
                       ),
                     )),
@@ -151,7 +149,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                       ? Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 0.0, horizontal: 16.0),
-                          child: const AttendanceList())
+                          child: Container())
                       : selectAttandance == "Request"
                           ? Container(
                               padding: const EdgeInsets.symmetric(
@@ -162,24 +160,6 @@ class _AttendanceState extends ConsumerState<Attendance> {
           )
         ],
       ),
-
-      // floatingActionButton: Visibility(
-      //   visible: selectAttandance == "Request",
-      //   child: FloatingActionButton(
-      //     onPressed: () {
-      //       context.go("/attandance-request");
-      //     },
-      //     shape: const RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.all(Radius.circular(100)),
-      //     ),
-      //     backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-      //     child: const Icon(
-      //       Icons.add,
-      //       weight: 4.0,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

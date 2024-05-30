@@ -12,6 +12,7 @@ import 'package:meraih_mobile/utils/format_date.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 import 'package:meraih_mobile/widgets/dialog_redirect.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/announcment_provider.dart';
+  
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -23,6 +24,8 @@ class HomeScreen extends ConsumerWidget {
     final announcmentData = ref.watch(announcmentProvider);
     final homeHistoryDataAsyncValue = ref.watch(attandanceTodayProvider);
     final authProvider = ref.watch(authTokenProvider);
+    final attendanceToday = ref.watch(attandanceTodayProvider);
+
     if (authProvider == null || AuthUtils.isTokenExpired(authProvider)) {
       return const DialogRedirect();
     }
@@ -83,8 +86,6 @@ class HomeScreen extends ConsumerWidget {
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w500),
                             ),
-
-                            // const SizedBox(height: 20.0),
                           ],
                         ),
                       ),

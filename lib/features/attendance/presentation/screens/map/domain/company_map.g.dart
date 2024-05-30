@@ -36,7 +36,7 @@ _$BranchImpl _$$BranchImplFromJson(Map<String, dynamic> json) => _$BranchImpl(
       address: json['address'] as String?,
       province: json['province'] as String?,
       city: json['city'] as String?,
-      longitude: (json['longitude'] as num?)?.toDouble(),
+      longitute: (json['longitute'] as num?)?.toDouble(),
       latitude: (json['latitude'] as num?)?.toDouble(),
       hqInitial: json['hq_initial'] as String?,
     );
@@ -46,7 +46,7 @@ Map<String, dynamic> _$$BranchImplToJson(_$BranchImpl instance) =>
       'address': instance.address,
       'province': instance.province,
       'city': instance.city,
-      'longitude': instance.longitude,
+      'longitute': instance.longitute,
       'latitude': instance.latitude,
       'hq_initial': instance.hqInitial,
     };

@@ -20,6 +20,8 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
   String _status = 'Tidak Terjangkau';
   double? _distance;
 
+  get longitute => null;
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +70,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
 
       setState(() {
         _distance = distance;
-        _status = distance <= 9999999999999 ? 'Terjangkau' : 'Tidak Terjangkau';
+        _status = distance <= 10000000000 ? 'Terjangkau' : 'Tidak Terjangkau';
       });
     }
   }
@@ -77,32 +79,31 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            context.pop(_status);
-          },
-        ),
-        flexibleSpace: const Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 18,
-              child: Center(
-                child: Text(
-                  "Lokasi Kamu!",
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-              ),
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-          ],
-        ),
-      ),
+            onPressed: () {
+              context.pop(_status);
+            },
+          ),
+          elevation: 0,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
+              Text(
+                "Lokasi Kamu !",
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+              ),
+            ],
+          )),
       body: ref.watch(companyBranchIdProvider).when(
             data: (companyBranchId) {
               final companyMapAsyncValue =
@@ -110,21 +111,27 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
               return companyMapAsyncValue.when(
                 data: (companyMap) {
                   final branch = companyMap.data?.branch;
+                  print(branch);
                   if (branch == null ||
                       branch.latitude == null ||
-                      branch.longitude == null) {
-                    return _buildMap(null, null, branch?.hqInitial,
-                        branch?.city, branch?.province, branch?.address, null);
+                      branch.longitute == null) {
+                    return _buildMap(
+                        branch?.latitude,
+                        branch?.longitute,
+                        branch?.hqInitial,
+                        branch?.city,
+                        branch?.province,
+                        branch?.address,
+                        null);
                   }
 
                   _customMarkerLocation =
-                      LatLng(branch.latitude!, branch.longitude!);
+                      LatLng(branch.latitude!, branch.longitute!);
                   _updateStatus();
-                  print(branch.hqInitial);
 
                   return _buildMap(
                       branch.latitude,
-                      branch.longitude,
+                      branch.longitute,
                       branch.hqInitial,
                       branch.city,
                       branch.province,
@@ -141,10 +148,10 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
     );
   }
 
-  Widget _buildMap(double? latitude, double? longitude, String? hqInitial,
+  Widget _buildMap(double? latitude, double? longitute, String? hqInitial,
       String? city, String? province, String? address, Branch? branch) {
-    _customMarkerLocation = latitude != null && longitude != null
-        ? LatLng(latitude, longitude)
+    _customMarkerLocation = latitude != null && longitute != null
+        ? LatLng(latitude, longitute)
         : null;
 
     return Stack(
@@ -177,7 +184,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                           size: 40.0,
                         ),
                         Text(
-                          'Your Location !',
+                          'Your Location!',
                           style: TextStyle(
                               color: Colors.red, fontWeight: FontWeight.bold),
                         ),
@@ -307,6 +314,32 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
                       'Address: ${address ?? "null"}',
+                      style:
+                          const TextStyle(fontSize: 18.0, color: Colors.black),
+                    )),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Longitude: ${longitute ?? "null"}',
+                      style:
+                          const TextStyle(fontSize: 18.0, color: Colors.black),
+                    )),
+              ),
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Address: ${latitude ?? "null"}',
                       style:
                           const TextStyle(fontSize: 18.0, color: Colors.black),
                     )),

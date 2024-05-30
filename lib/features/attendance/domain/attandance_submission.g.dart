@@ -10,16 +10,16 @@ _$AttandanceHistoryRequestImpl _$$AttandanceHistoryRequestImplFromJson(
         Map<String, dynamic> json) =>
     _$AttandanceHistoryRequestImpl(
       attendanceId: json['attendance_id'] as String,
-      attendanceSubmissionFile: json['attendance_submission_file'] as String,
       reason: json['reason'] as String,
+      attendanceSubmissionFile: json['attendance_submission_file'] as String,
     );
 
 Map<String, dynamic> _$$AttandanceHistoryRequestImplToJson(
         _$AttandanceHistoryRequestImpl instance) =>
     <String, dynamic>{
       'attendance_id': instance.attendanceId,
-      'attendance_submission_file': instance.attendanceSubmissionFile,
       'reason': instance.reason,
+      'attendance_submission_file': instance.attendanceSubmissionFile,
     };
 
 _$AttandanceHistoryDataImpl _$$AttandanceHistoryDataImplFromJson(

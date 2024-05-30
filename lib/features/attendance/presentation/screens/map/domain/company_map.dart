@@ -32,7 +32,7 @@ class Branch with _$Branch {
     @JsonKey(name: 'address') String? address,
     @JsonKey(name: 'province') String? province,
     @JsonKey(name: 'city') String? city,
-    @JsonKey(name: 'longitude') double? longitude,
+    @JsonKey(name: 'longitute') double? longitute,
     @JsonKey(name: 'latitude') double? latitude,
     @JsonKey(name: 'hq_initial') String? hqInitial,
   }) = _Branch;
