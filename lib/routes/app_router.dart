@@ -97,14 +97,14 @@ GoRouter goRouter(GoRouterRef ref) {
       //     );
       //   },
       // ),
-      GoRoute(
-        path: '/review',
-        pageBuilder: (context, state) {
-          return const NoTransitionPage(
-            child: ReviewPictureScreen(),
-          );
-        },
-      ),
+      // GoRoute(
+      //   path: '/review',
+      //   pageBuilder: (context, state) {
+      //     return const NoTransitionPage(
+      //       child: ReviewPictureScreen(),
+      //     );
+      //   },
+      // ),
       GoRoute(
         path: '/checkin-map',
         pageBuilder: (context, state) {
