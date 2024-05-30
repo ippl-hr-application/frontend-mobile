@@ -19,7 +19,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
   LatLng? _customMarkerLocation;
   String _status = 'Tidak Terjangkau';
   double? _distance;
-  
+
   get longitute => null;
 
   @override
@@ -79,32 +79,31 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            context.pop(_status);
-          },
-        ),
-        flexibleSpace: const Stack(
-          children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 18,
-              child: Center(
-                child: Text(
-                  "Lokasi Kamu!",
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-              ),
+          backgroundColor: const Color.fromRGBO(32, 81, 229, 1),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
             ),
-          ],
-        ),
-      ),
+            onPressed: () {
+              context.pop(_status);
+            },
+          ),
+          elevation: 0,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
+              Text(
+                "Lokasi Kamu !",
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+              ),
+            ],
+          )),
       body: ref.watch(companyBranchIdProvider).when(
             data: (companyBranchId) {
               final companyMapAsyncValue =
@@ -116,8 +115,14 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
                   if (branch == null ||
                       branch.latitude == null ||
                       branch.longitute == null) {
-                    return _buildMap(branch?.latitude, branch?.longitute, branch?.hqInitial,
-                        branch?.city, branch?.province, branch?.address, null);
+                    return _buildMap(
+                        branch?.latitude,
+                        branch?.longitute,
+                        branch?.hqInitial,
+                        branch?.city,
+                        branch?.province,
+                        branch?.address,
+                        null);
                   }
 
                   _customMarkerLocation =
@@ -145,7 +150,7 @@ class _CheckinMapState extends ConsumerState<CheckinMap> {
 
   Widget _buildMap(double? latitude, double? longitute, String? hqInitial,
       String? city, String? province, String? address, Branch? branch) {
-    _customMarkerLocation = latitude   != null && longitute != null
+    _customMarkerLocation = latitude != null && longitute != null
         ? LatLng(latitude, longitute)
         : null;
 

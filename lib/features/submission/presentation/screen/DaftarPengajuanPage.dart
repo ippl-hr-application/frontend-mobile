@@ -24,17 +24,12 @@ class DaftarPengajuanScreen extends ConsumerStatefulWidget {
 }
 
 class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
-  String formatCurrentMonthYear(String showYearMonth) {
-  DateTime now = DateTime.now();
-  return DateFormat('MM/yyyy').format(now);
-}
-
   DateTime _selectedYearMonth = DateTime.now();
   String year = DateTime.now().year.toString();
   String month = DateTime.now().month.toString().padLeft(2, '0');
   String status = '';
-  
-  String showYearMonth = DateTime.now().toString().padLeft(2, '0');
+
+  String showYearMonth = "Bulan ini";
   late Future<dynamic> submissionHistoryData;
 
   @override
@@ -63,7 +58,8 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
         _selectedYearMonth = picked;
         year = picked.year.toString();
         month = picked.month.toString().padLeft(2, '0');
-        showYearMonth = "${picked.year}/${picked.month.toString().padLeft(2, '0')}";
+        showYearMonth =
+            "${picked.year}/${picked.month.toString().padLeft(2, '0')}";
         _fetchData();
       });
     }
@@ -113,14 +109,13 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            formatCurrentMonthYear(showYearMonth),
+                            showYearMonth,
                             style: const TextStyle(
                                 fontSize: 18.0, fontWeight: FontWeight.bold),
                           ),
                           Row(
                             children: [
                               GestureDetector(
-                                
                                 onTap: () {
                                   _selectYearMonth(context);
                                 },
