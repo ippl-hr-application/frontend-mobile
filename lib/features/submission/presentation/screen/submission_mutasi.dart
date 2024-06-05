@@ -77,359 +77,377 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
               ),
             ],
           )),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FormBuilder(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.type_specimen,
-                          color: Colors.white,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                        child: homeHistoryData.when(
-                      data: (data) {
-                        return FormBuilderTextField(
-                          initialValue: data!.jobPosition.toString(),
-                          readOnly: true,
-                          name: 'Jabatan',
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 6.0),
-                            labelText: 'Jabatan',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        );
-                      },
-                      error: (error, stackTrace) =>
-                          Center(child: Text('Error: $error')),
-                      loading: () =>
-                          const Center(child: CircularProgressIndicator()),
-                    ))
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.type_specimen,
-                          color: Colors.white,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                        child: homeHistoryData.when(
-                      data: (data) {
-                        return FormBuilderTextField(
-                          initialValue: data!.companyName.toString(),
-                          readOnly: true,
-                          name: 'Cabang Sekarang',
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 6.0),
-                            labelText: 'Cabang Sekarang',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        );
-                      },
-                      error: (error, stackTrace) =>
-                          Center(child: Text('Error: $error')),
-                      loading: () =>
-                          const Center(child: CircularProgressIndicator()),
-                    ))
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                // decoration: const BoxDecoration(
-                //   border: Border(
-                //     bottom: BorderSide(
-                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                //   ),
-                // ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.type_specimen,
-                          color: Colors.white,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                        child: companyBranchData.when(
-                      data: (data) {
-                        // if (data!.branches == null || data.branches!.isEmpty) {
-                        //   return const Center(
-                        //       child: Text('No branches available'));
-                        // }
-                        // print(data.branches!.first.company_branch_id);
-
-                        return FormBuilder(
-                          child: FormBuilderDropdown(
-                            name: 'cabang',
-                            validator: (value) {
-                              print(value);
-                              if (value == null ||
-                                  value.isEmpty ||
-                                  value == '') {
-                                return "Cabang tidak boleh kosong";
-                              }
-                            },
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.type_specimen,
+                            color: Colors.white,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                          child: homeHistoryData.when(
+                        data: (data) {
+                          return FormBuilderTextField(
+                            initialValue: data!.jobPosition.toString(),
+                            readOnly: true,
+                            name: 'Jabatan',
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 6.0),
-                              labelText: 'Cabang',
+                              labelText: 'Jabatan',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                            onChanged: (value) {
-                              setState(() {
-                                selectTargetBranch = value;
-                                if (homeHistoryData
-                                        .asData!.value!.companyBranchId ==
-                                    selectTargetBranch) {
-                                  setState(() {
-                                    errorMessageBranch =
-                                        'Pilih Cabang yang berbeda!';
-                                  });
-                                } else {
-                                  setState(() {
-                                    errorMessageBranch = '';
-                                  });
-                                }
-                              });
-                            },
-                            items: data!.branches!
-                                .map((e) => DropdownMenuItem(
-                                      child: Text(
-                                        e.hq_initial.toString().toUpperCase(),
-                                        softWrap: true,
-                                      ),
-                                      value: e.company_branch_id,
-                                    ))
-                                .toList(),
-                          ),
-                        );
-                      },
-                      error: (error, stackTrace) =>
-                          Center(child: Text('Error: $error')),
-                      loading: () =>
-                          const Center(child: CircularProgressIndicator()),
-                    ))
-                  ],
-                ),
-              ),
-              if (errorMessageBranch.isNotEmpty)
-                Padding(
-                  padding: EdgeInsets.only(top: 0.0, left: 65.0),
-                  child: Text(
-                    errorMessageBranch,
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-              Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.date_range_outlined,
-                          color: Colors.white,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: FormBuilderTextField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Alasan tidak boleh kosong";
-                          }
+                          );
                         },
-                        name: 'keterangan',
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 10.0),
-                          labelText: 'Alasan Mutasi',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                        error: (error, stackTrace) =>
+                            Center(child: Text('Error: $error')),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                      ))
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.type_specimen,
+                            color: Colors.white,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                          child: homeHistoryData.when(
+                        data: (data) {
+                          return FormBuilderTextField(
+                            initialValue: data!.companyName.toString(),
+                            readOnly: true,
+                            name: 'Cabang Sekarang',
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 6.0),
+                              labelText: 'Cabang Sekarang',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          );
+                        },
+                        error: (error, stackTrace) =>
+                            Center(child: Text('Error: $error')),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                      ))
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  // decoration: const BoxDecoration(
+                  //   border: Border(
+                  //     bottom: BorderSide(
+                  //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  //   ),
+                  // ),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.type_specimen,
+                            color: Colors.white,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                          child: companyBranchData.when(
+                        data: (data) {
+                          // if (data!.branches == null || data.branches!.isEmpty) {
+                          //   return const Center(
+                          //       child: Text('No branches available'));
+                          // }
+                          // print(data.branches!.first.company_branch_id);
+
+                          return FormBuilder(
+                            child: FormBuilderDropdown(
+                              name: 'cabang',
+                              validator: (value) {
+                                print(value);
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value == '') {
+                                  return "Cabang tidak boleh kosong";
+                                }
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 6.0),
+                                labelText: 'Cabang',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectTargetBranch = value;
+                                  if (homeHistoryData
+                                          .asData!.value!.companyBranchId ==
+                                      selectTargetBranch) {
+                                    setState(() {
+                                      errorMessageBranch =
+                                          'Pilih Cabang yang berbeda!';
+                                    });
+                                  } else {
+                                    setState(() {
+                                      errorMessageBranch = '';
+                                    });
+                                  }
+                                });
+                              },
+                              items: data!.branches!
+                                  .map((e) => DropdownMenuItem(
+                                        child: Text(
+                                          e.hq_initial.toString().toUpperCase(),
+                                          softWrap: true,
+                                        ),
+                                        value: e.company_branch_id,
+                                      ))
+                                  .toList(),
+                            ),
+                          );
+                        },
+                        error: (error, stackTrace) =>
+                            Center(child: Text('Error: $error')),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                      ))
+                    ],
+                  ),
+                ),
+                if (errorMessageBranch.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.only(top: 0.0, left: 65.0),
+                    child: Text(
+                      errorMessageBranch,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.date_range_outlined,
+                            color: Colors.white,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: FormBuilderTextField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Alasan tidak boleh kosong";
+                            }
+                          },
+                          name: 'keterangan',
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 10.0),
+                            labelText: 'Alasan Mutasi',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                // decoration: const BoxDecoration(
-                //   border: Border(
-                //     bottom: BorderSide(
-                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                //   ),
-                // ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.upload_file_sharp,
-                          color: Colors.white,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          border: Border.all(color: Colors.black, width: 0.5),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    filePickerResult =
-                                        await FilePicker.platform.pickFiles(
-                                      type: FileType.custom,
-                                      allowedExtensions: ['pdf', 'jpg', 'png'],
-                                    );
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  // decoration: const BoxDecoration(
+                  //   border: Border(
+                  //     bottom: BorderSide(
+                  //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  //   ),
+                  // ),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.upload_file_sharp,
+                            color: Colors.white,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                            border: Border.all(color: Colors.black, width: 0.5),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      filePickerResult =
+                                          await FilePicker.platform.pickFiles(
+                                        type: FileType.custom,
+                                        allowedExtensions: [
+                                          'pdf',
+                                          'jpg',
+                                          'png'
+                                        ],
+                                      );
 
-                                    if (filePickerResult != null) {
-                                      // Mendapatkan file yang dipilih
-                                      var file = filePickerResult!.files.first;
+                                      if (filePickerResult != null) {
+                                        // Mendapatkan file yang dipilih
+                                        var file =
+                                            filePickerResult!.files.first;
 
-                                      // Ukuran maksimum dalam byte (1 MB = 1 * 1024 * 1024 bytes)
+                                        // Ukuran maksimum dalam byte (1 MB = 1 * 1024 * 1024 bytes)
 
-                                      if (file.size > maxSizeInBytes) {
-                                        // Jika ukuran file lebih dari 1 MB, perbarui state dengan pesan kesalahan
-                                        setState(() {
-                                          errorMessage =
-                                              'Ukuran file tidak boleh lebih dari 1 MB';
-                                          showFileName = '';
-                                        });
-                                      } else {
-                                        // Jika ukuran file sesuai, perbarui state dengan nama file
-                                        setState(() {
-                                          showFileName = file.name;
-                                          errorMessage =
-                                              ''; // Clear any previous error message
-                                        });
+                                        if (file.size > maxSizeInBytes) {
+                                          // Jika ukuran file lebih dari 1 MB, perbarui state dengan pesan kesalahan
+                                          setState(() {
+                                            errorMessage =
+                                                'Ukuran file tidak boleh lebih dari 1 MB';
+                                            showFileName = '';
+                                          });
+                                        } else {
+                                          // Jika ukuran file sesuai, perbarui state dengan nama file
+                                          setState(() {
+                                            showFileName = file.name;
+                                            errorMessage =
+                                                ''; // Clear any previous error message
+                                          });
+                                        }
                                       }
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 13.0, horizontal: 8.0),
-                                    backgroundColor:
-                                        Color.fromRGBO(243, 243, 243, 1),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0)),
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 13.0, horizontal: 8.0),
+                                      backgroundColor:
+                                          Color.fromRGBO(243, 243, 243, 1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8.0)),
+                                      ),
                                     ),
-                                  ),
-                                  child: Text(
-                                    'Pilih File',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
                                     child: Text(
-                                      showFileName!,
-                                      overflow: TextOverflow.ellipsis,
+                                      'Pilih File',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        showFileName!,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                if (errorMessage.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.only(top: 0.0, left: 60.0),
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(color: Colors.red),
                     ),
-                  ],
-                ),
-              ),
-              if (errorMessage.isNotEmpty)
-                Padding(
-                  padding: EdgeInsets.only(top: 0.0, left: 60.0),
-                  child: Text(
-                    errorMessage,
-                    style: TextStyle(color: Colors.red),
                   ),
-                ),
-              Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -449,7 +467,6 @@ class SubmissionMutasiState extends ConsumerState<SubmissionMutasi> {
                   showFileName = '';
                 });
               }
-
               if (_formKey.currentState!.saveAndValidate() &&
                   filePickerResult!.files.first.size < maxSizeInBytes) {
                 Map<String, dynamic> formData = _formKey.currentState!.value;

@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/authentication/changepassword/domain/changepassword.dart';
 import 'package:meraih_mobile/features/authentication/changepassword/provider/changepassword_provider.dart';
 
-
 class ChangePassword extends ConsumerStatefulWidget {
   const ChangePassword({super.key});
 

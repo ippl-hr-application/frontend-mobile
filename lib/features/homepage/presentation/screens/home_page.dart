@@ -12,7 +12,6 @@ import 'package:meraih_mobile/utils/format_date.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/home_provider.dart';
 import 'package:meraih_mobile/widgets/dialog_redirect.dart';
 import 'package:meraih_mobile/features/homepage/presentation/provider/announcment_provider.dart';
-  
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

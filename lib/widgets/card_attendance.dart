@@ -146,9 +146,7 @@ class CardAttendance extends StatelessWidget {
                             decoration: const BoxDecoration(
                                 color: Color.fromRGBO(79, 199, 177, 1),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0))
-                                
-                                ),
+                                    BorderRadius.all(Radius.circular(10.0))),
                             child: const Text('CHECK IN')))
                     : TextButton(
                         style: ButtonStyle(

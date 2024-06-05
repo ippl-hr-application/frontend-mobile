@@ -136,7 +136,6 @@ class ReviewPictureScreen extends ConsumerWidget {
                         cameraState.location,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                  
                       const SizedBox(height: 16),
                       Text(
                         'Waktu Pengambilan Foto:',

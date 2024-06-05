@@ -23,7 +23,8 @@ class AuthService {
       }
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
-        print('Login failed: ${e.response?.data['message']}'); // Logging the error message
+        print(
+            'Login failed: ${e.response?.data['message']}'); // Logging the error message
         rethrow;
       } else {
         print('Unexpected error: $e'); // Logging unexpected errors

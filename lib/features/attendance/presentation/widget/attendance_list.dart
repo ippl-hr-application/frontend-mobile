@@ -45,123 +45,127 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredStatusMap = statusMap.entries.where((entry) {
-      return entry.key.year == _selectedMonth?.year &&
-          entry.key.month == _selectedMonth?.month;
-    }).map((entry) => entry.value).toList();
+    final filteredStatusMap = statusMap.entries
+        .where((entry) {
+          return entry.key.year == _selectedMonth?.year &&
+              entry.key.month == _selectedMonth?.month;
+        })
+        .map((entry) => entry.value)
+        .toList();
 
-    int presentCount = filteredStatusMap.where((status) => status == true).length;
-    int absentCount = filteredStatusMap.where((status) => status == false).length;
+    int presentCount =
+        filteredStatusMap.where((status) => status == true).length;
+    int absentCount =
+        filteredStatusMap.where((status) => status == false).length;
 
-    return 
-      Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Kehadiran',
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          presentCount.toString(),
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          'Absen',
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          absentCount.toString(),
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'Kehadiran',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        presentCount.toString(),
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Absen',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        absentCount.toString(),
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 16),
-            TableCalendar(
-              calendarFormat: CalendarFormat.month,
-              daysOfWeekStyle: const DaysOfWeekStyle(
-                weekdayStyle: TextStyle(color: Colors.blue),
-                weekendStyle: TextStyle(color: Colors.blue),
+          ),
+          const SizedBox(height: 16),
+          TableCalendar(
+            calendarFormat: CalendarFormat.month,
+            daysOfWeekStyle: const DaysOfWeekStyle(
+              weekdayStyle: TextStyle(color: Colors.blue),
+              weekendStyle: TextStyle(color: Colors.blue),
+            ),
+            calendarStyle: const CalendarStyle(
+              todayTextStyle: TextStyle(color: Colors.white),
+              selectedDecoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.circle,
               ),
-              calendarStyle: const CalendarStyle(
-                todayTextStyle: TextStyle(color: Colors.white),
-                selectedDecoration: BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle,
-                ),
-                selectedTextStyle: TextStyle(color: Colors.white),
-                outsideDaysVisible: true,
-                outsideTextStyle: TextStyle(color: Colors.grey),
-                cellMargin: EdgeInsets.all(2),
-              ),
-              headerStyle: const HeaderStyle(
-                formatButtonVisible: false,
-              ),
-              daysOfWeekHeight: 40,
-              calendarBuilders: CalendarBuilders(
-                defaultBuilder: (context, date, _) {
-                  bool? status = statusMap[date];
-                  return Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: status == true
-                          ? Colors.blue
-                          : (status == false ? Colors.red : null),
-                    ),
-                    child: Center(
-                      child: Text(
-                        date.day.toString(),
-                        style: TextStyle(
-                          color: (status != null ? Colors.white : Colors.black),
-                        ),
+              selectedTextStyle: TextStyle(color: Colors.white),
+              outsideDaysVisible: true,
+              outsideTextStyle: TextStyle(color: Colors.grey),
+              cellMargin: EdgeInsets.all(2),
+            ),
+            headerStyle: const HeaderStyle(
+              formatButtonVisible: false,
+            ),
+            daysOfWeekHeight: 40,
+            calendarBuilders: CalendarBuilders(
+              defaultBuilder: (context, date, _) {
+                bool? status = statusMap[date];
+                return Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: status == true
+                        ? Colors.blue
+                        : (status == false ? Colors.red : null),
+                  ),
+                  child: Center(
+                    child: Text(
+                      date.day.toString(),
+                      style: TextStyle(
+                        color: (status != null ? Colors.white : Colors.black),
                       ),
                     ),
-                  );
-                },
-              ),
-              focusedDay: _focusedDay,
-              firstDay: DateTime(2020, 1, 1),
-              lastDay: DateTime(2030, 12, 31),
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _focusedDay = focusedDay;
-                });
-              },
-              onPageChanged: (focusedDay) {
-                setState(() {
-                  _selectedMonth = focusedDay;
-                  _focusedDay = focusedDay;
-                });
-                fetchAttendanceData(focusedDay);
+                  ),
+                );
               },
             ),
-          ],
-        ),
+            focusedDay: _focusedDay,
+            firstDay: DateTime(2020, 1, 1),
+            lastDay: DateTime(2030, 12, 31),
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _focusedDay = focusedDay;
+              });
+            },
+            onPageChanged: (focusedDay) {
+              setState(() {
+                _selectedMonth = focusedDay;
+                _focusedDay = focusedDay;
+              });
+              fetchAttendanceData(focusedDay);
+            },
+          ),
+        ],
+      ),
     );
   }
 }

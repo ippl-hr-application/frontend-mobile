@@ -123,7 +123,8 @@ class _CameraViewState extends ConsumerState<CameraView> {
 
   Future<void> _takePicture() async {
     if (_locationController.text.isEmpty) {
-      _showValidationError(context, 'Lokasi harus diisi sebelum mengambil foto ! - Silahkan buka halaman Lokasi terlebih dahulu.');
+      _showValidationError(context,
+          'Lokasi harus diisi sebelum mengambil foto ! - Silahkan buka halaman Lokasi terlebih dahulu.');
       return;
     }
 
@@ -240,7 +241,6 @@ class _CameraViewState extends ConsumerState<CameraView> {
                   ),
                 ),
               ),
-              
               const SizedBox(height: 8),
               Text(
                 'Waktu: $_currentDateTime',

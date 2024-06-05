@@ -198,7 +198,6 @@ GoRouter goRouter(GoRouterRef ref) {
           );
         },
       ),
-      
       GoRoute(
         path: '/payroll',
         pageBuilder: (context, state) {

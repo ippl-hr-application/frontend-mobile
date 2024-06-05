@@ -9,7 +9,7 @@ part 'attandance_recap_repository.g.dart';
 abstract class AttandanceRecapRepository {
   factory AttandanceRecapRepository(Dio dio, {String baseUrl}) =
       _AttandanceRecapRepository;
-  
+
   @GET('attendance/recap')
   Future<AttandanceRecap> getAttandanceRecap(
     @Query('month') String month,

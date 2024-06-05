@@ -123,7 +123,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
                         color: selectAttandance == "Request"
-                            ? Colors.white 
+                            ? Colors.white
                             : Colors.black,
                       ),
                     )),
@@ -160,7 +160,6 @@ class _AttendanceState extends ConsumerState<Attendance> {
           )
         ],
       ),
-
     );
   }
 }

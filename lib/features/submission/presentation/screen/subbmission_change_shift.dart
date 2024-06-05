@@ -1,6 +1,5 @@
 import 'dart:core';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -71,246 +70,256 @@ class ChangeShiftState extends ConsumerState<SubmissionShift> {
               ),
             ],
           )),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FormBuilder(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(Icons.date_range_outlined,
-                            color: Colors.white, size: 30)),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                        child: FormBuilderDateTimePicker(
-                      name: 'shiftDate',
-                      format: DateFormat('yyyy-MM-dd'),
-                      inputType: InputType.date,
-                      decoration: InputDecoration(
-                        labelText: 'Pilih Tanggal Shift',
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 10.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      initialValue: currentDate,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime.now().add(
-                        Duration(days: 365),
-                      ),
-                      onChanged: (value) {
-                        if (value != null) {
-                          final startDate =
-                              DateFormat('yyyy-MM-dd').format(value);
-                          setState(() {
-                            date = startDate;
-                          });
-                        }
-                      },
-                    )),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.timelapse_sharp,
-                          color: Colors.white,
-                          size: 30,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                        child: homeHistoryData.when(
-                      data: (data) {
-                        return FormBuilderTextField(
-                            initialValue: data!.shiftName.toString(),
-                            readOnly: true,
-                            name: "shift",
-                            validator: (value) {
-                              if (value == null) {
-                                return 'Pilih Shift!';
-                              }
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'Pilih Shift',
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 16.0, horizontal: 10.0),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: const BorderSide(
-                                      width: 1.0, color: Colors.black)),
-                            ));
-                      },
-                      error: (error, stackTrace) =>
-                          Center(child: Text('Error: $error')),
-                      loading: () =>
-                          const Center(child: CircularProgressIndicator()),
-                    ))
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                // decoration: const BoxDecoration(
-                //   border: Border(
-                //     bottom: BorderSide(
-                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                //   ),
-                // ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.type_specimen,
-                          color: Colors.white,
-                          size: 30,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                        child: shiftCompanyData.when(
-                      data: (data) {
-                        return FormBuilder(
-                            child: FormBuilderDropdown(
-                          borderRadius: BorderRadius.circular(8.0),
-                          name: 'shift-baru',
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Pilih Shift Baru!';
-                            }
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Pilih Shift Baru',
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16.0, horizontal: 10.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              selectedShiftBaru = value;
-                              if (homeHistoryData.asData!.value!.shiftId ==
-                                  selectedShiftBaru) {
-                                setState(() {
-                                  errorMessage =
-                                      'Pilih Shift Baru yang berbeda!';
-                                });
-                              } else {
-                                setState(() {
-                                  errorMessage = '';
-                                });
-                              }
-                            });
-                          },
-                          items: (data!
-                              .map(
-                                (e) => DropdownMenuItem<int>(
-                                  child: Text(e.name.toString()),
-                                  value: e.shift_id,
-                                ),
-                              )
-                              .toList()),
-                        ));
-                      },
-                      error: (error, stackTrace) =>
-                          Center(child: Text('Error: $error')),
-                      loading: () =>
-                          const Center(child: CircularProgressIndicator()),
-                    ))
-                  ],
-                ),
-              ),
-              if (errorMessage.isNotEmpty)
-                Padding(
-                  padding: EdgeInsets.only(top: 0.0),
-                  child: Text(
-                    errorMessage,
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-              Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.timelapse_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: FormBuilderTextField(
-                        name: 'keterangan',
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Alasan ganti shift harus diisi!';
-                          }
-                        },
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(Icons.date_range_outlined,
+                              color: Colors.white, size: 30)),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                          child: FormBuilderDateTimePicker(
+                        name: 'shiftDate',
+                        format: DateFormat('yyyy-MM-dd'),
+                        inputType: InputType.date,
                         decoration: InputDecoration(
+                          labelText: 'Pilih Tanggal Shift',
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 16.0, horizontal: 10.0),
-                          labelText: 'Alasan ganti shift',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                      ),
-                    ),
-                  ],
+                        initialValue: currentDate,
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime.now().add(
+                          Duration(days: 365),
+                        ),
+                        onChanged: (value) {
+                          if (value != null) {
+                            final startDate =
+                                DateFormat('yyyy-MM-dd').format(value);
+                            setState(() {
+                              date = startDate;
+                            });
+                          }
+                        },
+                      )),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.timelapse_sharp,
+                            color: Colors.white,
+                            size: 30,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                          child: homeHistoryData.when(
+                        data: (data) {
+                          return FormBuilderTextField(
+                              initialValue: data!.shiftName.toString(),
+                              readOnly: true,
+                              name: "shift",
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Pilih Shift!';
+                                }
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Pilih Shift',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 16.0, horizontal: 10.0),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: const BorderSide(
+                                        width: 1.0, color: Colors.black)),
+                              ));
+                        },
+                        error: (error, stackTrace) =>
+                            Center(child: Text('Error: $error')),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                      ))
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  // decoration: const BoxDecoration(
+                  //   border: Border(
+                  //     bottom: BorderSide(
+                  //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  //   ),
+                  // ),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.type_specimen,
+                            color: Colors.white,
+                            size: 30,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                          child: shiftCompanyData.when(
+                        data: (data) {
+                          return FormBuilder(
+                              child: FormBuilderDropdown(
+                            borderRadius: BorderRadius.circular(8.0),
+                            name: 'shift-baru',
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Pilih Shift Baru!';
+                              }
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Pilih Shift Baru',
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16.0, horizontal: 10.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedShiftBaru = value;
+                                if (homeHistoryData.asData!.value!.shiftId ==
+                                    selectedShiftBaru) {
+                                  setState(() {
+                                    errorMessage =
+                                        'Pilih Shift Baru yang berbeda!';
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorMessage = '';
+                                  });
+                                }
+                              });
+                            },
+                            items: (data!
+                                .map(
+                                  (e) => DropdownMenuItem<int>(
+                                    child: Text(e.name.toString()),
+                                    value: e.shift_id,
+                                  ),
+                                )
+                                .toList()),
+                          ));
+                        },
+                        error: (error, stackTrace) =>
+                            Center(child: Text('Error: $error')),
+                        loading: () =>
+                            const Center(child: CircularProgressIndicator()),
+                      ))
+                    ],
+                  ),
+                ),
+                if (errorMessage.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.only(top: 0.0),
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.timelapse_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: FormBuilderTextField(
+                          name: 'keterangan',
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Alasan ganti shift harus diisi!';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 10.0),
+                            labelText: 'Alasan ganti shift',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
