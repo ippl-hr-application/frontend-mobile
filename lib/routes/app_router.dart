@@ -3,9 +3,11 @@ import 'package:meraih_mobile/core.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/checkout_success.dart';
 
 import 'package:meraih_mobile/features/attendance/presentation/screens/request_attandance.dart';
+import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/attendance_list.dart';
 import 'package:meraih_mobile/features/attendance/presentation/widget/request_attandance.dart';
-import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
+import 'package:meraih_mobile/features/authentication/presentation/screens/forget_password.dart';
+
 import 'package:meraih_mobile/features/payroll/presentation/screens/payroll_page.dart';
 import 'package:meraih_mobile/features/submission/presentation/screen/DaftarPengajuanPage.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/review_picture_screen.dart';
@@ -22,7 +24,7 @@ part 'app_router.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: "/",
+    initialLocation: "/login",
     routes: [
       GoRoute(
         path: "/login",
@@ -42,12 +44,6 @@ GoRouter goRouter(GoRouterRef ref) {
         path: "/izin-test",
         pageBuilder: (context, state) {
           return const NoTransitionPage(child: SubmissionIzin());
-        },
-      ),
-      GoRoute(
-        path: "/reset-password",
-        pageBuilder: (context, state) {
-          return NoTransitionPage(child: ForgetPassword());
         },
       ),
       GoRoute(
@@ -82,43 +78,35 @@ GoRouter goRouter(GoRouterRef ref) {
           );
         },
       ),
-      // GoRoute(
-      //   path: '/checkin-map',
-      //   pageBuilder: (context, state) {
-      //     return const NoTransitionPage(
-      //       child: CheckinMap(),
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   path: '/review',
-      //   pageBuilder: (context, state) {
-      //     return const NoTransitionPage(
-      //       child: ReviewPictureScreen(),
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   path: '/review',
-      //   pageBuilder: (context, state) {
-      //     return const NoTransitionPage(
-      //       child: ReviewPictureScreen(),
-      //     );
-      //   },
-      // ),
-      // GoRoute(
-      //   path: '/checkin-map',
-      //   pageBuilder: (context, state) {
-      //     return const NoTransitionPage(
-      //       child: CheckinMap(),
-      //     );
-      //   },
-      // ),
+      GoRoute(
+        path: '/checkin-map',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: CheckinMap(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/review',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ReviewPictureScreen(),
+          );
+        },
+      ),
       GoRoute(
         path: '/checkin-prove',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: CheckinProve(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/review',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ReviewPictureScreen(),
           );
         },
       ),
@@ -219,18 +207,18 @@ GoRouter goRouter(GoRouterRef ref) {
         },
       ),
       GoRoute(
-        path: '/notifications',
-        pageBuilder: (context, state) {
-          return const NoTransitionPage(
-            child: Notif_Page(),
-          );
-        },
-      ),
-      GoRoute(
         path: '/attandance-request',
         pageBuilder: (context, state) {
           return const NoTransitionPage(
             child: RequestAttandance(),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/reset-password',
+        pageBuilder: (context, state) {
+          return const NoTransitionPage(
+            child: ForgetPassword(),
           );
         },
       ),

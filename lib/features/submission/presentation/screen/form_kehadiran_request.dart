@@ -77,80 +77,83 @@ class _FormReAbsenState extends State<FormReAbsen> {
       //     ],
       //   ),
       // ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FormBuilder(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FormBuilderTextField(
-                name: 'keterangan',
-                decoration: InputDecoration(
-                  labelText: 'Keterangan Absen',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FormBuilderTextField(
+                  name: 'keterangan',
+                  decoration: InputDecoration(
+                    labelText: 'Keterangan Absen',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              FormBuilderDateRangePicker(
-                name: 'izinDate',
-                format: DateFormat('yyyy-MM-dd'),
-                decoration: InputDecoration(
-                  labelText: '  Tanggal Mulai - Akhir Sakit',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                SizedBox(height: 20),
+                FormBuilderDateRangePicker(
+                  name: 'izinDate',
+                  format: DateFormat('yyyy-MM-dd'),
+                  decoration: InputDecoration(
+                    labelText: '  Tanggal Mulai - Akhir Sakit',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
                   ),
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime.now().add(Duration(days: 365)),
                 ),
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(Duration(days: 365)),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  filePickerResult = await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['pdf', 'jpg', 'png'],
-                  );
-                  setState(() {});
-                },
-                child: Text('+ File Bukti'),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Tanda Tangan Digital:',
-                style: TextStyle(fontSize: 16),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  filePickerResult = await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['pdf', 'jpg', 'png'],
-                  );
-                  setState(() {});
-                },
-                child: Text('+ File Tanda Tangan'),
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.saveAndValidate()) {
-                      Map<String, dynamic> formData =
-                          _formKey.currentState!.value;
-                      String keterangan = formData['keterangan'];
-                      String? buktiReabsen = filePickerResult?.files.first.path;
-                      DateTimeRange izinDate = formData['izinDate'];
-                      DateTime startDate = izinDate.start;
-                      DateTime endDate = izinDate.end;
-                    }
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    filePickerResult = await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions: ['pdf', 'jpg', 'png'],
+                    );
+                    setState(() {});
                   },
-                  child: Text('Kirim Pengajuan'),
+                  child: Text('+ File Bukti'),
                 ),
-              ),
-            ],
+                SizedBox(height: 20),
+                Text(
+                  'Tanda Tangan Digital:',
+                  style: TextStyle(fontSize: 16),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    filePickerResult = await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions: ['pdf', 'jpg', 'png'],
+                    );
+                    setState(() {});
+                  },
+                  child: Text('+ File Tanda Tangan'),
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.saveAndValidate()) {
+                        Map<String, dynamic> formData =
+                            _formKey.currentState!.value;
+                        String keterangan = formData['keterangan'];
+                        String? buktiReabsen =
+                            filePickerResult?.files.first.path;
+                        DateTimeRange izinDate = formData['izinDate'];
+                        DateTime startDate = izinDate.start;
+                        DateTime endDate = izinDate.end;
+                      }
+                    },
+                    child: Text('Kirim Pengajuan'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

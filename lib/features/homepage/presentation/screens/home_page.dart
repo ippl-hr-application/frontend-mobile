@@ -23,23 +23,35 @@ class HomeScreen extends ConsumerWidget {
     final announcmentData = ref.watch(announcmentProvider);
     final homeHistoryDataAsyncValue = ref.watch(attandanceTodayProvider);
     final authProvider = ref.watch(authTokenProvider);
+    final attendanceToday = ref.watch(attandanceTodayProvider);
+
     if (authProvider == null || AuthUtils.isTokenExpired(authProvider)) {
       return const DialogRedirect();
     }
+    print(homeHistoryDataAsyncValue.asData?.value?.attendanceId);
+    Future<void> _refresh() async {
+      // ignore: unused_result
+      ref.refresh(homeProvider);
+      // ignore: unused_result
+      ref.refresh(announcmentProvider);
+      await Future.delayed(Duration(seconds: 1)); // Simulasi proses refresh
+    }
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.zero,
-        child: AppBar(
-          backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.zero,
+          child: AppBar(
+            backgroundColor: Color.fromRGBO(32, 81, 229, 1),
+          ),
         ),
-      ),
-      body: homeHistoryData.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        data: ((data) {
-          return SingleChildScrollView(
-            child: SafeArea(
-              child: Stack(
+        body: homeHistoryData.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          data: ((data) {
+            return SingleChildScrollView(
+              child: SafeArea(
+                  child: Stack(
                 children: [
                   Column(
                     children: <Widget>[
@@ -73,8 +85,6 @@ class HomeScreen extends ConsumerWidget {
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w500),
                             ),
-
-                            // const SizedBox(height: 20.0),
                           ],
                         ),
                       ),
@@ -193,22 +203,23 @@ class HomeScreen extends ConsumerWidget {
                           to: data?.to,
                           jobPosition: data?.jobPosition,
                           idAttendance: homeHistoryDataAsyncValue
-                              .asData?.value?.attendanceId
-                              .toString())),
+                              .asData?.value?.attendanceId)),
                 ],
-              ),
-            ),
-          );
-        }),
-        error: (Object error, StackTrace stackTrace) {
-          const DialogRedirect();
-          // return null;
-        },
+              )),
+            );
+          }),
+          error: (Object error, StackTrace stackTrace) {
+            const DialogRedirect();
+            // return null;
+          },
+        ),
+        bottomNavigationBar: CustomBottomNavigationBar(
+          selectedIndex: 0,
+        ),
+        // bottomNavigationBar: Container(
+        //   child: const ButtomBar(),
+        // ),
       ),
-      bottomNavigationBar: const ButtomBar(),
-      // bottomNavigationBar: Container(
-      //   child: const ButtomBar(),
-      // ),
     );
   }
 }

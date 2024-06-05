@@ -1,14 +1,46 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/features/profile/presentation/provider/profile_provider.dart';
 import 'package:meraih_mobile/features/profile/presentation/widget/card_profile.dart';
 import 'package:meraih_mobile/widgets/card_app_bar.dart';
-import 'package:go_router/go_router.dart';
 
 class Profile extends ConsumerWidget {
   const Profile({super.key});
+
+  Future<void> _logout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    bool result = await prefs.remove('token');
+
+    if (result) {
+      print('Token removed successfully');
+      _showLogoutDialog(context); // Show the logout dialog
+    } else {
+      print('Failed to remove token');
+    }
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: const Text('Anda Telah Log Out'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.go('/login');
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,9 +64,9 @@ class Profile extends ConsumerWidget {
                   SizedBox(
                     width: double.infinity,
                     child: CardProfile(
-                        firstName: data?.firstName,
-                        lastName: data?.lastName,
-                        positon: data?.jobPosition?.name),
+                        firstName: data?.user?.firstName,
+                        lastName: data?.user?.lastName,
+                        positon: data?.user?.jobPosition?.name),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -43,13 +75,6 @@ class Profile extends ConsumerWidget {
                       children: [
                         Container(
                           width: double.infinity,
-                          // decoration: const BoxDecoration(
-                          //   border: Border(
-                          //     bottom: BorderSide(
-                          //         width: 1.0,
-                          //         color: Color.fromARGB(255, 186, 186, 186)),
-                          //   ),
-                          // ),
                           child: InkWell(
                             onTap: () {
                               context.go('/my-profile');
@@ -128,47 +153,52 @@ class Profile extends ConsumerWidget {
                         const SizedBox(height: 5.0),
                         SizedBox(
                           width: double.infinity,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                  iconSize: 35.0,
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.person_outlined)),
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0),
-                                  width: double.infinity,
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          width: 1.0,
-                                          color: Color.fromARGB(
-                                              255, 186, 186, 186)),
+                          child: InkWell(
+                            onTap: () {
+                              _logout(context);
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                    iconSize: 35.0,
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.logout)),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0),
+                                    width: double.infinity,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            width: 1.0,
+                                            color: Color.fromARGB(
+                                                255, 186, 186, 186)),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "Keluar",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0),
                                     ),
                                   ),
-                                  child: const Text(
-                                    "Keluar",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18.0),
-                                  ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           );
         }),
       ),
-      bottomNavigationBar: const ButtomBar(),
+      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 2),
     );
   }
 }

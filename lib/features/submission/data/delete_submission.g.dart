@@ -13,7 +13,7 @@ class _DeleteSubmission implements DeleteSubmission {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://27.112.79.44';
+    baseUrl ??= 'https://jzgp086z-3001.asse.devtunnels.ms/';
   }
 
   final Dio _dio;

@@ -13,7 +13,7 @@ class _ProfileRepository implements ProfileRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://27.112.79.44';
+    baseUrl ??= 'https://jzgp086z-3001.asse.devtunnels.ms/';
   }
 
   final Dio _dio;
@@ -34,7 +34,7 @@ class _ProfileRepository implements ProfileRepository {
     )
             .compose(
               _dio.options,
-              '/profile',
+              '/auth/me',
               queryParameters: queryParameters,
               data: _data,
             )

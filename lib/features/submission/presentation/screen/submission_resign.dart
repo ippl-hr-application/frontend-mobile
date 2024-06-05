@@ -66,171 +66,183 @@ class PengajuanResignState extends ConsumerState<PengajuanResign> {
               ),
             ],
           )),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: FormBuilder(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: FormBuilder(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.timelapse_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: FormBuilderTextField(
-                        name: 'keterangan',
-                        validator: (value) {
-                          if (value == null || value.isEmpty || value == '') {
-                            return 'Alasan resign harus diisi!';
-                          }
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 10.0),
-                          labelText: 'Alasan Resign',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.timelapse_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: FormBuilderTextField(
+                          name: 'keterangan',
+                          validator: (value) {
+                            if (value == null || value.isEmpty || value == '') {
+                              return 'Alasan resign harus diisi!';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 10.0),
+                            labelText: 'Alasan Resign',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              // const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                // decoration: const BoxDecoration(
-                //   border: Border(
-                //     bottom: BorderSide(
-                //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
-                //   ),
-                // ),
-                child: Row(
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(32, 81, 229, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: const Icon(
-                          Icons.upload_file_sharp,
-                          color: Colors.white,
-                          size: 30,
-                        )),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          border: Border.all(color: Colors.black, width: 0.5),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    filePickerResult =
-                                        await FilePicker.platform.pickFiles(
-                                      type: FileType.custom,
-                                      allowedExtensions: ['pdf', 'jpg', 'png'],
-                                    );
+                // const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  // decoration: const BoxDecoration(
+                  //   border: Border(
+                  //     bottom: BorderSide(
+                  //         width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                  //   ),
+                  // ),
+                  child: Row(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromRGBO(32, 81, 229, 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: const Icon(
+                            Icons.upload_file_sharp,
+                            color: Colors.white,
+                            size: 30,
+                          )),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                            border: Border.all(color: Colors.black, width: 0.5),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      filePickerResult =
+                                          await FilePicker.platform.pickFiles(
+                                        type: FileType.custom,
+                                        allowedExtensions: [
+                                          'pdf',
+                                          'jpg',
+                                          'png'
+                                        ],
+                                      );
 
-                                    if (filePickerResult != null) {
-                                      // Mendapatkan file yang dipilih
-                                      var file = filePickerResult!.files.first;
+                                      if (filePickerResult != null) {
+                                        // Mendapatkan file yang dipilih
+                                        var file =
+                                            filePickerResult!.files.first;
 
-                                      // Ukuran maksimum dalam byte (1 MB = 1 * 1024 * 1024 bytes)
+                                        // Ukuran maksimum dalam byte (1 MB = 1 * 1024 * 1024 bytes)
 
-                                      if (file.size > maxSizeInBytes) {
-                                        // Jika ukuran file lebih dari 1 MB, perbarui state dengan pesan kesalahan
-                                        setState(() {
-                                          errorMessage =
-                                              'Ukuran file tidak boleh lebih dari 1 MB';
-                                          showFileName = '';
-                                        });
-                                      } else {
-                                        // Jika ukuran file sesuai, perbarui state dengan nama file
-                                        setState(() {
-                                          showFileName = file.name;
-                                          errorMessage =
-                                              ''; // Clear any previous error message
-                                        });
+                                        if (file.size > maxSizeInBytes) {
+                                          // Jika ukuran file lebih dari 1 MB, perbarui state dengan pesan kesalahan
+                                          setState(() {
+                                            errorMessage =
+                                                'Ukuran file tidak boleh lebih dari 1 MB';
+                                            showFileName = '';
+                                          });
+                                        } else {
+                                          // Jika ukuran file sesuai, perbarui state dengan nama file
+                                          setState(() {
+                                            showFileName = file.name;
+                                            errorMessage =
+                                                ''; // Clear any previous error message
+                                          });
+                                        }
                                       }
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 13.0, horizontal: 8.0),
-                                    backgroundColor:
-                                        Color.fromRGBO(243, 243, 243, 1),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0)),
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 13.0, horizontal: 8.0),
+                                      backgroundColor:
+                                          Color.fromRGBO(243, 243, 243, 1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8.0)),
+                                      ),
                                     ),
-                                  ),
-                                  child: Text(
-                                    'Pilih File',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
                                     child: Text(
-                                      showFileName!,
-                                      overflow: TextOverflow.ellipsis,
+                                      'Pilih File',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Text(
+                                        showFileName!,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                if (errorMessage.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.only(top: 0.0, left: 75.0),
+                    child: Text(
+                      errorMessage,
+                      style: TextStyle(color: Colors.red),
                     ),
-                  ],
-                ),
-              ),
-              if (errorMessage.isNotEmpty)
-                Padding(
-                  padding: EdgeInsets.only(top: 0.0, left: 75.0),
-                  child: Text(
-                    errorMessage,
-                    style: TextStyle(color: Colors.red),
                   ),
-                ),
-              Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                        width: 1.0, color: Color.fromARGB(255, 186, 186, 186)),
+                Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 186, 186, 186)),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

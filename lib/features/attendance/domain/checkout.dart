@@ -1,9 +1,9 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:io';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:retrofit/retrofit.dart';
+// import 'package:retrofit/retrofit.dart';
 part 'checkout.freezed.dart';
 part 'checkout.g.dart';
 

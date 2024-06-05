@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart' as cdp;
-import 'package:go_router/go_router.dart';
 import 'package:meraih_mobile/features/attendance/presentation/provider/attancande_recap_provider.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class AttendanceList extends ConsumerStatefulWidget {
   const AttendanceList({super.key});
@@ -13,40 +11,104 @@ class AttendanceList extends ConsumerStatefulWidget {
 }
 
 class _AttendanceListState extends ConsumerState<AttendanceList> {
-  late DateTime _selectedDay;
+  late DateTime _focusedDay;
+  DateTime? _selectedMonth;
   Map<DateTime, bool> statusMap = {};
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = DateTime.now();
-    _initializeStatusMap();
+    _focusedDay = DateTime.now();
+    _selectedMonth = DateTime.now();
+    fetchAttendanceData(_selectedMonth!);
   }
 
-  void _initializeStatusMap() {
-    statusMap = {
-      DateTime(2024, 4, 1): true,
-      DateTime(2024, 4, 2): false,
-    };
-  }
+  Future<void> fetchAttendanceData(DateTime selectedMonth) async {
+    final month = selectedMonth.month;
+    final year = selectedMonth.year;
+    final response = await ref.read(attandanceRecapProvider({
+      'month': month.toString().padLeft(2, '0'),
+      'year': year.toString(),
+    }).future);
 
-  void updateStatusMap(Map<DateTime, bool> newStatusMap) {
-    setState(() {
-      statusMap = newStatusMap;
-    });
+    if (response != null && response.detail != null) {
+      final newStatusMap = <DateTime, bool>{};
+      for (final detail in response.detail!) {
+        final date = DateTime.parse(detail.date!);
+        newStatusMap[date] = detail.isPresent ?? false;
+      }
+      setState(() {
+        statusMap = newStatusMap;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    final filteredStatusMap = statusMap.entries
+        .where((entry) {
+          return entry.key.year == _selectedMonth?.year &&
+              entry.key.month == _selectedMonth?.month;
+        })
+        .map((entry) => entry.value)
+        .toList();
+
+    int presentCount =
+        filteredStatusMap.where((status) => status == true).length;
+    int absentCount =
+        filteredStatusMap.where((status) => status == false).length;
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'Kehadiran',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        presentCount.toString(),
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Absen',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        absentCount.toString(),
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           TableCalendar(
             calendarFormat: CalendarFormat.month,
             daysOfWeekStyle: const DaysOfWeekStyle(
               weekdayStyle: TextStyle(color: Colors.blue),
-              weekendStyle: TextStyle(color: Colors.red),
+              weekendStyle: TextStyle(color: Colors.blue),
             ),
             calendarStyle: const CalendarStyle(
               todayTextStyle: TextStyle(color: Colors.white),
@@ -55,7 +117,6 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
                 shape: BoxShape.circle,
               ),
               selectedTextStyle: TextStyle(color: Colors.white),
-              weekendTextStyle: TextStyle(color: Colors.red),
               outsideDaysVisible: true,
               outsideTextStyle: TextStyle(color: Colors.grey),
               cellMargin: EdgeInsets.all(2),
@@ -67,8 +128,6 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
             calendarBuilders: CalendarBuilders(
               defaultBuilder: (context, date, _) {
                 bool? status = statusMap[date];
-                bool isWeekend = date.weekday == DateTime.saturday ||
-                    date.weekday == DateTime.sunday;
                 return Container(
                   width: 40,
                   height: 40,
@@ -82,49 +141,28 @@ class _AttendanceListState extends ConsumerState<AttendanceList> {
                     child: Text(
                       date.day.toString(),
                       style: TextStyle(
-                        color: isWeekend
-                            ? Colors.red
-                            : (status != null ? Colors.white : Colors.black),
+                        color: (status != null ? Colors.white : Colors.black),
                       ),
                     ),
                   ),
                 );
               },
             ),
-            focusedDay: _selectedDay,
-            firstDay: DateTime(2024, 1, 1),
-            lastDay: DateTime(2024, 12, 31),
+            focusedDay: _focusedDay,
+            firstDay: DateTime(2020, 1, 1),
+            lastDay: DateTime(2030, 12, 31),
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
-                _selectedDay = selectedDay;
-                print(_selectedDay);
+                _focusedDay = focusedDay;
               });
             },
-          ),
-          const SizedBox(height: 20),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  statusMap[_selectedDay] = !(statusMap[_selectedDay] ?? false);
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              ).copyWith(
-                backgroundColor:
-                    MaterialStateProperty.resolveWith<Color>((states) {
-                  return statusMap[_selectedDay] == true
-                      ? Colors.red
-                      : Colors.green;
-                }),
-              ),
-              child: Text(
-                statusMap[_selectedDay] == true ? 'Absen' : 'Hadir',
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
+            onPageChanged: (focusedDay) {
+              setState(() {
+                _selectedMonth = focusedDay;
+                _focusedDay = focusedDay;
+              });
+              fetchAttendanceData(focusedDay);
+            },
           ),
         ],
       ),

@@ -12,7 +12,7 @@ class CardAttendance extends StatelessWidget {
   final String? from;
   final String? to;
   final String? jobPosition;
-  final String? idAttendance;
+  final int? idAttendance;
 
   const CardAttendance(
       {required this.companyName,
@@ -146,9 +146,7 @@ class CardAttendance extends StatelessWidget {
                             decoration: const BoxDecoration(
                                 color: Color.fromRGBO(79, 199, 177, 1),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0))
-                                // border: Border.all(color: Colors.black, width: 1.0)
-                                ),
+                                    BorderRadius.all(Radius.circular(10.0))),
                             child: const Text('CHECK IN')))
                     : TextButton(
                         style: ButtonStyle(

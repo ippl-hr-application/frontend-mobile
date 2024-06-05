@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
@@ -11,11 +9,11 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:meraih_mobile/features/attendance/domain/attandance_request.dart';
+import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_history_provider.dart';
+import 'package:meraih_mobile/features/attendance/presentation/widget/alert_success_attendance.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:meraih_mobile/utils/format_date_to_day.dart';
 import 'package:signature/signature.dart';
-import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_history_provider.dart';
-import 'package:meraih_mobile/utils/format_date.dart';
 import 'package:meraih_mobile/utils/format_time.dart';
 import 'package:meraih_mobile/features/attendance/presentation/provider/attandance_request_provider.dart';
 
@@ -29,11 +27,7 @@ class RequestAttandance extends ConsumerStatefulWidget {
 class RequestAttandanceState extends ConsumerState<RequestAttandance> {
   late int attendanceId;
   final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-  final SignatureController _signatureController = SignatureController(
-    penStrokeWidth: 5,
-    penColor: Colors.black,
-  );
-
+  bool isSingleDate = true;
   String? showFileName = "";
   String errorMessage = '';
   int maxSizeInBytes = 1 * 1024 * 1024;
@@ -73,6 +67,7 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
             child: FormBuilder(
                 key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -161,7 +156,7 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                                     );
                                   } else {
                                     final data = snapshot.data;
-                                    attendanceId = data.attendanceId ?? 0;
+                                    attendanceId = data.attendanceId ?? 1;
                                     print(snapshot.data.date);
                                     return Column(
                                       crossAxisAlignment:
@@ -290,13 +285,13 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                              width: 1.0,
-                              color: Color.fromARGB(255, 186, 186, 186)),
-                        ),
-                      ),
+                      // decoration: const BoxDecoration(
+                      //   border: Border(
+                      //     bottom: BorderSide(
+                      //         width: 1.0,
+                      //         color: Color.fromARGB(255, 186, 186, 186)),
+                      //   ),
+                      // ),
                       child: Row(
                         children: [
                           Container(
@@ -387,6 +382,23 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                         ],
                       ),
                     ),
+                    if (errorMessage.isNotEmpty)
+                      Padding(
+                        padding: EdgeInsets.only(left: 75.0),
+                        child: Text(
+                          errorMessage,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 1.0,
+                              color: Color.fromARGB(255, 186, 186, 186)),
+                        ),
+                      ),
+                    ),
                   ],
                 )),
           ),
@@ -397,20 +409,34 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
+                if (filePickerResult == null) {
+                  setState(() {
+                    errorMessage = 'Pilih file terlebih dahulu!';
+                    showFileName = '';
+                  });
+                }
                 if (_formKey.currentState!.saveAndValidate()) {
                   Map<String, dynamic> formData = _formKey.currentState!.value;
-                  print(attendanceId);
-                  print(formData['Alasan']);
-                  print(File(filePickerResult!.files.first.path ?? '').path);
+                  // print(attendanceId);
+                  // print(formData['keterangan']);
+                  // print(File(filePickerResult!.files.first.path ?? '').path);
                   // print()
 
                   handleRequestAttandance(
-                      ref,
-                      AttandanceRequest(
-                          attendanceId: attendanceId,
-                          reason: formData['keterangan'],
-                          attendanceSubmissionFile:
-                              File(filePickerResult!.files.first.path ?? '')));
+                          ref,
+                          AttandanceRequest(
+                              attendanceId: attendanceId,
+                              reason: formData['keterangan'],
+                              attendanceSubmissionFile: File(
+                                  filePickerResult!.files.first.path ?? '')))
+                      .then((attandanceSubmission) {
+                    return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertSuccessAttandance(
+                        message: attandanceSubmission.message,
+                      ),
+                    );
+                  });
                 }
               },
               style: ElevatedButton.styleFrom(

@@ -16,6 +16,9 @@ Future<dynamic> handleRequestAttandance(
   dio.options.headers["Authorization"] = "Bearer $token";
 
   final attandanceRequestRepository = RequestAttandanceRepository(dio);
+  print(request.attendanceId);
+  print(request.reason);
+  print(request.attendanceSubmissionFile);
 
   try {
     final attandanceHistory =

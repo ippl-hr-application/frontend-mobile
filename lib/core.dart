@@ -14,7 +14,6 @@ export 'package:meraih_mobile/features/authentication/presentation/screens/login
 export 'package:meraih_mobile/routes/app_router.dart';
 export 'package:meraih_mobile/features/attendance/presentation/screens/attendance.dart';
 export 'package:meraih_mobile/features/attendance/presentation/widget/card_attandance_today.dart';
-export 'package:meraih_mobile/features/authentication/presentation/screens/forget_password.dart';
 export 'package:meraih_mobile/features/attendance/presentation/screens/checkin_map.dart';
 export 'package:meraih_mobile/features/attendance/presentation/screens/checkin_prove.dart';
 export 'package:meraih_mobile/features/attendance/presentation/screens/checkin_success.dart';
@@ -45,6 +44,5 @@ import 'package:meraih_mobile/features/profile/presentation/screens/profile_page
 import 'package:meraih_mobile/features/profile/presentation/screens/my_profile.dart';
 import 'package:meraih_mobile/features/profile/presentation/screens/change_password.dart';
 import 'package:meraih_mobile/features/payroll/presentation/screens/payroll_page.dart';
-import 'package:meraih_mobile/features/notification/presentation/screens/notification_page.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screen/absensiPage.dart';
 import 'package:meraih_mobile/features/attendance/presentation/screens/request_attandance.dart';

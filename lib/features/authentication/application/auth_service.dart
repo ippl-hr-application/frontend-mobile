@@ -14,11 +14,20 @@ class AuthService {
     try {
       final response = await authRepository.login(auth);
       final token = response.data?.token;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', token!);
+      if (token != null) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
+        print('Token saved: $token'); // Logging the token
+      } else {
+        print('No token received'); // Logging in case no token is received
+      }
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
+        print(
+            'Login failed: ${e.response?.data['message']}'); // Logging the error message
         rethrow;
+      } else {
+        print('Unexpected error: $e'); // Logging unexpected errors
       }
     }
   }
