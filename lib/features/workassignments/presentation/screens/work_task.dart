@@ -48,39 +48,40 @@ class WorkTask extends ConsumerWidget {
           children: <Widget>[
             // const Text("Select Tanggal"),
             Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: tasksHistoryData.when(
-                  data: (data) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: data == null ? 0 : data.tasks?.length,
-                      itemBuilder: (context, int index) {
-                        if (data?.tasks?[index] == null) {
-                          return Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: const Text(
-                              "Task perkerjaan belum tersedia",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          );
-                        } else {
-                          return ItemTasks(
-                              title: data?.tasks?[index].title,
-                              description: data?.tasks?[index].description,
-                              endDate: data?.tasks?[index].endDate,
-                              firstName:
-                                  data?.tasks?[index].givenbyId?.first_name,
-                              jobPosition: data?.tasks?[index].givenbyId
-                                  ?.job_position?.name);
-                        }
-                      },
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: tasksHistoryData.when(
+                data: (data) {
+                  if (data == null ||
+                      data.tasks == null ||
+                      data.tasks!.isEmpty) {
+                    return Center(
+                      child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 0.0),
+                          child: Text("Belum Ada Task Pekerjaan")),
                     );
-                  },
-                  error: (error, stackTrace) =>
-                      Center(child: Text('Error: $error')),
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                ))
+                  }
+
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: data.tasks!.length,
+                    itemBuilder: (context, int index) {
+                      return ItemTasks(
+                        title: data.tasks![index].title,
+                        description: data.tasks![index].description,
+                        endDate: data.tasks![index].endDate,
+                        firstName: data.tasks![index].givenbyId?.first_name,
+                        jobPosition:
+                            data.tasks![index].givenbyId?.job_position?.name,
+                      );
+                    },
+                  );
+                },
+                error: (error, stackTrace) =>
+                    Center(child: Text('Error: $error')),
+                loading: () => const Center(child: CircularProgressIndicator()),
+              ),
+            )
           ],
         ),
       ),

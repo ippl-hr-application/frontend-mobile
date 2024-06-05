@@ -13,7 +13,7 @@ class _ResignRepository implements ResignRepository {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://bwv94mdh-3000.asse.devtunnels.ms/';
+    baseUrl ??= 'https://jzgp086z-3001.asse.devtunnels.ms/';
   }
 
   final Dio _dio;

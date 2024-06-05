@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meraih_mobile/features/authentication/presentation/providers/auth_provider.dart';
 import 'package:meraih_mobile/routes/app_router.dart';
@@ -10,8 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(const ProviderScope(child: MyApp())));
 
-  runApp(const ProviderScope(child: MyApp()));
   FilePicker.platform = FilePicker.platform;
 }
 
@@ -35,7 +37,6 @@ class MyApp extends ConsumerWidget {
       ],
       supportedLocales: [
         const Locale('en', 'US'),
-        
       ],
       routerConfig: goRouter,
     );

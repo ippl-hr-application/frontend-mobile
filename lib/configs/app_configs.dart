@@ -1,3 +1,3 @@
 class AppConfigs {
-  static const String baseUrl = "https://bwv94mdh-3000.asse.devtunnels.ms/";
+  static const String baseUrl = "https://jzgp086z-3001.asse.devtunnels.ms/";
 }

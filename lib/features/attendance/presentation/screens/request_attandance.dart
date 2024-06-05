@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:meraih_mobile/features/attendance/domain/attandance_request.dart';
+import 'package:meraih_mobile/features/attendance/presentation/widget/alert_success_attendance.dart';
 import 'package:meraih_mobile/utils/date.dart';
 import 'package:meraih_mobile/utils/format_date_to_day.dart';
 import 'package:signature/signature.dart';
@@ -156,7 +157,7 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                                     );
                                   } else {
                                     final data = snapshot.data;
-                                    attendanceId = data.attendanceId ?? 0;
+                                    attendanceId = data.attendanceId ?? 1;
                                     print(snapshot.data.date);
                                     return Column(
                                       crossAxisAlignment:
@@ -417,18 +418,26 @@ class RequestAttandanceState extends ConsumerState<RequestAttandance> {
                 }
                 if (_formKey.currentState!.saveAndValidate()) {
                   Map<String, dynamic> formData = _formKey.currentState!.value;
-                  print(attendanceId);
-                  print(formData['Alasan']);
-                  print(File(filePickerResult!.files.first.path ?? '').path);
+                  // print(attendanceId);
+                  // print(formData['keterangan']);
+                  // print(File(filePickerResult!.files.first.path ?? '').path);
                   // print()
 
                   handleRequestAttandance(
-                      ref,
-                      AttandanceRequest(
-                          attendanceId: attendanceId,
-                          reason: formData['keterangan'],
-                          attendanceSubmissionFile:
-                              File(filePickerResult!.files.first.path ?? '')));
+                          ref,
+                          AttandanceRequest(
+                              attendanceId: attendanceId,
+                              reason: formData['keterangan'],
+                              attendanceSubmissionFile: File(
+                                  filePickerResult!.files.first.path ?? '')))
+                      .then((attandanceSubmission) {
+                    return showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertSuccessAttandance(
+                        message: attandanceSubmission.message,
+                      ),
+                    );
+                  });
                 }
               },
               style: ElevatedButton.styleFrom(

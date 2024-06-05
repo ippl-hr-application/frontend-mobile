@@ -152,20 +152,29 @@ class _DaftarPengajuanScreenState extends ConsumerState<DaftarPengajuanScreen> {
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else {
-                        return ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, int index) {
-                              return SubmissionItem(
-                                submissionId:
-                                    snapshot.data[index].submission_id,
-                                submissionDate:
-                                    snapshot.data[index].submission_date,
-                                status: snapshot.data[index].status,
-                                type: snapshot.data[index].type,
-                              );
-                            });
+                        if (snapshot.data.isEmpty) {
+                          return Center(
+                            child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 20.0, horizontal: 0.0),
+                                child: Text("Belum Ada History Pengajuan")),
+                          );
+                        } else {
+                          return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, int index) {
+                                return SubmissionItem(
+                                  submissionId:
+                                      snapshot.data[index].submission_id,
+                                  submissionDate:
+                                      snapshot.data[index].submission_date,
+                                  status: snapshot.data[index].status,
+                                  type: snapshot.data[index].type,
+                                );
+                              });
+                        }
                       }
                     },
                   )),
